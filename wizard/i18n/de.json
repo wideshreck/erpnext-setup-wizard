@@ -53,7 +53,7 @@
             "cancelled": "Einrichtung abgebrochen.",
             "port_invalid": "Gültige Portnummer eingeben (1024–65535)",
             "version_invalid": "Ungültiges Format. Beispiel: v16.7.3",
-            "site_name_invalid": "Site-Name muss mindestens einen Punkt enthalten und keine Leerzeichen oder ungültige Zeichen"
+            "site_name_invalid": "Site-Name muss mindestens einen Punkt enthalten und keine Leerzeichen oder ungültige Zeichen enthalten"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
