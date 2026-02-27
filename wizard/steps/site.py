@@ -15,6 +15,7 @@ from rich import box
 from ..theme import console, ACCENT, OK, WARN, MUTED
 from ..ui import step_header, step, ok, fail, info
 from ..utils import run, version_branch
+from ..apps import OPTIONAL_APPS
 from .configure import Config
 from ..i18n import t
 from . import TOTAL_STEPS
@@ -66,7 +67,8 @@ def _install_extra_apps(cfg: Config):
     if not cfg.extra_apps:
         return
 
-    branch = version_branch(cfg.erpnext_version)
+    default_branch = version_branch(cfg.erpnext_version)
+    app_branch_map = {app.repo_name: app.branch for app in OPTIONAL_APPS}
     console.print()
     failed = []
 
@@ -75,6 +77,7 @@ def _install_extra_apps(cfg: Config):
         info(t("steps.site.installing_app", app=app_name))
         app_q = shlex.quote(app_name)
         site_q = shlex.quote(cfg.site_name)
+        branch = app_branch_map.get(app_name) or default_branch
         branch_q = shlex.quote(branch)
 
         # Step 1: Clone app repo (matching ERPNext major version branch)

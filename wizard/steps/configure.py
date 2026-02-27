@@ -2,7 +2,7 @@
 
 import re
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from rich.panel import Panel
 from rich.table import Table
@@ -27,7 +27,7 @@ class Config:
     http_port: str
     db_password: str
     admin_password: str
-    extra_apps: list[str]
+    extra_apps: list[str] = field(default_factory=list)
 
 
 def _validate_port(val: str) -> bool | str:
@@ -119,8 +119,8 @@ def run_configure() -> Config:
         console.print()
 
         app_choices = [
-            (repo_name, f"{display_name} — {t(i18n_key)}")
-            for repo_name, display_name, i18n_key in OPTIONAL_APPS
+            (app.repo_name, f"{app.display_name} — {t(app.i18n_key)}")
+            for app in OPTIONAL_APPS
         ]
 
         extra_apps = ask_apps_field(
