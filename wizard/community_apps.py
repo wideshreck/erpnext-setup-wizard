@@ -21,7 +21,7 @@ class CommunityApp(NamedTuple):
 
 _AWESOME_FRAPPE_URL = "https://github.com/gavindsouza/awesome-frappe.git"
 _GITHUB_LINK_RE = re.compile(
-    r"\[([^\]]+)\]\((https://github\.com/[^/]+/[^/)]+)\)"
+    r"\[([^\]]+)\]\((https://github\.com/[^/]+/[^/)#?]+)\)"
 )
 
 
@@ -65,14 +65,16 @@ def fetch_community_apps(erpnext_version: str) -> list[CommunityApp]:
 
         for display_name, url in entries:
             url = url.rstrip("/")
-            repo_name = url.split("/")[-1]
+            parts = url.split("/")
+            repo_name = parts[-1]
             if repo_name.endswith(".git"):
                 repo_name = repo_name[:-4]
+            org_repo = f"{parts[-2]}/{repo_name}"
 
             # Skip duplicates, official apps, and non-app repos
-            if repo_name in seen or repo_name in official_repos:
+            if org_repo in seen or repo_name in official_repos:
                 continue
-            seen.add(repo_name)
+            seen.add(org_repo)
 
             # Check branch compatibility
             repo_url = url if url.endswith(".git") else url + ".git"
