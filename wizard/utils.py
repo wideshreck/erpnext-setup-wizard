@@ -1,6 +1,5 @@
 """Shell utilities: run commands, check tools, clear screen."""
 
-import os
 import platform
 import subprocess
 
@@ -9,7 +8,10 @@ from .i18n import t
 
 
 def clear_screen():
-    os.system("cls" if platform.system() == "Windows" else "clear")
+    subprocess.run(
+        ["cmd", "/c", "cls"] if platform.system() == "Windows" else ["clear"],
+        shell=False,
+    )
 
 
 def run(cmd: str, capture: bool = False):
