@@ -172,6 +172,47 @@ def ask_password_field(
     return password
 
 
+def ask_apps_field(
+    number: int,
+    icon: str,
+    label: str,
+    choices: list[tuple[str, str]],
+) -> list[str]:
+    """Checkbox field for selecting optional apps.
+
+    Args:
+        choices: list of (value, display_label) tuples
+    Returns:
+        list of selected values (repo names), may be empty
+    """
+    _field_header(number, icon, label)
+    console.print(f"      [{MUTED}]{t('steps.configure.extra_apps_hint')}[/]")
+
+    q_choices = [
+        questionary.Choice(title=display, value=value)
+        for value, display in choices
+    ]
+
+    selected = questionary.checkbox(
+        message="",
+        choices=q_choices,
+        qmark="      ▸",
+        style=Q_STYLE,
+    ).ask()
+
+    if selected is None:
+        _cancelled()
+
+    if selected:
+        names = ", ".join(selected)
+        console.print(f"      [bold {OK}]✔[/] [green]{t('steps.configure.extra_apps_selected', count=len(selected), apps=names)}[/green]")
+    else:
+        console.print(f"      [{MUTED}]{t('steps.configure.extra_apps_none')}[/]")
+
+    console.print()
+    return selected
+
+
 def confirm_action(question: str) -> bool:
     """Styled yes/no confirmation."""
     console.print()
