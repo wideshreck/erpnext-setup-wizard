@@ -1,6 +1,8 @@
 """Load configuration from CLI arguments or YAML file for unattended mode."""
 
 import argparse
+import re
+import sys
 
 import yaml
 
@@ -51,6 +53,54 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _require(data: dict, key: str, context: str = "config file") -> str:
+    """Return data[key] or exit with a clear error if missing."""
+    if key not in data:
+        print(f"Error: Required field '{key}' missing from {context}.", file=sys.stderr)
+        sys.exit(1)
+    return data[key]
+
+
+def _validate_config(cfg: Config) -> None:
+    """Validate a Config object, raising SystemExit on invalid values."""
+    errors = []
+
+    # Required fields
+    if not cfg.site_name:
+        errors.append("site_name is required")
+    if not cfg.erpnext_version:
+        errors.append("erpnext_version is required")
+    if not cfg.db_password:
+        errors.append("db_password is required")
+    if not cfg.admin_password:
+        errors.append("admin_password is required")
+
+    # Format validation
+    if cfg.site_name and not re.fullmatch(r"[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?)+", cfg.site_name):
+        errors.append(f"Invalid site_name: {cfg.site_name}")
+    if cfg.erpnext_version and not re.fullmatch(r"v\d+\.\d+\.\d+", cfg.erpnext_version):
+        errors.append(f"Invalid erpnext_version: {cfg.erpnext_version}")
+    if cfg.deploy_mode == "local" and cfg.http_port:
+        if not (cfg.http_port.isdigit() and 1024 <= int(cfg.http_port) <= 65535):
+            errors.append(f"Invalid http_port: {cfg.http_port}")
+
+    # Mode-specific required fields
+    if cfg.deploy_mode in ("production", "remote"):
+        if not cfg.domain:
+            errors.append("domain is required for production/remote mode")
+        if not cfg.letsencrypt_email:
+            errors.append("letsencrypt_email is required for production/remote mode")
+    if cfg.deploy_mode == "remote":
+        if not cfg.ssh_host:
+            errors.append("ssh_host is required for remote mode")
+
+    if errors:
+        print("Configuration errors:", file=sys.stderr)
+        for e in errors:
+            print(f"  - {e}", file=sys.stderr)
+        sys.exit(1)
+
+
 def _config_from_yaml(path: str) -> Config:
     """Parse a YAML config file into a Config object."""
     with open(path, "r", encoding="utf-8") as f:
@@ -60,14 +110,14 @@ def _config_from_yaml(path: str) -> Config:
     backup = data.get("backup", {})
     ssh = data.get("ssh", {})
 
-    return Config(
+    cfg = Config(
         deploy_mode=data.get("mode", "local"),
-        site_name=data["site_name"],
-        erpnext_version=data["erpnext_version"],
+        site_name=_require(data, "site_name"),
+        erpnext_version=_require(data, "erpnext_version"),
         db_type=data.get("db_type", "mariadb"),
         http_port=str(data.get("http_port", "8080")),
-        db_password=data["db_password"],
-        admin_password=data["admin_password"],
+        db_password=_require(data, "db_password"),
+        admin_password=_require(data, "admin_password"),
         extra_apps=data.get("extra_apps", []),
         community_apps=[],
         domain=data.get("domain", ""),
@@ -87,6 +137,8 @@ def _config_from_yaml(path: str) -> Config:
         backup_s3_access_key=backup.get("s3_access_key", ""),
         backup_s3_secret_key=backup.get("s3_secret_key", ""),
     )
+    _validate_config(cfg)
+    return cfg
 
 
 def _config_from_args(args) -> Config | None:
@@ -96,7 +148,7 @@ def _config_from_args(args) -> Config | None:
     if not all(required):
         return None
 
-    return Config(
+    cfg = Config(
         deploy_mode=args.mode,
         site_name=args.site_name,
         erpnext_version=args.version,
@@ -123,6 +175,8 @@ def _config_from_args(args) -> Config | None:
         backup_s3_access_key=args.backup_s3_access_key or "",
         backup_s3_secret_key=args.backup_s3_secret_key or "",
     )
+    _validate_config(cfg)
+    return cfg
 
 
 def load_config(args) -> Config | None:

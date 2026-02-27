@@ -322,8 +322,6 @@ def _show_done(cfg: Config):
 def run_site(cfg: Config, executor):
     """Step 5: create site, install extra apps, update hosts, show done."""
     compose_cmd = build_compose_cmd(cfg)
-    if cfg.deploy_mode == "remote":
-        compose_cmd = f"cd ~/frappe_docker && {compose_cmd}"
 
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg, executor, compose_cmd)

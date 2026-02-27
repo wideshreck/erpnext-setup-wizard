@@ -25,7 +25,10 @@ def build_compose_cmd(cfg: Config) -> str:
     else:
         files.append("overrides/compose.https.yaml")
 
-    return "docker compose " + " ".join(f"-f {f}" for f in files)
+    cmd = "docker compose " + " ".join(f"-f {f}" for f in files)
+    if cfg.deploy_mode == "remote":
+        cmd = f"cd ~/frappe_docker && {cmd}"
+    return cmd
 
 
 def run_docker(cfg: Config, executor):

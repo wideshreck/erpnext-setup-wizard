@@ -126,7 +126,14 @@
             "backup_s3_endpoint": "S3 Endpoint URL",
             "backup_s3_bucket": "S3 Bucket Name",
             "backup_s3_access_key": "S3 Access Key",
-            "backup_s3_secret_key": "S3 Secret Key"
+            "backup_s3_secret_key": "S3 Secret Key",
+            "ssh_port_hint": "Default SSH port is 22",
+            "smtp_host_hint": "Your email server address",
+            "smtp_port_hint": "587 for TLS, 465 for SSL, 25 for unencrypted",
+            "smtp_user_hint": "Email account username or address",
+            "backup_s3_endpoint_hint": "S3-compatible storage endpoint",
+            "backup_s3_bucket_hint": "Name of the storage bucket",
+            "backup_s3_access_key_hint": "Your S3 access key ID"
         },
         "env_file": {
             "title": "Preparing Environment File",

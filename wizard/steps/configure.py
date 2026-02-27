@@ -158,8 +158,8 @@ def run_configure() -> Config:
 
             ssh_key_path = ask_field(
                 number=n, icon="🔑",
-                label=t("steps.configure.ssh_key_path"),
-                hint=t("steps.configure.ssh_key_path_hint"),
+                label=t("steps.configure.ssh_key"),
+                hint=t("steps.configure.ssh_key_hint"),
                 examples="~/.ssh/id_rsa · ~/.ssh/id_ed25519",
             )
             n += 1
@@ -333,7 +333,7 @@ def run_configure() -> Config:
             console.print(Rule(style="dim"))
             console.print()
 
-            if confirm_action(t("steps.configure.smtp_configure_prompt")):
+            if confirm_action(t("steps.configure.smtp_configure")):
                 console.print()
                 smtp_host = ask_field(
                     number=n, icon="📧",
@@ -367,7 +367,7 @@ def run_configure() -> Config:
                 )
                 n += 1
 
-                smtp_use_tls = confirm_action(t("steps.configure.smtp_use_tls_prompt"))
+                smtp_use_tls = confirm_action(t("steps.configure.smtp_use_tls"))
 
         # ── 10. Backup config (production/remote only) ───────
         backup_enabled = False
@@ -380,7 +380,7 @@ def run_configure() -> Config:
             console.print(Rule(style="dim"))
             console.print()
 
-            if confirm_action(t("steps.configure.backup_configure_prompt")):
+            if confirm_action(t("steps.configure.backup_configure")):
                 backup_enabled = True
                 console.print()
 

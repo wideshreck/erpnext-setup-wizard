@@ -126,7 +126,14 @@
             "backup_s3_endpoint": "S3 Uç Nokta URL",
             "backup_s3_bucket": "S3 Kova Adı",
             "backup_s3_access_key": "S3 Erişim Anahtarı",
-            "backup_s3_secret_key": "S3 Gizli Anahtar"
+            "backup_s3_secret_key": "S3 Gizli Anahtar",
+            "ssh_port_hint": "Varsayılan SSH portu 22'dir",
+            "smtp_host_hint": "E-posta sunucu adresiniz",
+            "smtp_port_hint": "TLS için 587, SSL için 465, şifresiz için 25",
+            "smtp_user_hint": "E-posta hesabı kullanıcı adı veya adresi",
+            "backup_s3_endpoint_hint": "S3 uyumlu depolama uç noktası",
+            "backup_s3_bucket_hint": "Depolama kovasının adı",
+            "backup_s3_access_key_hint": "S3 erişim anahtarı kimliğiniz"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",

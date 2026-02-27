@@ -10,11 +10,14 @@ from . import TOTAL_STEPS
 
 
 def _env_quote(value: str) -> str:
-    """Quote a value for safe .env file inclusion."""
-    special = set("#$\"'`\\!&|;() \t\n")
-    if any(c in special for c in value):
-        escaped = value.replace("'", "'\\''")
-        return f"'{escaped}'"
+    """Quote a value for safe Docker Compose .env file inclusion.
+
+    Docker Compose only supports double-quoted values in .env files.
+    """
+    needs_quoting = set("#$\"'`\\!&|;() \t\n")
+    if any(c in needs_quoting for c in value):
+        escaped = value.replace("\\", "\\\\").replace('"', '\\"').replace("$", "\\$").replace("`", "\\`")
+        return f'"{escaped}"'
     return value
 
 
