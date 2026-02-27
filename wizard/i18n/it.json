@@ -77,7 +77,14 @@
             "extra_apps": "App aggiuntive (opzionale)",
             "extra_apps_hint": "Seleziona con Spazio, conferma con Invio — Invio per nessuna",
             "extra_apps_none": "Nessuna app aggiuntiva selezionata",
-            "extra_apps_selected": "{count} app selezionata/e: {apps}"
+            "extra_apps_selected": "{count} app selezionata/e: {apps}",
+            "community_apps": "App della comunità (opzionale)",
+            "community_apps_hint": "App dalla lista awesome-frappe della comunità",
+            "community_apps_none": "Nessuna app della comunità selezionata",
+            "community_apps_selected": "{count} app della comunità selezionata/e: {apps}",
+            "fetching_community_apps": "Recupero app della comunità…",
+            "community_apps_loaded": "{count} app della comunità compatibili trovate",
+            "community_apps_failed": "Impossibile recuperare le app della comunità — saltato."
         },
         "env_file": {
             "title": "Preparazione del file di ambiente",
@@ -112,6 +119,12 @@
             "app_build_failed": "Build degli asset di {app} fallito — saltato.",
             "apps_done": "Tutte le {count} app aggiuntive sono state installate.",
             "apps_some_failed": "{failed} su {total} app non sono state installate.",
+            "installing_community_apps": "Installazione app della comunità… ({current}/{total})",
+            "installing_community_app": "Download di {app} da {url}…",
+            "community_app_installed": "{app} installata.",
+            "community_app_failed": "Installazione di {app} fallita — saltata.",
+            "community_apps_done": "Tutte le {count} app della comunità sono state installate.",
+            "community_apps_some_failed": "{failed} di {total} app della comunità non sono state installate.",
             "hosts_header": " File Hosts ",
             "hosts_adding": "Aggiunta al file hosts: 127.0.0.1 {site_name}",
             "hosts_updated": "File hosts aggiornato.",

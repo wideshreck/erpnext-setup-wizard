@@ -77,7 +77,14 @@
             "extra_apps": "Applications supplémentaires (optionnel)",
             "extra_apps_hint": "Sélectionnez avec Espace, confirmez avec Entrée — Entrée pour aucune",
             "extra_apps_none": "Aucune application supplémentaire sélectionnée",
-            "extra_apps_selected": "{count} application(s) sélectionnée(s) : {apps}"
+            "extra_apps_selected": "{count} application(s) sélectionnée(s) : {apps}",
+            "community_apps": "Applications communautaires (optionnel)",
+            "community_apps_hint": "Applications de la liste awesome-frappe de la communauté",
+            "community_apps_none": "Aucune application communautaire sélectionnée",
+            "community_apps_selected": "{count} application(s) communautaire(s) sélectionnée(s) : {apps}",
+            "fetching_community_apps": "Récupération des applications communautaires…",
+            "community_apps_loaded": "{count} applications communautaires compatibles trouvées",
+            "community_apps_failed": "Impossible de récupérer les applications communautaires — ignoré."
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",
@@ -112,6 +119,12 @@
             "app_build_failed": "Compilation des assets de {app} échouée — ignorée.",
             "apps_done": "Les {count} applications supplémentaires ont été installées.",
             "apps_some_failed": "{failed} sur {total} application(s) n'ont pas pu être installées.",
+            "installing_community_apps": "Installation des applications communautaires… ({current}/{total})",
+            "installing_community_app": "Téléchargement de {app} depuis {url}…",
+            "community_app_installed": "{app} installée.",
+            "community_app_failed": "Installation de {app} échouée — ignorée.",
+            "community_apps_done": "Les {count} applications communautaires ont été installées.",
+            "community_apps_some_failed": "{failed} sur {total} application(s) communautaire(s) n'ont pas pu être installées.",
             "hosts_header": " Fichier Hosts ",
             "hosts_adding": "Ajout au fichier hosts : 127.0.0.1 {site_name}",
             "hosts_updated": "Fichier hosts mis à jour.",

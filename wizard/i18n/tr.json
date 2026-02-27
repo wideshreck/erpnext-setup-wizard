@@ -77,7 +77,14 @@
             "extra_apps": "Ek Uygulamalar (isteğe bağlı)",
             "extra_apps_hint": "Space ile seçin, Enter ile onaylayın — hiçbiri için direkt Enter",
             "extra_apps_none": "Ek uygulama seçilmedi",
-            "extra_apps_selected": "{count} uygulama seçildi: {apps}"
+            "extra_apps_selected": "{count} uygulama seçildi: {apps}",
+            "community_apps": "Topluluk Uygulamaları (isteğe bağlı)",
+            "community_apps_hint": "awesome-frappe topluluk listesinden uygulamalar",
+            "community_apps_none": "Topluluk uygulaması seçilmedi",
+            "community_apps_selected": "{count} topluluk uygulaması seçildi: {apps}",
+            "fetching_community_apps": "Topluluk uygulamaları getiriliyor…",
+            "community_apps_loaded": "{count} uyumlu topluluk uygulaması bulundu",
+            "community_apps_failed": "Topluluk uygulamaları alınamadı — atlanıyor."
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",
@@ -112,6 +119,12 @@
             "app_build_failed": "{app} varlık derleme başarısız — atlanıyor.",
             "apps_done": "Tüm {count} ek uygulama kuruldu.",
             "apps_some_failed": "{total} uygulamadan {failed} tanesi kurulamadı.",
+            "installing_community_apps": "Topluluk uygulamaları kuruluyor… ({current}/{total})",
+            "installing_community_app": "{app} indiriliyor: {url}…",
+            "community_app_installed": "{app} kuruldu.",
+            "community_app_failed": "{app} kurulumu başarısız — atlanıyor.",
+            "community_apps_done": "Tüm {count} topluluk uygulaması kuruldu.",
+            "community_apps_some_failed": "{total} topluluk uygulamasından {failed} tanesi kurulamadı.",
             "hosts_header": " Hosts Dosyası ",
             "hosts_adding": "hosts dosyasına ekleniyor: 127.0.0.1 {site_name}",
             "hosts_updated": "hosts dosyası güncellendi.",

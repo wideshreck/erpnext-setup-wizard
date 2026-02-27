@@ -77,7 +77,14 @@
             "extra_apps": "Aplicaciones adicionales (opcional)",
             "extra_apps_hint": "Seleccione con Espacio, confirme con Enter — Enter para ninguna",
             "extra_apps_none": "No se seleccionaron aplicaciones adicionales",
-            "extra_apps_selected": "{count} aplicación(es) seleccionada(s): {apps}"
+            "extra_apps_selected": "{count} aplicación(es) seleccionada(s): {apps}",
+            "community_apps": "Aplicaciones de la comunidad (opcional)",
+            "community_apps_hint": "Aplicaciones de la lista awesome-frappe de la comunidad",
+            "community_apps_none": "No se seleccionaron aplicaciones de la comunidad",
+            "community_apps_selected": "{count} aplicación(es) de la comunidad seleccionada(s): {apps}",
+            "fetching_community_apps": "Obteniendo aplicaciones de la comunidad…",
+            "community_apps_loaded": "{count} aplicaciones de la comunidad compatibles encontradas",
+            "community_apps_failed": "No se pudieron obtener las aplicaciones de la comunidad — omitiendo."
         },
         "env_file": {
             "title": "Preparando archivo de entorno",
@@ -112,6 +119,12 @@
             "app_build_failed": "Compilación de assets de {app} fallida — omitiendo.",
             "apps_done": "Las {count} aplicaciones adicionales fueron instaladas.",
             "apps_some_failed": "{failed} de {total} aplicación(es) no pudieron instalarse.",
+            "installing_community_apps": "Instalando aplicaciones de la comunidad… ({current}/{total})",
+            "installing_community_app": "Descargando {app} desde {url}…",
+            "community_app_installed": "{app} instalada.",
+            "community_app_failed": "Instalación de {app} fallida — omitiendo.",
+            "community_apps_done": "Las {count} aplicaciones de la comunidad fueron instaladas.",
+            "community_apps_some_failed": "{failed} de {total} aplicación(es) de la comunidad no pudieron instalarse.",
             "hosts_header": " Archivo Hosts ",
             "hosts_adding": "Agregando al archivo hosts: 127.0.0.1 {site_name}",
             "hosts_updated": "Archivo hosts actualizado.",

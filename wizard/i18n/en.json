@@ -77,7 +77,14 @@
             "extra_apps": "Extra Apps (optional)",
             "extra_apps_hint": "Select with Space, confirm with Enter — skip with Enter for none",
             "extra_apps_none": "No extra apps selected",
-            "extra_apps_selected": "{count} app(s) selected: {apps}"
+            "extra_apps_selected": "{count} app(s) selected: {apps}",
+            "community_apps": "Community Apps (optional)",
+            "community_apps_hint": "Apps from the awesome-frappe community list",
+            "community_apps_none": "No community apps selected",
+            "community_apps_selected": "{count} community app(s) selected: {apps}",
+            "fetching_community_apps": "Fetching community apps…",
+            "community_apps_loaded": "{count} compatible community apps found",
+            "community_apps_failed": "Could not fetch community apps — skipping."
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -112,6 +119,12 @@
             "app_build_failed": "{app} asset build failed — skipping.",
             "apps_done": "All {count} extra app(s) installed.",
             "apps_some_failed": "{failed} of {total} app(s) failed to install.",
+            "installing_community_apps": "Installing community apps… ({current}/{total})",
+            "installing_community_app": "Downloading {app} from {url}…",
+            "community_app_installed": "{app} installed.",
+            "community_app_failed": "{app} installation failed — skipping.",
+            "community_apps_done": "All {count} community app(s) installed.",
+            "community_apps_some_failed": "{failed} of {total} community app(s) failed to install.",
             "hosts_header": " Hosts File ",
             "hosts_adding": "Adding to hosts file: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts file updated.",

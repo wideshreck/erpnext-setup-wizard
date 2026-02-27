@@ -77,7 +77,14 @@
             "extra_apps": "Zusätzliche Apps (optional)",
             "extra_apps_hint": "Mit Leertaste auswählen, mit Enter bestätigen — Enter für keine",
             "extra_apps_none": "Keine zusätzlichen Apps ausgewählt",
-            "extra_apps_selected": "{count} App(s) ausgewählt: {apps}"
+            "extra_apps_selected": "{count} App(s) ausgewählt: {apps}",
+            "community_apps": "Community-Apps (optional)",
+            "community_apps_hint": "Apps aus der awesome-frappe Community-Liste",
+            "community_apps_none": "Keine Community-Apps ausgewählt",
+            "community_apps_selected": "{count} Community-App(s) ausgewählt: {apps}",
+            "fetching_community_apps": "Community-Apps werden abgerufen…",
+            "community_apps_loaded": "{count} kompatible Community-Apps gefunden",
+            "community_apps_failed": "Community-Apps konnten nicht abgerufen werden — wird übersprungen."
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -112,6 +119,12 @@
             "app_build_failed": "Asset-Build für {app} fehlgeschlagen — wird übersprungen.",
             "apps_done": "Alle {count} zusätzlichen App(s) installiert.",
             "apps_some_failed": "{failed} von {total} App(s) konnten nicht installiert werden.",
+            "installing_community_apps": "Community-Apps werden installiert… ({current}/{total})",
+            "installing_community_app": "{app} wird heruntergeladen von {url}…",
+            "community_app_installed": "{app} installiert.",
+            "community_app_failed": "Installation von {app} fehlgeschlagen — wird übersprungen.",
+            "community_apps_done": "Alle {count} Community-App(s) installiert.",
+            "community_apps_some_failed": "{failed} von {total} Community-App(s) konnten nicht installiert werden.",
             "hosts_header": " Hosts-Datei ",
             "hosts_adding": "Wird zur Hosts-Datei hinzugefügt: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts-Datei aktualisiert.",
