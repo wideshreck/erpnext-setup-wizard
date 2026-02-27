@@ -14,7 +14,7 @@ from rich import box
 
 from ..theme import console, ACCENT, OK, WARN, MUTED
 from ..ui import step_header, step, ok, fail, info
-from ..utils import run, version_branch
+from ..utils import version_branch
 from ..apps import OPTIONAL_APPS, detect_best_branch
 from .configure import Config
 from ..i18n import t
@@ -22,7 +22,7 @@ from . import TOTAL_STEPS
 from .docker import build_compose_cmd
 
 
-def _create_site(cfg: Config, compose_cmd: str):
+def _create_site(cfg: Config, executor, compose_cmd: str):
     """Create the ERPNext site via bench, with retry on failure."""
     from ..prompts import confirm_action
 
@@ -30,12 +30,15 @@ def _create_site(cfg: Config, compose_cmd: str):
     step(t("steps.site.creating", site_name=site_escaped))
     info(t("steps.site.creating_hint"))
 
+    db_type_flag = " --db-type postgres" if cfg.db_type == "postgres" else ""
+
     while True:
-        code = run(
+        code = executor.run(
             f"{compose_cmd} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
             f"--install-app erpnext "
             f"--db-root-password {shlex.quote(cfg.db_password)} "
             f"--admin-password {shlex.quote(cfg.admin_password)}"
+            f"{db_type_flag}"
         )
         if code == 0:
             break
@@ -50,7 +53,7 @@ def _create_site(cfg: Config, compose_cmd: str):
 
     console.print()
     step(t("steps.site.enabling_scheduler"))
-    code = run(f"{compose_cmd} exec -T backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
+    code = executor.run(f"{compose_cmd} exec -T backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
     if code != 0:
         fail(t("steps.site.scheduler_failed"))
     else:
@@ -59,7 +62,7 @@ def _create_site(cfg: Config, compose_cmd: str):
 
 def _install_app(repo_name: str, display_name: str, source: str,
                   branch: str, site_name: str, fail_key: str,
-                  compose_cmd: str = "") -> bool:
+                  executor=None, compose_cmd: str = "") -> bool:
     """Run the 6-step install pipeline for a single Frappe app.
 
     Docker production containers need explicit steps because
@@ -74,7 +77,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     source_q = shlex.quote(source)
 
     # Step 1: Clone app repo
-    code = run(
+    code = executor.run(
         f"{compose_cmd} exec -T backend bench get-app "
         f"--branch {branch_q} {source_q}"
     )
@@ -83,19 +86,19 @@ def _install_app(repo_name: str, display_name: str, source: str,
         return False
 
     # Step 2: pip install (bench get-app skips this in production containers)
-    code = run(f"{compose_cmd} exec -T backend pip install -e apps/{app_q}")
+    code = executor.run(f"{compose_cmd} exec -T backend pip install -e apps/{app_q}")
     if code != 0:
         fail(t(fail_key, app=display_name))
         return False
 
     # Step 3: Register in apps.txt if missing
-    run(
+    executor.run(
         f"{compose_cmd} exec -T backend bash -c "
         f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
     )
 
     # Step 4: Install on site
-    code = run(
+    code = executor.run(
         f"{compose_cmd} exec -T backend bench --site {site_q} "
         f"install-app {app_q}"
     )
@@ -104,7 +107,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
         return False
 
     # Step 5: Build assets (CSS, JS, images)
-    build_code = run(f"{compose_cmd} exec -T backend bench build --app {app_q}")
+    build_code = executor.run(f"{compose_cmd} exec -T backend bench build --app {app_q}")
     if build_code != 0:
         fail(t("steps.site.app_build_failed", app=display_name))
         return False
@@ -113,7 +116,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     # bench build creates a symlink sites/assets/{app} -> apps/{app}/.../public
     # but the frontend container doesn't have the apps/ volume, so the
     # symlink is dangling.  Replace it with the actual files.
-    run(
+    executor.run(
         f"{compose_cmd} exec -T backend bash -c "
         f"'if [ -L sites/assets/{app_q} ]; then "
         f"target=$(readlink -f sites/assets/{app_q}) && "
@@ -124,7 +127,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     return True
 
 
-def _install_extra_apps(cfg: Config, compose_cmd: str) -> int:
+def _install_extra_apps(cfg: Config, executor, compose_cmd: str) -> int:
     """Download and install selected extra apps. Fail-soft per app.
 
     Returns the number of successfully installed apps.
@@ -153,7 +156,7 @@ def _install_extra_apps(cfg: Config, compose_cmd: str) -> int:
         # source=app_name: bench get-app resolves to github.com/frappe/{name}
         if _install_app(app_name, app_name, app_name, branch,
                         cfg.site_name, "steps.site.app_failed",
-                        compose_cmd=compose_cmd):
+                        executor=executor, compose_cmd=compose_cmd):
             ok(t("steps.site.app_installed", app=app_name))
         else:
             failed.append(app_name)
@@ -167,7 +170,7 @@ def _install_extra_apps(cfg: Config, compose_cmd: str) -> int:
     return len(cfg.extra_apps) - len(failed)
 
 
-def _install_community_apps(cfg: Config, compose_cmd: str) -> int:
+def _install_community_apps(cfg: Config, executor, compose_cmd: str) -> int:
     """Install selected community apps. Fail-soft per app.
 
     Returns the number of successfully installed apps.
@@ -184,7 +187,7 @@ def _install_community_apps(cfg: Config, compose_cmd: str) -> int:
 
         if _install_app(app.repo_name, app.display_name, app.repo_url,
                         app.branch, cfg.site_name, "steps.site.community_app_failed",
-                        compose_cmd=compose_cmd):
+                        executor=executor, compose_cmd=compose_cmd):
             ok(t("steps.site.community_app_installed", app=app.display_name))
         else:
             failed.append(app.display_name)
@@ -198,8 +201,43 @@ def _install_community_apps(cfg: Config, compose_cmd: str) -> int:
     return len(cfg.community_apps) - len(failed)
 
 
+def _configure_smtp(cfg: Config, executor, compose_cmd: str):
+    """Apply SMTP settings via bench set-config."""
+    if not cfg.smtp_host:
+        return
+    console.print()
+    step(t("steps.site.configuring_smtp"))
+    site_q = shlex.quote(cfg.site_name)
+    bench_cfg = f"{compose_cmd} exec -T backend bench --site {site_q} set-config"
+    executor.run(f"{bench_cfg} mail_server {shlex.quote(cfg.smtp_host)}")
+    executor.run(f"{bench_cfg} mail_port {cfg.smtp_port}")
+    executor.run(f"{bench_cfg} mail_login {shlex.quote(cfg.smtp_user)}")
+    executor.run(f"{bench_cfg} mail_password {shlex.quote(cfg.smtp_password)}")
+    executor.run(f"{bench_cfg} use_tls {1 if cfg.smtp_use_tls else 0}")
+    ok(t("steps.site.smtp_configured"))
+
+
+def _configure_backup(cfg: Config, executor, compose_cmd: str):
+    """Apply S3 backup settings via bench set-config."""
+    if not cfg.backup_enabled:
+        return
+    console.print()
+    step(t("steps.site.configuring_backup"))
+    site_q = shlex.quote(cfg.site_name)
+    bench_cfg = f"{compose_cmd} exec -T backend bench --site {site_q} set-config"
+    executor.run(f"{bench_cfg} backup_bucket {shlex.quote(cfg.backup_s3_bucket)}")
+    executor.run(f'{bench_cfg} backup_region ""')
+    executor.run(f"{bench_cfg} backup_endpoint {shlex.quote(cfg.backup_s3_endpoint)}")
+    executor.run(f"{bench_cfg} backup_access_key {shlex.quote(cfg.backup_s3_access_key)}")
+    executor.run(f"{bench_cfg} backup_secret_key {shlex.quote(cfg.backup_s3_secret_key)}")
+    ok(t("steps.site.backup_configured"))
+
+
 def _update_hosts(cfg: Config):
-    """Add site to hosts file if needed."""
+    """Add site to hosts file if needed (local mode only)."""
+    if cfg.deploy_mode != "local":
+        return
+
     console.print()
     console.print(Rule(t("steps.site.hosts_header"), style=ACCENT))
     console.print()
@@ -239,7 +277,10 @@ def _update_hosts(cfg: Config):
 
 def _show_done(cfg: Config):
     """Print the completion banner."""
-    url = f"http://{cfg.site_name}:{cfg.http_port}"
+    if cfg.deploy_mode == "local":
+        url = f"http://{cfg.site_name}:{cfg.http_port}"
+    else:
+        url = f"https://{cfg.domain}"
 
     result_table = Table(box=box.SIMPLE_HEAVY, border_style=OK, padding=(0, 3), show_header=False)
     result_table.add_column(style="bold white")
@@ -248,15 +289,19 @@ def _show_done(cfg: Config):
     result_table.add_row(f"👤  {t('steps.site.done_user')}", "Administrator")
     result_table.add_row(f"🔑  {t('steps.site.done_password')}", t("steps.site.done_password_hint"))
 
+    if cfg.deploy_mode != "local":
+        result_table.add_row(f"🔒  {t('steps.site.done_ssl')}", "Let's Encrypt (auto)")
+
     done_title = Text.assemble(
         ("\n🎉  ", ""),
         (t("steps.site.done_title"), "bold bright_green"),
         ("\n", ""),
     )
-    done_footer = Text(
-        f"\n{t('steps.site.done_open_browser', url=url)}\n",
-        style=MUTED,
-    )
+
+    done_footer_text = t("steps.site.done_open_browser", url=url)
+    if cfg.deploy_mode != "local":
+        done_footer_text += f"\n{t('steps.site.dns_reminder', domain=cfg.domain)}"
+    done_footer = Text(f"\n{done_footer_text}\n", style=MUTED)
 
     console.print()
     console.print(
@@ -274,13 +319,18 @@ def _show_done(cfg: Config):
     console.print()
 
 
-def run_site(cfg: Config):
+def run_site(cfg: Config, executor):
     """Step 5: create site, install extra apps, update hosts, show done."""
-    step_header(5, TOTAL_STEPS, t("steps.site.title"))
     compose_cmd = build_compose_cmd(cfg)
-    _create_site(cfg, compose_cmd)
-    installed = _install_extra_apps(cfg, compose_cmd) + _install_community_apps(cfg, compose_cmd)
+    if cfg.deploy_mode == "remote":
+        compose_cmd = f"cd ~/frappe_docker && {compose_cmd}"
+
+    step_header(5, TOTAL_STEPS, t("steps.site.title"))
+    _create_site(cfg, executor, compose_cmd)
+    installed = _install_extra_apps(cfg, executor, compose_cmd) + _install_community_apps(cfg, executor, compose_cmd)
     if installed > 0:
-        run(f"{compose_cmd} restart frontend")
+        executor.run(f"{compose_cmd} restart frontend")
+    _configure_smtp(cfg, executor, compose_cmd)
+    _configure_backup(cfg, executor, compose_cmd)
     _update_hosts(cfg)
     _show_done(cfg)

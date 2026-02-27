@@ -149,7 +149,13 @@
             "done_user": "User",
             "done_password": "Password",
             "done_password_hint": "(the admin password you entered)",
-            "done_open_browser": "Open {url} in your browser."
+            "done_open_browser": "Open {url} in your browser.",
+            "done_ssl": "SSL",
+            "dns_reminder": "Make sure DNS for {domain} points to your server before accessing.",
+            "configuring_smtp": "Configuring SMTP…",
+            "smtp_configured": "SMTP configured.",
+            "configuring_backup": "Configuring S3 backup…",
+            "backup_configured": "S3 backup configured."
         }
     }
 }

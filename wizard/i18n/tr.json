@@ -149,7 +149,13 @@
             "done_user": "Kullanıcı",
             "done_password": "Şifre",
             "done_password_hint": "(girdiğiniz admin şifresi)",
-            "done_open_browser": "Tarayıcınızda {url} adresini açın."
+            "done_open_browser": "Tarayıcınızda {url} adresini açın.",
+            "done_ssl": "SSL",
+            "dns_reminder": "Erişmeden önce {domain} için DNS kaydının sunucunuza yönlendiğinden emin olun.",
+            "configuring_smtp": "SMTP yapılandırılıyor…",
+            "smtp_configured": "SMTP yapılandırıldı.",
+            "configuring_backup": "S3 yedekleme yapılandırılıyor…",
+            "backup_configured": "S3 yedekleme yapılandırıldı."
         }
     }
 }
