@@ -14,6 +14,7 @@ from ..theme import console, ACCENT, HEADING, WARN, MUTED
 from ..ui import step_header, step, ok, fail
 from ..prompts import ask_field, ask_password_field, ask_version_field, ask_apps_field, confirm_action
 from ..apps import OPTIONAL_APPS
+from ..community_apps import CommunityApp, fetch_community_apps
 from ..i18n import t
 from ..versions import fetch_erpnext_versions
 from . import TOTAL_STEPS
@@ -28,6 +29,7 @@ class Config:
     db_password: str
     admin_password: str
     extra_apps: list[str] = field(default_factory=list)
+    community_apps: list[CommunityApp] = field(default_factory=list)
 
 
 def _validate_port(val: str) -> bool | str:
@@ -130,6 +132,36 @@ def run_configure() -> Config:
             choices=app_choices,
         )
 
+        # ── Community apps ───────────────────────────────────
+        console.print()
+        step(t("steps.configure.fetching_community_apps"))
+        community_app_list = fetch_community_apps(erpnext_version)
+
+        community_apps: list[CommunityApp] = []
+        if community_app_list:
+            ok(t("steps.configure.community_apps_loaded", count=len(community_app_list)))
+            console.print()
+
+            community_choices = [
+                (app.repo_name, f"{app.display_name} ({app.repo_name})")
+                for app in community_app_list
+            ]
+
+            selected_community = ask_apps_field(
+                number=7,
+                icon="🌐",
+                label=t("steps.configure.community_apps"),
+                choices=community_choices,
+            )
+
+            # Map selected repo_names back to full CommunityApp objects
+            selected_set = set(selected_community)
+            community_apps = [
+                app for app in community_app_list if app.repo_name in selected_set
+            ]
+        else:
+            fail(t("steps.configure.community_apps_failed"))
+
         # ── Summary table ────────────────────────────────────────
         console.print()
         table = Table(
@@ -154,6 +186,11 @@ def run_configure() -> Config:
         else:
             apps_display = "—"
         table.add_row(f"📦  {t('steps.configure.extra_apps')}", apps_display)
+        if community_apps:
+            community_display = ", ".join(app.display_name for app in community_apps)
+        else:
+            community_display = "—"
+        table.add_row(f"🌐  {t('steps.configure.community_apps')}", community_display)
 
         console.print(Align.center(table))
         console.print()
@@ -166,6 +203,7 @@ def run_configure() -> Config:
                 db_password=db_password,
                 admin_password=admin_password,
                 extra_apps=extra_apps,
+                community_apps=community_apps,
             )
 
         # User declined — ask if they want to re-enter
