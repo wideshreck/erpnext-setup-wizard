@@ -1,5 +1,6 @@
 """Interactive prompts powered by questionary + Rich headers."""
 
+import re
 import sys
 
 import questionary
@@ -78,11 +79,16 @@ def ask_version_field(
 
     If choices is empty/None, falls back to ask_field with validation.
     """
+    def _validate_version_format(val: str) -> bool | str:
+        if re.fullmatch(r"v\d+\.\d+\.\d+", val):
+            return True
+        return t("steps.configure.version_invalid")
+
     if not choices:
         return ask_field(
             number=number, icon=icon, label=label, hint=hint,
             default=default,
-            validate=lambda v: True if __import__("re").fullmatch(r"v\d+\.\d+\.\d+", v) else t("steps.configure.version_invalid"),
+            validate=_validate_version_format,
         )
 
     _field_header(number, icon, label)
@@ -90,6 +96,13 @@ def ask_version_field(
     if hint:
         console.print(f"      [{MUTED}]{hint}[/]")
     console.print(f"      [{MUTED}]{t('steps.configure.version_search_hint')}[/]")
+
+    choices_set = set(choices)
+
+    def _validate_in_list(val: str) -> bool | str:
+        if val in choices_set:
+            return True
+        return t("steps.configure.version_invalid")
 
     value = questionary.autocomplete(
         message="",
@@ -99,7 +112,7 @@ def ask_version_field(
         style=Q_STYLE,
         match_middle=True,
         ignore_case=True,
-        validate=lambda v: v in choices or t("steps.configure.version_invalid"),
+        validate=_validate_in_list,
     ).ask()
 
     if value is None:

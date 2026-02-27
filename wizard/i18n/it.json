@@ -53,7 +53,11 @@
             "cancelled": "Installazione annullata.",
             "port_invalid": "Inserisci un numero di porta valido (1024–65535)",
             "version_invalid": "Formato non valido. Esempio: v16.7.3",
-            "site_name_invalid": "Il nome del sito deve contenere almeno un punto e non avere spazi o caratteri non validi"
+            "site_name_invalid": "Il nome del sito deve contenere almeno un punto e non avere spazi o caratteri non validi",
+            "fetching_versions": "Recupero delle versioni disponibili…",
+            "versions_loaded": "{count} versioni caricate",
+            "versions_failed": "Impossibile ottenere le versioni — verrà usato l'inserimento manuale.",
+            "version_search_hint": "Inizia a digitare per cercare (es. v16)"
         },
         "env_file": {
             "title": "Preparazione del file di ambiente",

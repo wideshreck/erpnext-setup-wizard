@@ -53,7 +53,11 @@
             "cancelled": "Setup cancelled.",
             "port_invalid": "Enter a valid port number (1024–65535)",
             "version_invalid": "Invalid format. Example: v16.7.3",
-            "site_name_invalid": "Site name must contain at least one dot and no spaces or invalid characters"
+            "site_name_invalid": "Site name must contain at least one dot and no spaces or invalid characters",
+            "fetching_versions": "Fetching available versions…",
+            "versions_loaded": "{count} versions loaded",
+            "versions_failed": "Could not fetch versions — manual input will be used.",
+            "version_search_hint": "Start typing to search (e.g. v16)"
         },
         "env_file": {
             "title": "Preparing Environment File",
