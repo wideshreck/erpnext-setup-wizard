@@ -1,6 +1,7 @@
 """Step 5: Create ERPNext site, configure hosts, show completion."""
 
 import platform
+import shlex
 import sys
 
 from rich.align import Align
@@ -26,10 +27,10 @@ def _create_site(cfg: Config):
     info(t("steps.site.creating_hint"))
 
     code = run(
-        f"docker compose exec backend bench new-site {cfg.site_name} "
+        f"docker compose exec backend bench new-site {shlex.quote(cfg.site_name)} "
         f"--install-app erpnext "
-        f"--db-root-password {cfg.db_password} "
-        f"--admin-password {cfg.admin_password}"
+        f"--db-root-password {shlex.quote(cfg.db_password)} "
+        f"--admin-password {shlex.quote(cfg.admin_password)}"
     )
     if code != 0:
         fail(t("steps.site.create_failed"))
@@ -38,7 +39,7 @@ def _create_site(cfg: Config):
 
     console.print()
     step(t("steps.site.enabling_scheduler"))
-    run(f"docker compose exec backend bench --site {cfg.site_name} enable-scheduler")
+    run(f"docker compose exec backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
     ok(t("steps.site.scheduler_enabled"))
 
 
