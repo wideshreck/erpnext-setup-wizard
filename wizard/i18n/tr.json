@@ -47,7 +47,17 @@
             "repo_downloaded": "Repo indirildi.",
             "folder_exists": "frappe_docker klasörü zaten mevcut.",
             "working_dir": "Çalışma dizini: {cwd}",
-            "correct_dir": "Doğru klasördeyiz."
+            "correct_dir": "Doğru klasördeyiz.",
+            "install_ssh": "SSH istemcisi bulunamadı. Lütfen bir SSH istemcisi kurun.",
+            "testing_ssh": "SSH bağlantısı test ediliyor…",
+            "ssh_failed": "SSH bağlantısı başarısız! Host, port, kullanıcı ve anahtarı kontrol edin.",
+            "ssh_ok": "SSH bağlantısı başarılı.",
+            "checking_remote": "Uzak sunucuda {name} kontrol ediliyor…",
+            "remote_not_found": "Uzak sunucuda {name} bulunamadı!",
+            "remote_found": "Uzak sunucuda {name} bulundu  →  {version}",
+            "checking_remote_folder": "Uzak sunucuda frappe_docker kontrol ediliyor…",
+            "cloning_repo_remote": "Uzak sunucuda repo klonlanıyor…",
+            "remote_folder_exists": "frappe_docker uzak sunucuda zaten mevcut."
         },
         "configure": {
             "title": "Kurulum Konfigürasyonu",

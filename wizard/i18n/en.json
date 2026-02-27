@@ -47,7 +47,17 @@
             "repo_downloaded": "Repository downloaded.",
             "folder_exists": "frappe_docker folder already exists.",
             "working_dir": "Working directory: {cwd}",
-            "correct_dir": "We are in the correct directory."
+            "correct_dir": "We are in the correct directory.",
+            "install_ssh": "SSH client not found. Please install an SSH client.",
+            "testing_ssh": "Testing SSH connection…",
+            "ssh_failed": "SSH connection failed! Check host, port, user, and key.",
+            "ssh_ok": "SSH connection successful.",
+            "checking_remote": "Checking {name} on remote host…",
+            "remote_not_found": "{name} not found on remote host!",
+            "remote_found": "{name} found on remote  →  {version}",
+            "checking_remote_folder": "Checking frappe_docker on remote…",
+            "cloning_repo_remote": "Cloning repository on remote…",
+            "remote_folder_exists": "frappe_docker already exists on remote."
         },
         "configure": {
             "title": "Setup Configuration",
