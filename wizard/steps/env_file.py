@@ -37,15 +37,20 @@ def run_env_file(cfg: Config):
         f"LETSENCRYPT_EMAIL=mail@example.com\n"
     )
 
-    # Atomic write: write to temp file, then rename
-    fd = os.open(".env.tmp", os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    # Atomic write: O_EXCL prevents symlink attacks
+    tmp_path = ".env.tmp"
+    try:
+        os.unlink(tmp_path)
+    except FileNotFoundError:
+        pass
+    fd = os.open(tmp_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     try:
         with os.fdopen(fd, "w") as f:
             f.write(env_content)
-        os.replace(".env.tmp", ".env")
+        os.replace(tmp_path, ".env")
     except Exception:
         try:
-            os.unlink(".env.tmp")
+            os.unlink(tmp_path)
         except OSError:
             pass
         raise
