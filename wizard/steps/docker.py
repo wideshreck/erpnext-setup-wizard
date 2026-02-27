@@ -21,7 +21,10 @@ def run_docker():
     step_header(4, TOTAL_STEPS, t("steps.docker.title"))
 
     step(t("steps.docker.cleaning"))
-    run(f"{COMPOSE_CMD} down")
+    code = run(f"{COMPOSE_CMD} down")
+    if code != 0:
+        fail(t("steps.docker.down_failed"))
+        sys.exit(1)
     ok(t("steps.docker.cleaned"))
 
     console.print()
