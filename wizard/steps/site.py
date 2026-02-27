@@ -71,7 +71,7 @@ def _update_hosts(cfg: Config):
         with open(hosts_path, "r") as f:
             hosts_content = f.read()
 
-        if cfg.site_name not in hosts_content:
+        if f"127.0.0.1 {cfg.site_name}" not in hosts_content:
             step(t("steps.site.hosts_adding", site_name=cfg.site_name))
             with open(hosts_path, "a") as f:
                 f.write(f"\n127.0.0.1 {cfg.site_name}\n")

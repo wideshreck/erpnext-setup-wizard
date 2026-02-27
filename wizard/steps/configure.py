@@ -35,7 +35,7 @@ def _validate_port(val: str) -> bool | str:
 
 
 def _validate_site_name(val: str) -> bool | str:
-    if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9\-\.]+", val) and "." in val:
+    if re.fullmatch(r"[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?)+", val):
         return True
     return t("steps.configure.site_name_invalid")
 
