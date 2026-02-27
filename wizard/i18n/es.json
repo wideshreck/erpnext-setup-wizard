@@ -104,7 +104,7 @@
             "created": "Sitio creado exitosamente.",
             "enabling_scheduler": "Activando el programador…",
             "scheduler_enabled": "Programador activado.",
-            "scheduler_failed": "No se pudo activar el scheduler.",
+            "scheduler_failed": "No se pudo activar el programador.",
             "installing_apps": "Instalando aplicaciones adicionales… ({current}/{total})",
             "installing_app": "Descargando {app}…",
             "app_installed": "{app} instalada.",
