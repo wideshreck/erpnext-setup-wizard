@@ -55,16 +55,31 @@ def _create_site(cfg: Config):
         ok(t("steps.site.scheduler_enabled"))
 
 
+def _app_branch(erpnext_version: str) -> str:
+    """Derive the matching branch name for extra apps.
+
+    'v16.7.3' -> 'version-16'
+    'v15.2.0' -> 'version-15'
+    """
+    try:
+        major = erpnext_version.lstrip("v").split(".")[0]
+        int(major)
+        return f"version-{major}"
+    except (IndexError, ValueError):
+        return "version-16"
+
+
 def _install_extra_apps(cfg: Config):
     """Download and install selected extra apps. Fail-soft per app.
 
-    Docker production containers need three explicit steps because
+    Docker production containers need explicit steps because
     ``bench get-app`` only clones the repo without pip-installing or
     registering the app in ``sites/apps.txt``.
     """
     if not cfg.extra_apps:
         return
 
+    branch = _app_branch(cfg.erpnext_version)
     console.print()
     failed = []
 
@@ -73,9 +88,13 @@ def _install_extra_apps(cfg: Config):
         info(t("steps.site.installing_app", app=app_name))
         app_q = shlex.quote(app_name)
         site_q = shlex.quote(cfg.site_name)
+        branch_q = shlex.quote(branch)
 
-        # Step 1: Clone app repo
-        code = run(f"docker compose exec backend bench get-app {app_q}")
+        # Step 1: Clone app repo (matching ERPNext major version branch)
+        code = run(
+            f"docker compose exec backend bench get-app "
+            f"--branch {branch_q} {app_q}"
+        )
         if code != 0:
             fail(t("steps.site.app_failed", app=app_name))
             failed.append(app_name)
