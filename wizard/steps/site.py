@@ -57,15 +57,79 @@ def _create_site(cfg: Config):
         ok(t("steps.site.scheduler_enabled"))
 
 
-def _install_extra_apps(cfg: Config):
-    """Download and install selected extra apps. Fail-soft per app.
+def _install_app(repo_name: str, display_name: str, source: str,
+                  branch: str, site_name: str, fail_key: str) -> bool:
+    """Run the 6-step install pipeline for a single Frappe app.
 
     Docker production containers need explicit steps because
     ``bench get-app`` only clones the repo without pip-installing or
     registering the app in ``sites/apps.txt``.
+
+    Returns True on success, False on failure.
+    """
+    app_q = shlex.quote(repo_name)
+    site_q = shlex.quote(site_name)
+    branch_q = shlex.quote(branch)
+    source_q = shlex.quote(source)
+
+    # Step 1: Clone app repo
+    code = run(
+        f"{COMPOSE_CMD} exec -T backend bench get-app "
+        f"--branch {branch_q} {source_q}"
+    )
+    if code != 0:
+        fail(t(fail_key, app=display_name))
+        return False
+
+    # Step 2: pip install (bench get-app skips this in production containers)
+    code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
+    if code != 0:
+        fail(t(fail_key, app=display_name))
+        return False
+
+    # Step 3: Register in apps.txt if missing
+    run(
+        f"{COMPOSE_CMD} exec -T backend bash -c "
+        f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
+    )
+
+    # Step 4: Install on site
+    code = run(
+        f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
+        f"install-app {app_q}"
+    )
+    if code != 0:
+        fail(t(fail_key, app=display_name))
+        return False
+
+    # Step 5: Build assets (CSS, JS, images)
+    build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
+    if build_code != 0:
+        fail(t("steps.site.app_build_failed", app=display_name))
+        return False
+
+    # Step 6: Copy assets to frontend container.
+    # bench build creates a symlink sites/assets/{app} -> apps/{app}/.../public
+    # but the frontend container doesn't have the apps/ volume, so the
+    # symlink is dangling.  Replace it with the actual files.
+    run(
+        f"{COMPOSE_CMD} exec -T backend bash -c "
+        f"'if [ -L sites/assets/{app_q} ]; then "
+        f"target=$(readlink -f sites/assets/{app_q}) && "
+        f"rm sites/assets/{app_q} && "
+        f"cp -r \"$target\" sites/assets/{app_q}; fi'"
+    )
+
+    return True
+
+
+def _install_extra_apps(cfg: Config) -> int:
+    """Download and install selected extra apps. Fail-soft per app.
+
+    Returns the number of successfully installed apps.
     """
     if not cfg.extra_apps:
-        return
+        return 0
 
     default_branch = version_branch(cfg.erpnext_version)
     app_branch_map = {app.repo_name: app.branch for app in OPTIONAL_APPS}
@@ -75,8 +139,7 @@ def _install_extra_apps(cfg: Config):
     for i, app_name in enumerate(cfg.extra_apps, 1):
         step(t("steps.site.installing_apps", current=i, total=len(cfg.extra_apps)))
         info(t("steps.site.installing_app", app=app_name))
-        app_q = shlex.quote(app_name)
-        site_q = shlex.quote(cfg.site_name)
+
         # Smart branch: explicit override > detected > default
         branch = app_branch_map.get(app_name)
         if not branch:
@@ -85,65 +148,12 @@ def _install_extra_apps(cfg: Config):
                 cfg.erpnext_version,
             )
             branch = detected or default_branch
-        branch_q = shlex.quote(branch)
 
-        # Step 1: Clone app repo (matching ERPNext major version branch)
-        code = run(
-            f"{COMPOSE_CMD} exec -T backend bench get-app "
-            f"--branch {branch_q} {app_q}"
-        )
-        if code != 0:
-            fail(t("steps.site.app_failed", app=app_name))
+        if _install_app(app_name, app_name, app_name, branch,
+                        cfg.site_name, "steps.site.app_failed"):
+            ok(t("steps.site.app_installed", app=app_name))
+        else:
             failed.append(app_name)
-            continue
-
-        # Step 2: pip install (bench get-app skips this in production containers)
-        code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
-        if code != 0:
-            fail(t("steps.site.app_failed", app=app_name))
-            failed.append(app_name)
-            continue
-
-        # Step 3: Register in apps.txt if missing
-        run(
-            f"{COMPOSE_CMD} exec -T backend bash -c "
-            f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
-        )
-
-        # Step 4: Install on site
-        code = run(
-            f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
-            f"install-app {app_q}"
-        )
-        if code != 0:
-            fail(t("steps.site.app_failed", app=app_name))
-            failed.append(app_name)
-            continue
-
-        # Step 5: Build assets (CSS, JS, images)
-        build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
-        if build_code != 0:
-            fail(t("steps.site.app_build_failed", app=app_name))
-            failed.append(app_name)
-            continue
-
-        # Step 6: Copy assets to frontend container.
-        # bench build creates a symlink sites/assets/{app} -> apps/{app}/.../public
-        # but the frontend container doesn't have the apps/ volume, so the
-        # symlink is dangling.  Replace it with the actual files.
-        run(
-            f"{COMPOSE_CMD} exec -T backend bash -c "
-            f"'if [ -L sites/assets/{app_q} ]; then "
-            f"target=$(readlink -f sites/assets/{app_q}) && "
-            f"rm sites/assets/{app_q} && "
-            f"cp -r \"$target\" sites/assets/{app_q}; fi'"
-        )
-
-        ok(t("steps.site.app_installed", app=app_name))
-
-    # Restart frontend (nginx) to serve newly built assets
-    if cfg.extra_apps and len(failed) < len(cfg.extra_apps):
-        run(f"{COMPOSE_CMD} restart frontend")
 
     console.print()
     if failed:
@@ -151,11 +161,16 @@ def _install_extra_apps(cfg: Config):
     else:
         ok(t("steps.site.apps_done", count=len(cfg.extra_apps)))
 
+    return len(cfg.extra_apps) - len(failed)
 
-def _install_community_apps(cfg: Config):
-    """Install selected community apps. Fail-soft per app."""
+
+def _install_community_apps(cfg: Config) -> int:
+    """Install selected community apps. Fail-soft per app.
+
+    Returns the number of successfully installed apps.
+    """
     if not cfg.community_apps:
-        return
+        return 0
 
     console.print()
     failed = []
@@ -163,71 +178,20 @@ def _install_community_apps(cfg: Config):
     for i, app in enumerate(cfg.community_apps, 1):
         step(t("steps.site.installing_community_apps", current=i, total=len(cfg.community_apps)))
         info(t("steps.site.installing_community_app", app=app.display_name, url=app.repo_url))
-        app_q = shlex.quote(app.repo_name)
-        site_q = shlex.quote(cfg.site_name)
-        branch_q = shlex.quote(app.branch)
-        url_q = shlex.quote(app.repo_url)
 
-        # Step 1: Clone app repo
-        code = run(
-            f"{COMPOSE_CMD} exec -T backend bench get-app "
-            f"--branch {branch_q} {url_q}"
-        )
-        if code != 0:
-            fail(t("steps.site.community_app_failed", app=app.display_name))
+        if _install_app(app.repo_name, app.display_name, app.repo_url,
+                        app.branch, cfg.site_name, "steps.site.community_app_failed"):
+            ok(t("steps.site.community_app_installed", app=app.display_name))
+        else:
             failed.append(app.display_name)
-            continue
-
-        # Step 2: pip install
-        code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
-        if code != 0:
-            fail(t("steps.site.community_app_failed", app=app.display_name))
-            failed.append(app.display_name)
-            continue
-
-        # Step 3: Register in apps.txt if missing
-        run(
-            f"{COMPOSE_CMD} exec -T backend bash -c "
-            f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
-        )
-
-        # Step 4: Install on site
-        code = run(
-            f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
-            f"install-app {app_q}"
-        )
-        if code != 0:
-            fail(t("steps.site.community_app_failed", app=app.display_name))
-            failed.append(app.display_name)
-            continue
-
-        # Step 5: Build assets
-        build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
-        if build_code != 0:
-            fail(t("steps.site.app_build_failed", app=app.display_name))
-            failed.append(app.display_name)
-            continue
-
-        # Step 6: Replace symlink with real files for frontend
-        run(
-            f"{COMPOSE_CMD} exec -T backend bash -c "
-            f"'if [ -L sites/assets/{app_q} ]; then "
-            f"target=$(readlink -f sites/assets/{app_q}) && "
-            f"rm sites/assets/{app_q} && "
-            f"cp -r \"$target\" sites/assets/{app_q}; fi'"
-        )
-
-        ok(t("steps.site.community_app_installed", app=app.display_name))
-
-    # Restart frontend if any app was installed
-    if cfg.community_apps and len(failed) < len(cfg.community_apps):
-        run(f"{COMPOSE_CMD} restart frontend")
 
     console.print()
     if failed:
         fail(t("steps.site.community_apps_some_failed", failed=len(failed), total=len(cfg.community_apps)))
     else:
         ok(t("steps.site.community_apps_done", count=len(cfg.community_apps)))
+
+    return len(cfg.community_apps) - len(failed)
 
 
 def _update_hosts(cfg: Config):
@@ -310,7 +274,8 @@ def run_site(cfg: Config):
     """Step 5: create site, install extra apps, update hosts, show done."""
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg)
-    _install_extra_apps(cfg)
-    _install_community_apps(cfg)
+    installed = _install_extra_apps(cfg) + _install_community_apps(cfg)
+    if installed > 0:
+        run(f"{COMPOSE_CMD} restart frontend")
     _update_hosts(cfg)
     _show_done(cfg)
