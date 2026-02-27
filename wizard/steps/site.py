@@ -104,7 +104,14 @@ def _install_extra_apps(cfg: Config):
             failed.append(app_name)
             continue
 
+        # Step 5: Build assets (CSS, JS, images)
+        run(f"docker compose exec backend bench build --app {app_q}")
+
         ok(t("steps.site.app_installed", app=app_name))
+
+    # Restart frontend (nginx) to serve newly built assets
+    if cfg.extra_apps and len(failed) < len(cfg.extra_apps):
+        run("docker compose restart frontend")
 
     console.print()
     if failed:
