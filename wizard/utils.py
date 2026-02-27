@@ -14,7 +14,7 @@ def clear_screen():
     )
 
 
-def run(cmd: str, capture: bool = False):
+def run(cmd: str, capture: bool = False) -> int | tuple[int, str, str]:
     """Run a shell command. Returns (code, stdout, stderr) if capture=True, else code."""
     if capture:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)

@@ -4,7 +4,6 @@ import json
 import os
 
 _translations: dict = {}
-_current_lang: str = "tr"
 
 
 def _i18n_dir() -> str:
@@ -30,14 +29,13 @@ def get_available_langs() -> list[dict]:
 
 def init(lang: str):
     """Initialize i18n with the given language code."""
-    global _translations, _current_lang
+    global _translations
     filepath = os.path.join(_i18n_dir(), f"{lang}.json")
     if not os.path.exists(filepath):
         available = [l["code"] for l in get_available_langs()]
         raise SystemExit(
             f"Unknown language: '{lang}'. Available: {', '.join(available)}"
         )
-    _current_lang = lang
     _translations = _load_translations(lang)
 
 

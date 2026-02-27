@@ -31,7 +31,7 @@ class Config:
 
 
 def _validate_port(val: str) -> bool | str:
-    if val.isdigit() and 1024 <= int(val) <= 65535:
+    if val.isdigit() and val == str(int(val)) and 1024 <= int(val) <= 65535:
         return True
     return t("steps.configure.port_invalid")
 
