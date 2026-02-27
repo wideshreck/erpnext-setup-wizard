@@ -89,6 +89,7 @@
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
             "writing": ".env-Datei wird geschrieben…",
+            "uploaded": ".env-Datei wurde auf den Remote-Server hochgeladen.",
             "done": ".env-Datei ist bereit."
         },
         "docker": {

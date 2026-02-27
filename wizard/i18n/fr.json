@@ -89,6 +89,7 @@
         "env_file": {
             "title": "Préparation du fichier d'environnement",
             "writing": "Écriture du fichier .env…",
+            "uploaded": "Fichier .env transféré sur le serveur distant.",
             "done": "Fichier .env prêt."
         },
         "docker": {

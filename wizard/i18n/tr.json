@@ -89,6 +89,7 @@
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",
             "writing": ".env dosyası yazılıyor…",
+            "uploaded": ".env dosyası uzak sunucuya yüklendi.",
             "done": ".env dosyası hazır."
         },
         "docker": {

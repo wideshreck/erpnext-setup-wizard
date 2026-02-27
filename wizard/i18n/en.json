@@ -89,6 +89,7 @@
         "env_file": {
             "title": "Preparing Environment File",
             "writing": "Writing .env file…",
+            "uploaded": ".env file uploaded to remote server.",
             "done": ".env file is ready."
         },
         "docker": {
