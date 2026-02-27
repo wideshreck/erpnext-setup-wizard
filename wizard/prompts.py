@@ -219,6 +219,45 @@ def ask_apps_field(
     return selected
 
 
+def ask_select_field(
+    number: int,
+    icon: str,
+    label: str,
+    choices: list[tuple[str, str]],
+    hint: str = "",
+) -> str:
+    """Single-select field using questionary.select.
+
+    Args:
+        choices: list of (value, display_label) tuples
+    Returns:
+        selected value
+    """
+    _field_header(number, icon, label)
+    if hint:
+        console.print(f"      [{MUTED}]{hint}[/]")
+
+    q_choices = [
+        questionary.Choice(title=display, value=value)
+        for value, display in choices
+    ]
+
+    selected = questionary.select(
+        message="",
+        choices=q_choices,
+        qmark="      ▸",
+        style=Q_STYLE,
+    ).ask()
+
+    if selected is None:
+        _cancelled()
+
+    display = next(d for v, d in choices if v == selected)
+    console.print(f"      [bold {OK}]✔[/] [green]{display}[/green]")
+    console.print()
+    return selected
+
+
 def confirm_action(question: str) -> bool:
     """Styled yes/no confirmation."""
     console.print()
