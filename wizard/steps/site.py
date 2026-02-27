@@ -15,7 +15,7 @@ from rich import box
 from ..theme import console, ACCENT, OK, WARN, MUTED
 from ..ui import step_header, step, ok, fail, info
 from ..utils import run, version_branch
-from ..apps import OPTIONAL_APPS
+from ..apps import OPTIONAL_APPS, detect_best_branch
 from .configure import Config
 from ..i18n import t
 from . import TOTAL_STEPS
@@ -77,7 +77,14 @@ def _install_extra_apps(cfg: Config):
         info(t("steps.site.installing_app", app=app_name))
         app_q = shlex.quote(app_name)
         site_q = shlex.quote(cfg.site_name)
-        branch = app_branch_map.get(app_name) or default_branch
+        # Smart branch: explicit override > detected > default
+        branch = app_branch_map.get(app_name)
+        if not branch:
+            detected = detect_best_branch(
+                f"https://github.com/frappe/{app_name}.git",
+                cfg.erpnext_version,
+            )
+            branch = detected or default_branch
         branch_q = shlex.quote(branch)
 
         # Step 1: Clone app repo (matching ERPNext major version branch)
@@ -143,6 +150,84 @@ def _install_extra_apps(cfg: Config):
         fail(t("steps.site.apps_some_failed", failed=len(failed), total=len(cfg.extra_apps)))
     else:
         ok(t("steps.site.apps_done", count=len(cfg.extra_apps)))
+
+
+def _install_community_apps(cfg: Config):
+    """Install selected community apps. Fail-soft per app."""
+    if not cfg.community_apps:
+        return
+
+    console.print()
+    failed = []
+
+    for i, app in enumerate(cfg.community_apps, 1):
+        step(t("steps.site.installing_community_apps", current=i, total=len(cfg.community_apps)))
+        info(t("steps.site.installing_community_app", app=app.display_name, url=app.repo_url))
+        app_q = shlex.quote(app.repo_name)
+        site_q = shlex.quote(cfg.site_name)
+        branch_q = shlex.quote(app.branch)
+        url_q = shlex.quote(app.repo_url)
+
+        # Step 1: Clone app repo
+        code = run(
+            f"{COMPOSE_CMD} exec -T backend bench get-app "
+            f"--branch {branch_q} {url_q}"
+        )
+        if code != 0:
+            fail(t("steps.site.community_app_failed", app=app.display_name))
+            failed.append(app.display_name)
+            continue
+
+        # Step 2: pip install
+        code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
+        if code != 0:
+            fail(t("steps.site.community_app_failed", app=app.display_name))
+            failed.append(app.display_name)
+            continue
+
+        # Step 3: Register in apps.txt if missing
+        run(
+            f"{COMPOSE_CMD} exec -T backend bash -c "
+            f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
+        )
+
+        # Step 4: Install on site
+        code = run(
+            f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
+            f"install-app {app_q}"
+        )
+        if code != 0:
+            fail(t("steps.site.community_app_failed", app=app.display_name))
+            failed.append(app.display_name)
+            continue
+
+        # Step 5: Build assets
+        build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
+        if build_code != 0:
+            fail(t("steps.site.app_build_failed", app=app.display_name))
+            failed.append(app.display_name)
+            continue
+
+        # Step 6: Replace symlink with real files for frontend
+        run(
+            f"{COMPOSE_CMD} exec -T backend bash -c "
+            f"'if [ -L sites/assets/{app_q} ]; then "
+            f"target=$(readlink -f sites/assets/{app_q}) && "
+            f"rm sites/assets/{app_q} && "
+            f"cp -r \"$target\" sites/assets/{app_q}; fi'"
+        )
+
+        ok(t("steps.site.community_app_installed", app=app.display_name))
+
+    # Restart frontend if any app was installed
+    if cfg.community_apps and len(failed) < len(cfg.community_apps):
+        run(f"{COMPOSE_CMD} restart frontend")
+
+    console.print()
+    if failed:
+        fail(t("steps.site.community_apps_some_failed", failed=len(failed), total=len(cfg.community_apps)))
+    else:
+        ok(t("steps.site.community_apps_done", count=len(cfg.community_apps)))
 
 
 def _update_hosts(cfg: Config):
@@ -226,5 +311,6 @@ def run_site(cfg: Config):
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg)
     _install_extra_apps(cfg)
+    _install_community_apps(cfg)
     _update_hosts(cfg)
     _show_done(cfg)
