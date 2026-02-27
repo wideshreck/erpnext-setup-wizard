@@ -11,9 +11,10 @@ from rich.rule import Rule
 from rich import box
 
 from ..theme import console, ACCENT, HEADING, WARN, MUTED
-from ..ui import step_header
-from ..prompts import ask_field, ask_password_field, confirm_action
+from ..ui import step_header, step, ok, fail
+from ..prompts import ask_field, ask_password_field, ask_version_field, confirm_action
 from ..i18n import t
+from ..versions import fetch_erpnext_versions
 from . import TOTAL_STEPS
 
 
@@ -31,12 +32,6 @@ def _validate_port(val: str) -> bool | str:
     if val.isdigit() and 1024 <= int(val) <= 65535:
         return True
     return t("steps.configure.port_invalid")
-
-
-def _validate_version(val: str) -> bool | str:
-    if re.fullmatch(r"v\d+\.\d+\.\d+", val):
-        return True
-    return t("steps.configure.version_invalid")
 
 
 def _validate_site_name(val: str) -> bool | str:
@@ -69,13 +64,27 @@ def run_configure() -> Config:
         validate=_validate_site_name,
     )
 
-    erpnext_version = ask_field(
+    # Fetch available versions from GitHub
+    step(t("steps.configure.fetching_versions"))
+    versions = fetch_erpnext_versions()
+
+    if versions:
+        ok(t("steps.configure.versions_loaded", count=len(versions)))
+        default_version = versions[0]  # newest stable
+    else:
+        fail(t("steps.configure.versions_failed"))
+        versions = None
+        default_version = "v16.7.3"
+
+    console.print()
+
+    erpnext_version = ask_version_field(
         number=2,
         icon="📦",
         label=t("steps.configure.erpnext_version"),
         hint=t("steps.configure.erpnext_version_hint"),
-        default="v16.7.3",
-        validate=_validate_version,
+        choices=versions,
+        default=default_version,
     )
 
     http_port = ask_field(
