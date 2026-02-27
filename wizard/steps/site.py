@@ -14,7 +14,7 @@ from rich import box
 
 from ..theme import console, ACCENT, OK, WARN, MUTED
 from ..ui import step_header, step, ok, fail, info
-from ..utils import run
+from ..utils import run, version_branch
 from .configure import Config
 from ..i18n import t
 from . import TOTAL_STEPS
@@ -55,20 +55,6 @@ def _create_site(cfg: Config):
         ok(t("steps.site.scheduler_enabled"))
 
 
-def _app_branch(erpnext_version: str) -> str:
-    """Derive the matching branch name for extra apps.
-
-    'v16.7.3' -> 'version-16'
-    'v15.2.0' -> 'version-15'
-    """
-    try:
-        major = erpnext_version.lstrip("v").split(".")[0]
-        int(major)
-        return f"version-{major}"
-    except (IndexError, ValueError):
-        return "version-16"
-
-
 def _install_extra_apps(cfg: Config):
     """Download and install selected extra apps. Fail-soft per app.
 
@@ -79,7 +65,7 @@ def _install_extra_apps(cfg: Config):
     if not cfg.extra_apps:
         return
 
-    branch = _app_branch(cfg.erpnext_version)
+    branch = version_branch(cfg.erpnext_version)
     console.print()
     failed = []
 

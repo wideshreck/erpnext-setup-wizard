@@ -34,3 +34,13 @@ def check_tool(name: str, cmd: str) -> str:
     version = out.strip()
     ok(t("utils.found", name=name, version=version))
     return version
+
+
+def version_branch(erpnext_version: str) -> str:
+    """Derive branch name from ERPNext version: 'v16.7.3' -> 'version-16'."""
+    try:
+        major = erpnext_version.lstrip("v").split(".")[0]
+        int(major)
+        return f"version-{major}"
+    except (IndexError, ValueError):
+        return "version-16"
