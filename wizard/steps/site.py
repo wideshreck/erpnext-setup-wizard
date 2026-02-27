@@ -19,10 +19,10 @@ from ..apps import OPTIONAL_APPS, detect_best_branch
 from .configure import Config
 from ..i18n import t
 from . import TOTAL_STEPS
-from .docker import COMPOSE_CMD
+from .docker import build_compose_cmd
 
 
-def _create_site(cfg: Config):
+def _create_site(cfg: Config, compose_cmd: str):
     """Create the ERPNext site via bench, with retry on failure."""
     from ..prompts import confirm_action
 
@@ -32,7 +32,7 @@ def _create_site(cfg: Config):
 
     while True:
         code = run(
-            f"{COMPOSE_CMD} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
+            f"{compose_cmd} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
             f"--install-app erpnext "
             f"--db-root-password {shlex.quote(cfg.db_password)} "
             f"--admin-password {shlex.quote(cfg.admin_password)}"
@@ -50,7 +50,7 @@ def _create_site(cfg: Config):
 
     console.print()
     step(t("steps.site.enabling_scheduler"))
-    code = run(f"{COMPOSE_CMD} exec -T backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
+    code = run(f"{compose_cmd} exec -T backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
     if code != 0:
         fail(t("steps.site.scheduler_failed"))
     else:
@@ -58,7 +58,8 @@ def _create_site(cfg: Config):
 
 
 def _install_app(repo_name: str, display_name: str, source: str,
-                  branch: str, site_name: str, fail_key: str) -> bool:
+                  branch: str, site_name: str, fail_key: str,
+                  compose_cmd: str = "") -> bool:
     """Run the 6-step install pipeline for a single Frappe app.
 
     Docker production containers need explicit steps because
@@ -74,7 +75,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
 
     # Step 1: Clone app repo
     code = run(
-        f"{COMPOSE_CMD} exec -T backend bench get-app "
+        f"{compose_cmd} exec -T backend bench get-app "
         f"--branch {branch_q} {source_q}"
     )
     if code != 0:
@@ -82,20 +83,20 @@ def _install_app(repo_name: str, display_name: str, source: str,
         return False
 
     # Step 2: pip install (bench get-app skips this in production containers)
-    code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
+    code = run(f"{compose_cmd} exec -T backend pip install -e apps/{app_q}")
     if code != 0:
         fail(t(fail_key, app=display_name))
         return False
 
     # Step 3: Register in apps.txt if missing
     run(
-        f"{COMPOSE_CMD} exec -T backend bash -c "
+        f"{compose_cmd} exec -T backend bash -c "
         f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
     )
 
     # Step 4: Install on site
     code = run(
-        f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
+        f"{compose_cmd} exec -T backend bench --site {site_q} "
         f"install-app {app_q}"
     )
     if code != 0:
@@ -103,7 +104,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
         return False
 
     # Step 5: Build assets (CSS, JS, images)
-    build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
+    build_code = run(f"{compose_cmd} exec -T backend bench build --app {app_q}")
     if build_code != 0:
         fail(t("steps.site.app_build_failed", app=display_name))
         return False
@@ -113,7 +114,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     # but the frontend container doesn't have the apps/ volume, so the
     # symlink is dangling.  Replace it with the actual files.
     run(
-        f"{COMPOSE_CMD} exec -T backend bash -c "
+        f"{compose_cmd} exec -T backend bash -c "
         f"'if [ -L sites/assets/{app_q} ]; then "
         f"target=$(readlink -f sites/assets/{app_q}) && "
         f"rm sites/assets/{app_q} && "
@@ -123,7 +124,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     return True
 
 
-def _install_extra_apps(cfg: Config) -> int:
+def _install_extra_apps(cfg: Config, compose_cmd: str) -> int:
     """Download and install selected extra apps. Fail-soft per app.
 
     Returns the number of successfully installed apps.
@@ -151,7 +152,8 @@ def _install_extra_apps(cfg: Config) -> int:
 
         # source=app_name: bench get-app resolves to github.com/frappe/{name}
         if _install_app(app_name, app_name, app_name, branch,
-                        cfg.site_name, "steps.site.app_failed"):
+                        cfg.site_name, "steps.site.app_failed",
+                        compose_cmd=compose_cmd):
             ok(t("steps.site.app_installed", app=app_name))
         else:
             failed.append(app_name)
@@ -165,7 +167,7 @@ def _install_extra_apps(cfg: Config) -> int:
     return len(cfg.extra_apps) - len(failed)
 
 
-def _install_community_apps(cfg: Config) -> int:
+def _install_community_apps(cfg: Config, compose_cmd: str) -> int:
     """Install selected community apps. Fail-soft per app.
 
     Returns the number of successfully installed apps.
@@ -181,7 +183,8 @@ def _install_community_apps(cfg: Config) -> int:
         info(t("steps.site.installing_community_app", app=app.display_name, url=app.repo_url))
 
         if _install_app(app.repo_name, app.display_name, app.repo_url,
-                        app.branch, cfg.site_name, "steps.site.community_app_failed"):
+                        app.branch, cfg.site_name, "steps.site.community_app_failed",
+                        compose_cmd=compose_cmd):
             ok(t("steps.site.community_app_installed", app=app.display_name))
         else:
             failed.append(app.display_name)
@@ -274,9 +277,10 @@ def _show_done(cfg: Config):
 def run_site(cfg: Config):
     """Step 5: create site, install extra apps, update hosts, show done."""
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
-    _create_site(cfg)
-    installed = _install_extra_apps(cfg) + _install_community_apps(cfg)
+    compose_cmd = build_compose_cmd(cfg)
+    _create_site(cfg, compose_cmd)
+    installed = _install_extra_apps(cfg, compose_cmd) + _install_community_apps(cfg, compose_cmd)
     if installed > 0:
-        run(f"{COMPOSE_CMD} restart frontend")
+        run(f"{compose_cmd} restart frontend")
     _update_hosts(cfg)
     _show_done(cfg)
