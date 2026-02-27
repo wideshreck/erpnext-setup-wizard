@@ -9,12 +9,16 @@
         "cancelled": "Cancelled.",
         "waiting": "Waiting",
         "done": "Done.",
-        "examples": "Examples"
+        "examples": "Examples",
+        "unexpected_error": "An unexpected error occurred: {error}",
+        "interrupted": "Interrupted by user."
     },
     "prompts": {
         "password_min_hint": "Minimum {min_length} characters",
         "password_too_short": "Password must be at least {min_length} characters",
-        "password_accepted": "Password accepted"
+        "password_accepted": "Password accepted",
+        "password_confirm": "Confirm password",
+        "password_mismatch": "Passwords do not match. Please try again."
     },
     "utils": {
         "checking": "Checking {name}…",
@@ -56,8 +60,10 @@
             "site_name_invalid": "Site name must contain at least one dot and no spaces or invalid characters",
             "fetching_versions": "Fetching available versions…",
             "versions_loaded": "{count} versions loaded",
-            "versions_failed": "Could not fetch versions — manual input will be used.",
-            "version_search_hint": "Start typing to search (e.g. v16)"
+            "versions_failed": "Could not fetch versions (GitHub API rate limit or connection error) — manual input will be used.",
+            "version_search_hint": "Start typing to search (e.g. v16)",
+            "confirm_declined": "Would you like to re-enter the settings?",
+            "password_chars_warning": "Avoid using #, $, ', \", and backtick characters in passwords."
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -72,16 +78,19 @@
             "first_time_hint": "This may take 5-10 minutes on the first run.",
             "start_failed": "Docker Compose startup failed!",
             "running": "Containers are running.",
-            "waiting_db": "Waiting for database to be ready"
+            "waiting_db": "Waiting for database to be ready",
+            "down_failed": "Could not stop previous containers. Is Docker running?"
         },
         "site": {
             "title": "Creating ERPNext Site",
             "creating": "Creating site: [bold]{site_name}[/bold]",
             "creating_hint": "This may take 3-5 minutes…",
             "create_failed": "Site creation failed!",
+            "create_retry": "Would you like to retry site creation?",
             "created": "Site created successfully.",
             "enabling_scheduler": "Enabling scheduler…",
             "scheduler_enabled": "Scheduler enabled.",
+            "scheduler_failed": "Could not enable scheduler.",
             "hosts_header": " Hosts File ",
             "hosts_adding": "Adding to hosts file: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts file updated.",

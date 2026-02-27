@@ -9,12 +9,16 @@
     "cancelled": "İptal edildi.",
     "waiting": "Bekleniyor",
     "done": "Tamamlandı.",
-    "examples": "Örnekler"
+    "examples": "Örnekler",
+    "unexpected_error": "Beklenmeyen bir hata oluştu: {error}",
+    "interrupted": "Kullanıcı tarafından iptal edildi."
   },
   "prompts": {
     "password_min_hint": "Minimum {min_length} karakter",
     "password_too_short": "Şifre en az {min_length} karakter olmalı",
-    "password_accepted": "Şifre kabul edildi"
+    "password_accepted": "Şifre kabul edildi",
+    "password_confirm": "Şifreyi doğrulayın",
+    "password_mismatch": "Şifreler eşleşmiyor. Lütfen tekrar deneyin."
   },
   "utils": {
     "checking": "{name} kontrol ediliyor…",
@@ -56,8 +60,10 @@
       "site_name_invalid": "Site adı en az bir nokta içermeli ve boşluk/geçersiz karakter içermemeli",
       "fetching_versions": "Mevcut versiyonlar getiriliyor…",
       "versions_loaded": "{count} versiyon yüklendi",
-      "versions_failed": "Versiyonlar alınamadı — manuel giriş yapılacak.",
-      "version_search_hint": "Aramak için yazmaya başlayın (ör. v16)"
+      "versions_failed": "Versiyonlar alınamadı (GitHub API limiti veya bağlantı hatası) — manuel giriş yapılacak.",
+      "version_search_hint": "Aramak için yazmaya başlayın (ör. v16)",
+      "confirm_declined": "Ayarları yeniden girmek ister misiniz?",
+      "password_chars_warning": "Şifrelerde #, $, ', \" ve backtick karakterlerini kullanmaktan kaçının."
     },
     "env_file": {
       "title": "Ortam Dosyası Hazırlanıyor",
@@ -72,16 +78,19 @@
       "first_time_hint": "İlk seferde 5-10 dakika sürebilir.",
       "start_failed": "Docker Compose başlatma başarısız!",
       "running": "Konteynerler çalışıyor.",
-      "waiting_db": "Veritabanı hazır olana kadar bekleniyor"
+      "waiting_db": "Veritabanı hazır olana kadar bekleniyor",
+      "down_failed": "Önceki konteynerler durdurulamadı. Docker çalışıyor mu?"
     },
     "site": {
       "title": "ERPNext Sitesi Oluşturuluyor",
       "creating": "Site oluşturuluyor: [bold]{site_name}[/bold]",
       "creating_hint": "Bu işlem 3-5 dakika sürebilir…",
       "create_failed": "Site oluşturulamadı!",
+      "create_retry": "Site oluşturmayı tekrar denemek ister misiniz?",
       "created": "Site başarıyla oluşturuldu.",
       "enabling_scheduler": "Scheduler aktif ediliyor…",
       "scheduler_enabled": "Scheduler aktif.",
+      "scheduler_failed": "Scheduler aktif edilemedi.",
       "hosts_header": " Hosts Dosyası ",
       "hosts_adding": "hosts dosyasına ekleniyor: 127.0.0.1 {site_name}",
       "hosts_updated": "hosts dosyası güncellendi.",

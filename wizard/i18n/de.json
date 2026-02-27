@@ -9,12 +9,16 @@
         "cancelled": "Abgebrochen.",
         "waiting": "Warten",
         "done": "Fertig.",
-        "examples": "Beispiele"
+        "examples": "Beispiele",
+        "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten: {error}",
+        "interrupted": "Vom Benutzer abgebrochen."
     },
     "prompts": {
         "password_min_hint": "Mindestens {min_length} Zeichen",
         "password_too_short": "Passwort muss mindestens {min_length} Zeichen lang sein",
-        "password_accepted": "Passwort akzeptiert"
+        "password_accepted": "Passwort akzeptiert",
+        "password_confirm": "Passwort bestätigen",
+        "password_mismatch": "Passwörter stimmen nicht überein. Bitte erneut versuchen."
     },
     "utils": {
         "checking": "{name} wird überprüft…",
@@ -56,8 +60,10 @@
             "site_name_invalid": "Site-Name muss mindestens einen Punkt enthalten und keine Leerzeichen oder ungültige Zeichen enthalten",
             "fetching_versions": "Verfügbare Versionen werden abgerufen…",
             "versions_loaded": "{count} Versionen geladen",
-            "versions_failed": "Versionen konnten nicht abgerufen werden — manuelle Eingabe wird verwendet.",
-            "version_search_hint": "Zum Suchen eingeben (z. B. v16)"
+            "versions_failed": "Versionen konnten nicht abgerufen werden (GitHub-API-Limit oder Verbindungsfehler) — manuelle Eingabe wird verwendet.",
+            "version_search_hint": "Zum Suchen eingeben (z. B. v16)",
+            "confirm_declined": "Möchten Sie die Einstellungen erneut eingeben?",
+            "password_chars_warning": "Vermeiden Sie #, $, ', \" und Backtick-Zeichen in Passwörtern."
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -72,16 +78,19 @@
             "first_time_hint": "Beim ersten Mal kann dies 5-10 Minuten dauern.",
             "start_failed": "Docker Compose Start fehlgeschlagen!",
             "running": "Container laufen.",
-            "waiting_db": "Warten, bis die Datenbank bereit ist"
+            "waiting_db": "Warten, bis die Datenbank bereit ist",
+            "down_failed": "Vorherige Container konnten nicht gestoppt werden. Läuft Docker?"
         },
         "site": {
             "title": "ERPNext-Site wird erstellt",
             "creating": "Site wird erstellt: [bold]{site_name}[/bold]",
             "creating_hint": "Dies kann 3-5 Minuten dauern…",
             "create_failed": "Site-Erstellung fehlgeschlagen!",
+            "create_retry": "Möchten Sie die Site-Erstellung erneut versuchen?",
             "created": "Site erfolgreich erstellt.",
             "enabling_scheduler": "Scheduler wird aktiviert…",
             "scheduler_enabled": "Scheduler aktiviert.",
+            "scheduler_failed": "Scheduler konnte nicht aktiviert werden.",
             "hosts_header": " Hosts-Datei ",
             "hosts_adding": "Wird zur Hosts-Datei hinzugefügt: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts-Datei aktualisiert.",

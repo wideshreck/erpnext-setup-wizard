@@ -9,12 +9,16 @@
         "cancelled": "Annulé.",
         "waiting": "En attente",
         "done": "Terminé.",
-        "examples": "Exemples"
+        "examples": "Exemples",
+        "unexpected_error": "Une erreur inattendue s'est produite : {error}",
+        "interrupted": "Interrompu par l'utilisateur."
     },
     "prompts": {
         "password_min_hint": "Minimum {min_length} caractères",
         "password_too_short": "Le mot de passe doit contenir au moins {min_length} caractères",
-        "password_accepted": "Mot de passe accepté"
+        "password_accepted": "Mot de passe accepté",
+        "password_confirm": "Confirmer le mot de passe",
+        "password_mismatch": "Les mots de passe ne correspondent pas. Veuillez réessayer."
     },
     "utils": {
         "checking": "Vérification de {name}…",
@@ -56,8 +60,10 @@
             "site_name_invalid": "Le nom du site doit contenir au moins un point et pas d'espaces ni de caractères invalides",
             "fetching_versions": "Récupération des versions disponibles…",
             "versions_loaded": "{count} versions chargées",
-            "versions_failed": "Impossible de récupérer les versions — saisie manuelle utilisée.",
-            "version_search_hint": "Tapez pour rechercher (ex. v16)"
+            "versions_failed": "Impossible de récupérer les versions (limite de l'API GitHub ou erreur de connexion) — saisie manuelle utilisée.",
+            "version_search_hint": "Tapez pour rechercher (ex. v16)",
+            "confirm_declined": "Souhaitez-vous ressaisir les paramètres ?",
+            "password_chars_warning": "Évitez d'utiliser #, $, ', \" et les accents graves dans les mots de passe."
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",
@@ -72,16 +78,19 @@
             "first_time_hint": "Cela peut prendre 5 à 10 minutes la première fois.",
             "start_failed": "Échec du démarrage de Docker Compose !",
             "running": "Les conteneurs fonctionnent.",
-            "waiting_db": "En attente de la disponibilité de la base de données"
+            "waiting_db": "En attente de la disponibilité de la base de données",
+            "down_failed": "Impossible d'arrêter les conteneurs précédents. Docker est-il en cours d'exécution ?"
         },
         "site": {
             "title": "Création du site ERPNext",
             "creating": "Création du site : [bold]{site_name}[/bold]",
             "creating_hint": "Cela peut prendre 3 à 5 minutes…",
             "create_failed": "Échec de la création du site !",
+            "create_retry": "Souhaitez-vous réessayer la création du site ?",
             "created": "Site créé avec succès.",
             "enabling_scheduler": "Activation du planificateur…",
             "scheduler_enabled": "Planificateur activé.",
+            "scheduler_failed": "Impossible d'activer le planificateur.",
             "hosts_header": " Fichier Hosts ",
             "hosts_adding": "Ajout au fichier hosts : 127.0.0.1 {site_name}",
             "hosts_updated": "Fichier hosts mis à jour.",
