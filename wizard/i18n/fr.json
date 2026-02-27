@@ -1,0 +1,94 @@
+{
+    "lang_name": "Français",
+    "banner": {
+        "subtitle": "Assistant d'installation  ·  frappe_docker",
+        "powered_by": "Powered by Frappe Framework"
+    },
+    "common": {
+        "step_label": "ÉTAPE",
+        "cancelled": "Annulé.",
+        "waiting": "En attente",
+        "done": "Terminé.",
+        "examples": "Exemples"
+    },
+    "prompts": {
+        "password_min_hint": "Minimum {min_length} caractères",
+        "password_too_short": "Le mot de passe doit contenir au moins {min_length} caractères",
+        "password_accepted": "Mot de passe accepté"
+    },
+    "utils": {
+        "checking": "Vérification de {name}…",
+        "not_found": "{name} introuvable !",
+        "found": "{name} trouvé  →  {version}"
+    },
+    "steps": {
+        "prerequisites": {
+            "title": "Vérification des prérequis",
+            "install_docker": "Installez depuis https://docker.com/products/docker-desktop",
+            "checking_folder": "Vérification du dossier frappe_docker…",
+            "compose_not_found": "compose.yaml introuvable — le dépôt sera téléchargé.",
+            "install_git": "Installez depuis https://git-scm.com",
+            "cloning_repo": "Clonage du dépôt…",
+            "clone_failed": "Échec du clonage Git ! Vérifiez votre connexion internet.",
+            "repo_downloaded": "Dépôt téléchargé.",
+            "folder_exists": "Le dossier frappe_docker existe déjà.",
+            "working_dir": "Répertoire de travail : {cwd}",
+            "correct_dir": "Nous sommes dans le bon répertoire."
+        },
+        "configure": {
+            "title": "Configuration de l'installation",
+            "intro": "Personnalisez l'installation en saisissant les informations ci-dessous.\nLes valeurs par défaut sont affichées entre crochets — appuyez sur Entrée pour accepter.",
+            "site_name": "Nom du site",
+            "site_name_hint": "L'adresse à laquelle vous accéderez dans le navigateur",
+            "erpnext_version": "Version ERPNext",
+            "erpnext_version_hint": "Version stable actuelle : v16.7.3",
+            "http_port": "Port HTTP",
+            "http_port_hint": "Port du serveur local",
+            "db_password": "Mot de passe de la base de données",
+            "admin_password": "Mot de passe admin ERPNext",
+            "summary_title": "Résumé de la configuration",
+            "col_setting": "Paramètre",
+            "col_value": "Valeur",
+            "confirm": "Continuer avec ces paramètres ?",
+            "cancelled": "Installation annulée."
+        },
+        "env_file": {
+            "title": "Préparation du fichier d'environnement",
+            "writing": "Écriture du fichier .env…",
+            "done": "Fichier .env prêt."
+        },
+        "docker": {
+            "title": "Démarrage des conteneurs",
+            "cleaning": "Arrêt des conteneurs précédents (données préservées)…",
+            "cleaned": "Nettoyé.",
+            "starting": "Démarrage des conteneurs…",
+            "first_time_hint": "Cela peut prendre 5 à 10 minutes la première fois.",
+            "start_failed": "Échec du démarrage de Docker Compose !",
+            "running": "Les conteneurs fonctionnent.",
+            "waiting_db": "En attente de la disponibilité de la base de données"
+        },
+        "site": {
+            "title": "Création du site ERPNext",
+            "creating": "Création du site : [bold]{site_name}[/bold]",
+            "creating_hint": "Cela peut prendre 3 à 5 minutes…",
+            "create_failed": "Échec de la création du site !",
+            "created": "Site créé avec succès.",
+            "enabling_scheduler": "Activation du planificateur…",
+            "scheduler_enabled": "Planificateur activé.",
+            "hosts_header": " Fichier Hosts ",
+            "hosts_adding": "Ajout au fichier hosts : 127.0.0.1 {site_name}",
+            "hosts_updated": "Fichier hosts mis à jour.",
+            "hosts_exists": "Déjà présent dans le fichier hosts.",
+            "hosts_permission_error": "Impossible de mettre à jour le fichier hosts — erreur de permission.",
+            "hosts_manual": "Ajoutez manuellement :",
+            "hosts_file_label": "Fichier",
+            "hosts_line_label": "Ligne",
+            "hosts_perm_title": "⚠ Erreur de permission",
+            "done_title": "INSTALLATION TERMINÉE !",
+            "done_user": "Utilisateur",
+            "done_password": "Mot de passe",
+            "done_password_hint": "(le mot de passe admin que vous avez saisi)",
+            "done_open_browser": "Ouvrez {url} dans votre navigateur."
+        }
+    }
+}

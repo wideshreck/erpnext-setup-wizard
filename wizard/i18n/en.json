@@ -1,0 +1,94 @@
+{
+    "lang_name": "English",
+    "banner": {
+        "subtitle": "Setup Wizard  ·  frappe_docker",
+        "powered_by": "Powered by Frappe Framework"
+    },
+    "common": {
+        "step_label": "STEP",
+        "cancelled": "Cancelled.",
+        "waiting": "Waiting",
+        "done": "Done.",
+        "examples": "Examples"
+    },
+    "prompts": {
+        "password_min_hint": "Minimum {min_length} characters",
+        "password_too_short": "Password must be at least {min_length} characters",
+        "password_accepted": "Password accepted"
+    },
+    "utils": {
+        "checking": "Checking {name}…",
+        "not_found": "{name} not found!",
+        "found": "{name} found  →  {version}"
+    },
+    "steps": {
+        "prerequisites": {
+            "title": "Prerequisite Check",
+            "install_docker": "Install from https://docker.com/products/docker-desktop",
+            "checking_folder": "Checking frappe_docker folder…",
+            "compose_not_found": "compose.yaml not found — repository will be downloaded.",
+            "install_git": "Install from https://git-scm.com",
+            "cloning_repo": "Cloning repository…",
+            "clone_failed": "Git clone failed! Check your internet connection.",
+            "repo_downloaded": "Repository downloaded.",
+            "folder_exists": "frappe_docker folder already exists.",
+            "working_dir": "Working directory: {cwd}",
+            "correct_dir": "We are in the correct directory."
+        },
+        "configure": {
+            "title": "Setup Configuration",
+            "intro": "Customize the setup by entering the information below.\nDefault values are shown in brackets — press Enter to accept.",
+            "site_name": "Site Name",
+            "site_name_hint": "The address you will access in the browser",
+            "erpnext_version": "ERPNext Version",
+            "erpnext_version_hint": "Current stable version: v16.7.3",
+            "http_port": "HTTP Port",
+            "http_port_hint": "Local server port",
+            "db_password": "Database Password",
+            "admin_password": "ERPNext Admin Password",
+            "summary_title": "Configuration Summary",
+            "col_setting": "Setting",
+            "col_value": "Value",
+            "confirm": "Continue with these settings?",
+            "cancelled": "Setup cancelled."
+        },
+        "env_file": {
+            "title": "Preparing Environment File",
+            "writing": "Writing .env file…",
+            "done": ".env file is ready."
+        },
+        "docker": {
+            "title": "Starting Containers",
+            "cleaning": "Stopping previous containers (data preserved)…",
+            "cleaned": "Cleaned.",
+            "starting": "Starting containers…",
+            "first_time_hint": "This may take 5-10 minutes on the first run.",
+            "start_failed": "Docker Compose startup failed!",
+            "running": "Containers are running.",
+            "waiting_db": "Waiting for database to be ready"
+        },
+        "site": {
+            "title": "Creating ERPNext Site",
+            "creating": "Creating site: [bold]{site_name}[/bold]",
+            "creating_hint": "This may take 3-5 minutes…",
+            "create_failed": "Site creation failed!",
+            "created": "Site created successfully.",
+            "enabling_scheduler": "Enabling scheduler…",
+            "scheduler_enabled": "Scheduler enabled.",
+            "hosts_header": " Hosts File ",
+            "hosts_adding": "Adding to hosts file: 127.0.0.1 {site_name}",
+            "hosts_updated": "Hosts file updated.",
+            "hosts_exists": "Already present in hosts file.",
+            "hosts_permission_error": "Could not update hosts file — permission error.",
+            "hosts_manual": "Add manually:",
+            "hosts_file_label": "File",
+            "hosts_line_label": "Line",
+            "hosts_perm_title": "⚠ Permission Error",
+            "done_title": "SETUP COMPLETE!",
+            "done_user": "User",
+            "done_password": "Password",
+            "done_password_hint": "(the admin password you entered)",
+            "done_open_browser": "Open {url} in your browser."
+        }
+    }
+}

@@ -1,0 +1,94 @@
+{
+    "lang_name": "Deutsch",
+    "banner": {
+        "subtitle": "Einrichtungsassistent  ·  frappe_docker",
+        "powered_by": "Powered by Frappe Framework"
+    },
+    "common": {
+        "step_label": "SCHRITT",
+        "cancelled": "Abgebrochen.",
+        "waiting": "Warten",
+        "done": "Fertig.",
+        "examples": "Beispiele"
+    },
+    "prompts": {
+        "password_min_hint": "Mindestens {min_length} Zeichen",
+        "password_too_short": "Passwort muss mindestens {min_length} Zeichen lang sein",
+        "password_accepted": "Passwort akzeptiert"
+    },
+    "utils": {
+        "checking": "{name} wird überprüft…",
+        "not_found": "{name} nicht gefunden!",
+        "found": "{name} gefunden  →  {version}"
+    },
+    "steps": {
+        "prerequisites": {
+            "title": "Voraussetzungsprüfung",
+            "install_docker": "Installieren Sie es von https://docker.com/products/docker-desktop",
+            "checking_folder": "frappe_docker-Ordner wird überprüft…",
+            "compose_not_found": "compose.yaml nicht gefunden — Repository wird heruntergeladen.",
+            "install_git": "Installieren Sie es von https://git-scm.com",
+            "cloning_repo": "Repository wird geklont…",
+            "clone_failed": "Git-Klon fehlgeschlagen! Überprüfen Sie Ihre Internetverbindung.",
+            "repo_downloaded": "Repository heruntergeladen.",
+            "folder_exists": "frappe_docker-Ordner existiert bereits.",
+            "working_dir": "Arbeitsverzeichnis: {cwd}",
+            "correct_dir": "Wir befinden uns im richtigen Verzeichnis."
+        },
+        "configure": {
+            "title": "Einrichtungskonfiguration",
+            "intro": "Passen Sie die Einrichtung an, indem Sie die folgenden Informationen eingeben.\nStandardwerte werden in Klammern angezeigt — drücken Sie Enter zum Übernehmen.",
+            "site_name": "Site-Name",
+            "site_name_hint": "Die Adresse, über die Sie im Browser zugreifen",
+            "erpnext_version": "ERPNext-Version",
+            "erpnext_version_hint": "Aktuelle stabile Version: v16.7.3",
+            "http_port": "HTTP-Port",
+            "http_port_hint": "Lokaler Server-Port",
+            "db_password": "Datenbank-Passwort",
+            "admin_password": "ERPNext-Admin-Passwort",
+            "summary_title": "Konfigurationsübersicht",
+            "col_setting": "Einstellung",
+            "col_value": "Wert",
+            "confirm": "Mit diesen Einstellungen fortfahren?",
+            "cancelled": "Einrichtung abgebrochen."
+        },
+        "env_file": {
+            "title": "Umgebungsdatei wird vorbereitet",
+            "writing": ".env-Datei wird geschrieben…",
+            "done": ".env-Datei ist bereit."
+        },
+        "docker": {
+            "title": "Container werden gestartet",
+            "cleaning": "Vorherige Container werden gestoppt (Daten bleiben erhalten)…",
+            "cleaned": "Bereinigt.",
+            "starting": "Container werden gestartet…",
+            "first_time_hint": "Beim ersten Mal kann dies 5-10 Minuten dauern.",
+            "start_failed": "Docker Compose Start fehlgeschlagen!",
+            "running": "Container laufen.",
+            "waiting_db": "Warten, bis die Datenbank bereit ist"
+        },
+        "site": {
+            "title": "ERPNext-Site wird erstellt",
+            "creating": "Site wird erstellt: [bold]{site_name}[/bold]",
+            "creating_hint": "Dies kann 3-5 Minuten dauern…",
+            "create_failed": "Site-Erstellung fehlgeschlagen!",
+            "created": "Site erfolgreich erstellt.",
+            "enabling_scheduler": "Scheduler wird aktiviert…",
+            "scheduler_enabled": "Scheduler aktiviert.",
+            "hosts_header": " Hosts-Datei ",
+            "hosts_adding": "Wird zur Hosts-Datei hinzugefügt: 127.0.0.1 {site_name}",
+            "hosts_updated": "Hosts-Datei aktualisiert.",
+            "hosts_exists": "Bereits in der Hosts-Datei vorhanden.",
+            "hosts_permission_error": "Hosts-Datei konnte nicht aktualisiert werden — Berechtigungsfehler.",
+            "hosts_manual": "Manuell hinzufügen:",
+            "hosts_file_label": "Datei",
+            "hosts_line_label": "Zeile",
+            "hosts_perm_title": "⚠ Berechtigungsfehler",
+            "done_title": "EINRICHTUNG ABGESCHLOSSEN!",
+            "done_user": "Benutzer",
+            "done_password": "Passwort",
+            "done_password_hint": "(das eingegebene Admin-Passwort)",
+            "done_open_browser": "Öffnen Sie {url} in Ihrem Browser."
+        }
+    }
+}

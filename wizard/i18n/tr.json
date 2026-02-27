@@ -1,0 +1,94 @@
+{
+  "lang_name": "Türkçe",
+  "banner": {
+    "subtitle": "Kurulum Sihirbazı  ·  frappe_docker",
+    "powered_by": "Powered by Frappe Framework"
+  },
+  "common": {
+    "step_label": "ADIM",
+    "cancelled": "İptal edildi.",
+    "waiting": "Bekleniyor",
+    "done": "Tamamlandı.",
+    "examples": "Örnekler"
+  },
+  "prompts": {
+    "password_min_hint": "Minimum {min_length} karakter",
+    "password_too_short": "Şifre en az {min_length} karakter olmalı",
+    "password_accepted": "Şifre kabul edildi"
+  },
+  "utils": {
+    "checking": "{name} kontrol ediliyor…",
+    "not_found": "{name} bulunamadı!",
+    "found": "{name} bulundu  →  {version}"
+  },
+  "steps": {
+    "prerequisites": {
+      "title": "Ön Koşul Kontrolü",
+      "install_docker": "https://docker.com/products/docker-desktop adresinden kurun.",
+      "checking_folder": "frappe_docker klasörü kontrol ediliyor…",
+      "compose_not_found": "compose.yaml bulunamadı — repo indirilecek.",
+      "install_git": "https://git-scm.com adresinden kurun.",
+      "cloning_repo": "Repo klonlanıyor…",
+      "clone_failed": "Git clone başarısız! İnternet bağlantınızı kontrol edin.",
+      "repo_downloaded": "Repo indirildi.",
+      "folder_exists": "frappe_docker klasörü zaten mevcut.",
+      "working_dir": "Çalışma dizini: {cwd}",
+      "correct_dir": "Doğru klasördeyiz."
+    },
+    "configure": {
+      "title": "Kurulum Konfigürasyonu",
+      "intro": "Aşağıdaki bilgileri girerek kurulumu özelleştirin.\nVarsayılan değerler parantez içinde gösterilir — Enter ile kabul edin.",
+      "site_name": "Site Adı",
+      "site_name_hint": "Tarayıcıda erişeceğiniz adres",
+      "erpnext_version": "ERPNext Versiyonu",
+      "erpnext_version_hint": "Mevcut stabil versiyon: v16.7.3",
+      "http_port": "HTTP Port",
+      "http_port_hint": "Yerel sunucu portu",
+      "db_password": "Veritabanı Şifresi",
+      "admin_password": "ERPNext Admin Şifresi",
+      "summary_title": "Konfigürasyon Özeti",
+      "col_setting": "Ayar",
+      "col_value": "Değer",
+      "confirm": "Bu ayarlarla devam edilsin mi?",
+      "cancelled": "Kurulum iptal edildi."
+    },
+    "env_file": {
+      "title": "Ortam Dosyası Hazırlanıyor",
+      "writing": ".env dosyası yazılıyor…",
+      "done": ".env dosyası hazır."
+    },
+    "docker": {
+      "title": "Konteynerler Başlatılıyor",
+      "cleaning": "Önceki konteynerler durduruluyor (veriler korunur)…",
+      "cleaned": "Temizlendi.",
+      "starting": "Konteynerler başlatılıyor…",
+      "first_time_hint": "İlk seferde 5-10 dakika sürebilir.",
+      "start_failed": "Docker Compose başlatma başarısız!",
+      "running": "Konteynerler çalışıyor.",
+      "waiting_db": "Veritabanı hazır olana kadar bekleniyor"
+    },
+    "site": {
+      "title": "ERPNext Sitesi Oluşturuluyor",
+      "creating": "Site oluşturuluyor: [bold]{site_name}[/bold]",
+      "creating_hint": "Bu işlem 3-5 dakika sürebilir…",
+      "create_failed": "Site oluşturulamadı!",
+      "created": "Site başarıyla oluşturuldu.",
+      "enabling_scheduler": "Scheduler aktif ediliyor…",
+      "scheduler_enabled": "Scheduler aktif.",
+      "hosts_header": " Hosts Dosyası ",
+      "hosts_adding": "hosts dosyasına ekleniyor: 127.0.0.1 {site_name}",
+      "hosts_updated": "hosts dosyası güncellendi.",
+      "hosts_exists": "hosts dosyasında zaten mevcut.",
+      "hosts_permission_error": "hosts dosyası güncellenemedi — yetki hatası.",
+      "hosts_manual": "Manuel olarak ekleyin:",
+      "hosts_file_label": "Dosya",
+      "hosts_line_label": "Satır",
+      "hosts_perm_title": "⚠ Yetki Hatası",
+      "done_title": "KURULUM TAMAMLANDI!",
+      "done_user": "Kullanıcı",
+      "done_password": "Şifre",
+      "done_password_hint": "(girdiğiniz admin şifresi)",
+      "done_open_browser": "Tarayıcınızda {url} adresini açın."
+    }
+  }
+}

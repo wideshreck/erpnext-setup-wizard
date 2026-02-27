@@ -21,7 +21,7 @@ def run_docker():
     step_header(4, TOTAL_STEPS, t("steps.docker.title"))
 
     step(t("steps.docker.cleaning"))
-    run(f"{COMPOSE_CMD} down -v")
+    run(f"{COMPOSE_CMD} down")
     ok(t("steps.docker.cleaned"))
 
     console.print()

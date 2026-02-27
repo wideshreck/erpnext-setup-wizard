@@ -1,0 +1,94 @@
+{
+    "lang_name": "Italiano",
+    "banner": {
+        "subtitle": "Assistente di installazione  ·  frappe_docker",
+        "powered_by": "Powered by Frappe Framework"
+    },
+    "common": {
+        "step_label": "PASSO",
+        "cancelled": "Annullato.",
+        "waiting": "In attesa",
+        "done": "Completato.",
+        "examples": "Esempi"
+    },
+    "prompts": {
+        "password_min_hint": "Minimo {min_length} caratteri",
+        "password_too_short": "La password deve contenere almeno {min_length} caratteri",
+        "password_accepted": "Password accettata"
+    },
+    "utils": {
+        "checking": "Verifica di {name} in corso…",
+        "not_found": "{name} non trovato!",
+        "found": "{name} trovato  →  {version}"
+    },
+    "steps": {
+        "prerequisites": {
+            "title": "Verifica dei prerequisiti",
+            "install_docker": "Installalo da https://docker.com/products/docker-desktop",
+            "checking_folder": "Verifica della cartella frappe_docker…",
+            "compose_not_found": "compose.yaml non trovato — il repository verrà scaricato.",
+            "install_git": "Installalo da https://git-scm.com",
+            "cloning_repo": "Clonazione del repository…",
+            "clone_failed": "Clonazione Git fallita! Controlla la tua connessione internet.",
+            "repo_downloaded": "Repository scaricato.",
+            "folder_exists": "La cartella frappe_docker esiste già.",
+            "working_dir": "Directory di lavoro: {cwd}",
+            "correct_dir": "Siamo nella directory corretta."
+        },
+        "configure": {
+            "title": "Configurazione dell'installazione",
+            "intro": "Personalizza l'installazione inserendo le informazioni qui sotto.\nI valori predefiniti sono mostrati tra parentesi — premi Invio per accettare.",
+            "site_name": "Nome del sito",
+            "site_name_hint": "L'indirizzo a cui accederai dal browser",
+            "erpnext_version": "Versione ERPNext",
+            "erpnext_version_hint": "Versione stabile attuale: v16.7.3",
+            "http_port": "Porta HTTP",
+            "http_port_hint": "Porta del server locale",
+            "db_password": "Password del database",
+            "admin_password": "Password admin ERPNext",
+            "summary_title": "Riepilogo configurazione",
+            "col_setting": "Impostazione",
+            "col_value": "Valore",
+            "confirm": "Continuare con queste impostazioni?",
+            "cancelled": "Installazione annullata."
+        },
+        "env_file": {
+            "title": "Preparazione del file di ambiente",
+            "writing": "Scrittura del file .env…",
+            "done": "File .env pronto."
+        },
+        "docker": {
+            "title": "Avvio dei container",
+            "cleaning": "Arresto dei container precedenti (dati preservati)…",
+            "cleaned": "Pulito.",
+            "starting": "Avvio dei container…",
+            "first_time_hint": "La prima volta potrebbe richiedere 5-10 minuti.",
+            "start_failed": "Avvio di Docker Compose fallito!",
+            "running": "I container sono in esecuzione.",
+            "waiting_db": "In attesa che il database sia pronto"
+        },
+        "site": {
+            "title": "Creazione del sito ERPNext",
+            "creating": "Creazione del sito: [bold]{site_name}[/bold]",
+            "creating_hint": "Potrebbe richiedere 3-5 minuti…",
+            "create_failed": "Creazione del sito fallita!",
+            "created": "Sito creato con successo.",
+            "enabling_scheduler": "Attivazione dello scheduler…",
+            "scheduler_enabled": "Scheduler attivato.",
+            "hosts_header": " File Hosts ",
+            "hosts_adding": "Aggiunta al file hosts: 127.0.0.1 {site_name}",
+            "hosts_updated": "File hosts aggiornato.",
+            "hosts_exists": "Già presente nel file hosts.",
+            "hosts_permission_error": "Impossibile aggiornare il file hosts — errore di permesso.",
+            "hosts_manual": "Aggiungi manualmente:",
+            "hosts_file_label": "File",
+            "hosts_line_label": "Riga",
+            "hosts_perm_title": "⚠ Errore di permesso",
+            "done_title": "INSTALLAZIONE COMPLETATA!",
+            "done_user": "Utente",
+            "done_password": "Password",
+            "done_password_hint": "(la password admin inserita)",
+            "done_open_browser": "Apri {url} nel tuo browser."
+        }
+    }
+}
