@@ -25,6 +25,16 @@
         "not_found": "{name} not found!",
         "found": "{name} found  →  {version}"
     },
+    "apps": {
+        "hrms": "HR and Payroll Management",
+        "payments": "Payment Gateway Integrations",
+        "healthcare": "Health Management System",
+        "education": "Education Management System",
+        "lending": "Lending / Loan Management",
+        "webshop": "E-Commerce Platform",
+        "print_designer": "Print Format Designer",
+        "wiki": "Knowledge Base System"
+    },
     "steps": {
         "prerequisites": {
             "title": "Prerequisite Check",
@@ -63,7 +73,11 @@
             "versions_failed": "Could not fetch versions (GitHub API rate limit or connection error) — manual input will be used.",
             "version_search_hint": "Start typing to search (e.g. v16)",
             "confirm_declined": "Would you like to re-enter the settings?",
-            "password_chars_warning": "Avoid using #, $, ', \", and backtick characters in passwords."
+            "password_chars_warning": "Avoid using #, $, ', \", and backtick characters in passwords.",
+            "extra_apps": "Extra Apps (optional)",
+            "extra_apps_hint": "Select with Space, confirm with Enter — skip with Enter for none",
+            "extra_apps_none": "No extra apps selected",
+            "extra_apps_selected": "{count} app(s) selected: {apps}"
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -91,6 +105,12 @@
             "enabling_scheduler": "Enabling scheduler…",
             "scheduler_enabled": "Scheduler enabled.",
             "scheduler_failed": "Could not enable scheduler.",
+            "installing_apps": "Installing extra apps… ({current}/{total})",
+            "installing_app": "Downloading {app}…",
+            "app_installed": "{app} installed.",
+            "app_failed": "{app} installation failed — skipping.",
+            "apps_done": "All {count} extra app(s) installed.",
+            "apps_some_failed": "{failed} of {total} app(s) failed to install.",
             "hosts_header": " Hosts File ",
             "hosts_adding": "Adding to hosts file: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts file updated.",

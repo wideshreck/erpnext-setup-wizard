@@ -25,6 +25,16 @@
     "not_found": "{name} bulunamadı!",
     "found": "{name} bulundu  →  {version}"
   },
+  "apps": {
+    "hrms": "İK ve Bordro Yönetimi",
+    "payments": "Ödeme Gateway Entegrasyonları",
+    "healthcare": "Sağlık Yönetim Sistemi",
+    "education": "Eğitim Yönetim Sistemi",
+    "lending": "Kredi Yönetimi",
+    "webshop": "E-Ticaret Platformu",
+    "print_designer": "Baskı Format Tasarımcısı",
+    "wiki": "Bilgi Tabanı Sistemi"
+  },
   "steps": {
     "prerequisites": {
       "title": "Ön Koşul Kontrolü",
@@ -63,7 +73,11 @@
       "versions_failed": "Versiyonlar alınamadı (GitHub API limiti veya bağlantı hatası) — manuel giriş yapılacak.",
       "version_search_hint": "Aramak için yazmaya başlayın (ör. v16)",
       "confirm_declined": "Ayarları yeniden girmek ister misiniz?",
-      "password_chars_warning": "Şifrelerde #, $, ', \" ve backtick karakterlerini kullanmaktan kaçının."
+      "password_chars_warning": "Şifrelerde #, $, ', \" ve backtick karakterlerini kullanmaktan kaçının.",
+      "extra_apps": "Ek Uygulamalar (isteğe bağlı)",
+      "extra_apps_hint": "Space ile seçin, Enter ile onaylayın — hiçbiri için direkt Enter",
+      "extra_apps_none": "Ek uygulama seçilmedi",
+      "extra_apps_selected": "{count} uygulama seçildi: {apps}"
     },
     "env_file": {
       "title": "Ortam Dosyası Hazırlanıyor",
@@ -91,6 +105,12 @@
       "enabling_scheduler": "Scheduler aktif ediliyor…",
       "scheduler_enabled": "Scheduler aktif.",
       "scheduler_failed": "Scheduler aktif edilemedi.",
+      "installing_apps": "Ek uygulamalar kuruluyor… ({current}/{total})",
+      "installing_app": "{app} indiriliyor…",
+      "app_installed": "{app} kuruldu.",
+      "app_failed": "{app} kurulumu başarısız — atlanıyor.",
+      "apps_done": "Tüm {count} ek uygulama kuruldu.",
+      "apps_some_failed": "{total} uygulamadan {failed} tanesi kurulamadı.",
       "hosts_header": " Hosts Dosyası ",
       "hosts_adding": "hosts dosyasına ekleniyor: 127.0.0.1 {site_name}",
       "hosts_updated": "hosts dosyası güncellendi.",

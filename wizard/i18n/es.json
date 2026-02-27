@@ -25,6 +25,16 @@
         "not_found": "¡{name} no encontrado!",
         "found": "{name} encontrado  →  {version}"
     },
+    "apps": {
+        "hrms": "Gestión de RRHH y Nómina",
+        "payments": "Integraciones de Pasarela de Pago",
+        "healthcare": "Sistema de Gestión de Salud",
+        "education": "Sistema de Gestión Educativa",
+        "lending": "Gestión de Préstamos",
+        "webshop": "Plataforma de Comercio Electrónico",
+        "print_designer": "Diseñador de Formatos de Impresión",
+        "wiki": "Sistema de Base de Conocimiento"
+    },
     "steps": {
         "prerequisites": {
             "title": "Verificación de requisitos previos",
@@ -63,7 +73,11 @@
             "versions_failed": "No se pudieron obtener las versiones (límite de la API de GitHub o error de conexión) — se usará entrada manual.",
             "version_search_hint": "Empiece a escribir para buscar (ej. v16)",
             "confirm_declined": "¿Desea volver a ingresar la configuración?",
-            "password_chars_warning": "Evite usar #, $, ', \" y comillas invertidas en las contraseñas."
+            "password_chars_warning": "Evite usar #, $, ', \" y comillas invertidas en las contraseñas.",
+            "extra_apps": "Aplicaciones adicionales (opcional)",
+            "extra_apps_hint": "Seleccione con Espacio, confirme con Enter — Enter para ninguna",
+            "extra_apps_none": "No se seleccionaron aplicaciones adicionales",
+            "extra_apps_selected": "{count} aplicación(es) seleccionada(s): {apps}"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",
@@ -91,6 +105,12 @@
             "enabling_scheduler": "Activando el programador…",
             "scheduler_enabled": "Programador activado.",
             "scheduler_failed": "No se pudo activar el scheduler.",
+            "installing_apps": "Instalando aplicaciones adicionales… ({current}/{total})",
+            "installing_app": "Descargando {app}…",
+            "app_installed": "{app} instalada.",
+            "app_failed": "Instalación de {app} fallida — omitiendo.",
+            "apps_done": "Las {count} aplicaciones adicionales fueron instaladas.",
+            "apps_some_failed": "{failed} de {total} aplicación(es) no pudieron instalarse.",
             "hosts_header": " Archivo Hosts ",
             "hosts_adding": "Agregando al archivo hosts: 127.0.0.1 {site_name}",
             "hosts_updated": "Archivo hosts actualizado.",

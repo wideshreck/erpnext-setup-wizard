@@ -25,6 +25,16 @@
         "not_found": "{name} introuvable !",
         "found": "{name} trouvé  →  {version}"
     },
+    "apps": {
+        "hrms": "Gestion RH et Paie",
+        "payments": "Intégrations de passerelle de paiement",
+        "healthcare": "Système de gestion de santé",
+        "education": "Système de gestion scolaire",
+        "lending": "Gestion des prêts",
+        "webshop": "Plateforme e-commerce",
+        "print_designer": "Concepteur de formats d'impression",
+        "wiki": "Système de base de connaissances"
+    },
     "steps": {
         "prerequisites": {
             "title": "Vérification des prérequis",
@@ -63,7 +73,11 @@
             "versions_failed": "Impossible de récupérer les versions (limite de l'API GitHub ou erreur de connexion) — saisie manuelle utilisée.",
             "version_search_hint": "Tapez pour rechercher (ex. v16)",
             "confirm_declined": "Souhaitez-vous ressaisir les paramètres ?",
-            "password_chars_warning": "Évitez d'utiliser #, $, ', \" et les accents graves dans les mots de passe."
+            "password_chars_warning": "Évitez d'utiliser #, $, ', \" et les accents graves dans les mots de passe.",
+            "extra_apps": "Applications supplémentaires (optionnel)",
+            "extra_apps_hint": "Sélectionnez avec Espace, confirmez avec Entrée — Entrée pour aucune",
+            "extra_apps_none": "Aucune application supplémentaire sélectionnée",
+            "extra_apps_selected": "{count} application(s) sélectionnée(s) : {apps}"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",
@@ -91,6 +105,12 @@
             "enabling_scheduler": "Activation du planificateur…",
             "scheduler_enabled": "Planificateur activé.",
             "scheduler_failed": "Impossible d'activer le planificateur.",
+            "installing_apps": "Installation des applications supplémentaires… ({current}/{total})",
+            "installing_app": "Téléchargement de {app}…",
+            "app_installed": "{app} installée.",
+            "app_failed": "Installation de {app} échouée — ignorée.",
+            "apps_done": "Les {count} applications supplémentaires ont été installées.",
+            "apps_some_failed": "{failed} sur {total} application(s) n'ont pas pu être installées.",
             "hosts_header": " Fichier Hosts ",
             "hosts_adding": "Ajout au fichier hosts : 127.0.0.1 {site_name}",
             "hosts_updated": "Fichier hosts mis à jour.",

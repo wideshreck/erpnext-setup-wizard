@@ -25,6 +25,16 @@
         "not_found": "{name} nicht gefunden!",
         "found": "{name} gefunden  →  {version}"
     },
+    "apps": {
+        "hrms": "Personal- und Lohnverwaltung",
+        "payments": "Zahlungs-Gateway-Integrationen",
+        "healthcare": "Gesundheitsmanagement-System",
+        "education": "Bildungsmanagement-System",
+        "lending": "Kredit- / Darlehensverwaltung",
+        "webshop": "E-Commerce-Plattform",
+        "print_designer": "Druckformat-Designer",
+        "wiki": "Wissensdatenbank-System"
+    },
     "steps": {
         "prerequisites": {
             "title": "Voraussetzungsprüfung",
@@ -63,7 +73,11 @@
             "versions_failed": "Versionen konnten nicht abgerufen werden (GitHub-API-Limit oder Verbindungsfehler) — manuelle Eingabe wird verwendet.",
             "version_search_hint": "Zum Suchen eingeben (z. B. v16)",
             "confirm_declined": "Möchten Sie die Einstellungen erneut eingeben?",
-            "password_chars_warning": "Vermeiden Sie #, $, ', \" und Backtick-Zeichen in Passwörtern."
+            "password_chars_warning": "Vermeiden Sie #, $, ', \" und Backtick-Zeichen in Passwörtern.",
+            "extra_apps": "Zusätzliche Apps (optional)",
+            "extra_apps_hint": "Mit Leertaste auswählen, mit Enter bestätigen — Enter für keine",
+            "extra_apps_none": "Keine zusätzlichen Apps ausgewählt",
+            "extra_apps_selected": "{count} App(s) ausgewählt: {apps}"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -91,6 +105,12 @@
             "enabling_scheduler": "Scheduler wird aktiviert…",
             "scheduler_enabled": "Scheduler aktiviert.",
             "scheduler_failed": "Scheduler konnte nicht aktiviert werden.",
+            "installing_apps": "Zusätzliche Apps werden installiert… ({current}/{total})",
+            "installing_app": "{app} wird heruntergeladen…",
+            "app_installed": "{app} installiert.",
+            "app_failed": "{app} Installation fehlgeschlagen — wird übersprungen.",
+            "apps_done": "Alle {count} zusätzlichen App(s) installiert.",
+            "apps_some_failed": "{failed} von {total} App(s) konnten nicht installiert werden.",
             "hosts_header": " Hosts-Datei ",
             "hosts_adding": "Wird zur Hosts-Datei hinzugefügt: 127.0.0.1 {site_name}",
             "hosts_updated": "Hosts-Datei aktualisiert.",

@@ -25,6 +25,16 @@
         "not_found": "{name} non trovato!",
         "found": "{name} trovato  →  {version}"
     },
+    "apps": {
+        "hrms": "Gestione HR e Buste Paga",
+        "payments": "Integrazioni Gateway di Pagamento",
+        "healthcare": "Sistema di Gestione Sanitaria",
+        "education": "Sistema di Gestione Scolastica",
+        "lending": "Gestione Prestiti",
+        "webshop": "Piattaforma E-Commerce",
+        "print_designer": "Designer Formati di Stampa",
+        "wiki": "Sistema Base di Conoscenza"
+    },
     "steps": {
         "prerequisites": {
             "title": "Verifica dei prerequisiti",
@@ -63,7 +73,11 @@
             "versions_failed": "Impossibile ottenere le versioni (limite dell'API GitHub o errore di connessione) — verrà usato l'inserimento manuale.",
             "version_search_hint": "Inizia a digitare per cercare (es. v16)",
             "confirm_declined": "Vuoi reinserire le impostazioni?",
-            "password_chars_warning": "Evita di usare #, $, ', \" e backtick nelle password."
+            "password_chars_warning": "Evita di usare #, $, ', \" e backtick nelle password.",
+            "extra_apps": "App aggiuntive (opzionale)",
+            "extra_apps_hint": "Seleziona con Spazio, conferma con Invio — Invio per nessuna",
+            "extra_apps_none": "Nessuna app aggiuntiva selezionata",
+            "extra_apps_selected": "{count} app selezionata/e: {apps}"
         },
         "env_file": {
             "title": "Preparazione del file di ambiente",
@@ -91,6 +105,12 @@
             "enabling_scheduler": "Attivazione dello scheduler…",
             "scheduler_enabled": "Scheduler attivato.",
             "scheduler_failed": "Impossibile attivare lo scheduler.",
+            "installing_apps": "Installazione app aggiuntive… ({current}/{total})",
+            "installing_app": "Download di {app}…",
+            "app_installed": "{app} installata.",
+            "app_failed": "Installazione di {app} fallita — saltata.",
+            "apps_done": "Tutte le {count} app aggiuntive sono state installate.",
+            "apps_some_failed": "{failed} su {total} app non sono state installate.",
             "hosts_header": " File Hosts ",
             "hosts_adding": "Aggiunta al file hosts: 127.0.0.1 {site_name}",
             "hosts_updated": "File hosts aggiornato.",
