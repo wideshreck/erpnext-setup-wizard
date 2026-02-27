@@ -9,6 +9,7 @@ _TAGS_URL = "https://api.github.com/repos/frappe/erpnext/tags"
 _PER_PAGE = 100
 _TIMEOUT = 10
 _MIN_MAJOR = 14
+_MAX_PAGES = 20
 _STABLE_RE = re.compile(r"^v(\d+)\.(\d+)\.(\d+)$")
 
 
@@ -22,7 +23,7 @@ def fetch_erpnext_versions() -> list[str]:
     page = 1
 
     try:
-        while True:
+        while page <= _MAX_PAGES:
             url = f"{_TAGS_URL}?per_page={_PER_PAGE}&page={page}"
             req = urllib.request.Request(
                 url, headers={"Accept": "application/vnd.github.v3+json"}

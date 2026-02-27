@@ -53,7 +53,10 @@ def t(key: str, **kwargs) -> str:
     if not isinstance(value, str):
         return key
     if kwargs:
-        return value.format(**kwargs)
+        try:
+            return value.format(**kwargs)
+        except (KeyError, IndexError, ValueError):
+            return value
     return value
 
 
