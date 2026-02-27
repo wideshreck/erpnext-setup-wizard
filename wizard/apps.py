@@ -28,3 +28,32 @@ OPTIONAL_APPS: list[AppInfo] = [
     AppInfo("print_designer", "Print Designer", "apps.print_designer"),
     AppInfo("wiki",           "Wiki",           "apps.wiki"),
 ]
+
+
+def detect_best_branch(repo_url: str, erpnext_version: str) -> str | None:
+    """Detect best compatible branch via git ls-remote.
+
+    Checks branches in priority order: version-{major} > main > master > develop.
+    Returns the first match, or None if no suitable branch found.
+    """
+    import shlex
+    from .utils import run, version_branch
+
+    target = version_branch(erpnext_version)
+    code, stdout, _ = run(
+        f"git ls-remote --heads {shlex.quote(repo_url)}", capture=True
+    )
+    if code != 0:
+        return None
+
+    branches = set()
+    for line in stdout.strip().splitlines():
+        parts = line.split("\t")
+        if len(parts) == 2:
+            branches.add(parts[1].replace("refs/heads/", ""))
+
+    for candidate in [target, "main", "master", "develop"]:
+        if candidate in branches:
+            return candidate
+
+    return None
