@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["rich>=13.9.0", "questionary>=2.1.0"]
+# dependencies = ["rich>=13.9.0", "questionary>=2.1.0", "pyyaml>=6.0"]
 # ///
 """
 ERPNext Setup Wizard — frappe_docker
