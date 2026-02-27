@@ -1,5 +1,6 @@
 """Step 2: Gather configuration from the user."""
 
+import re
 import sys
 from dataclasses import dataclass
 
@@ -26,6 +27,24 @@ class Config:
     admin_password: str
 
 
+def _validate_port(val: str) -> bool | str:
+    if val.isdigit() and 1024 <= int(val) <= 65535:
+        return True
+    return t("steps.configure.port_invalid")
+
+
+def _validate_version(val: str) -> bool | str:
+    if re.fullmatch(r"v\d+\.\d+\.\d+", val):
+        return True
+    return t("steps.configure.version_invalid")
+
+
+def _validate_site_name(val: str) -> bool | str:
+    if re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9\-\.]+", val) and "." in val:
+        return True
+    return t("steps.configure.site_name_invalid")
+
+
 def run_configure() -> Config:
     """Prompt for configuration and return a Config dataclass."""
     step_header(2, TOTAL_STEPS, t("steps.configure.title"))
@@ -47,6 +66,7 @@ def run_configure() -> Config:
         hint=t("steps.configure.site_name_hint"),
         examples="spaceflow.localhost · erp.localhost · myapp.localhost",
         default="mysite.localhost",
+        validate=_validate_site_name,
     )
 
     erpnext_version = ask_field(
@@ -55,6 +75,7 @@ def run_configure() -> Config:
         label=t("steps.configure.erpnext_version"),
         hint=t("steps.configure.erpnext_version_hint"),
         default="v16.7.3",
+        validate=_validate_version,
     )
 
     http_port = ask_field(
@@ -63,6 +84,7 @@ def run_configure() -> Config:
         label=t("steps.configure.http_port"),
         hint=t("steps.configure.http_port_hint"),
         default="8080",
+        validate=_validate_port,
     )
 
     console.print(Rule(style="dim"))
