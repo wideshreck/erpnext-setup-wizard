@@ -55,6 +55,46 @@ def _create_site(cfg: Config):
         ok(t("steps.site.scheduler_enabled"))
 
 
+def _install_extra_apps(cfg: Config):
+    """Download and install selected extra apps. Fail-soft per app."""
+    if not cfg.extra_apps:
+        return
+
+    console.print()
+    failed = []
+
+    for i, app_name in enumerate(cfg.extra_apps, 1):
+        step(t("steps.site.installing_apps", current=i, total=len(cfg.extra_apps)))
+        info(t("steps.site.installing_app", app=app_name))
+
+        # Step 1: Download app
+        code = run(
+            f"docker compose exec backend bench get-app {shlex.quote(app_name)}"
+        )
+        if code != 0:
+            fail(t("steps.site.app_failed", app=app_name))
+            failed.append(app_name)
+            continue
+
+        # Step 2: Install on site
+        code = run(
+            f"docker compose exec backend bench --site {shlex.quote(cfg.site_name)} "
+            f"install-app {shlex.quote(app_name)}"
+        )
+        if code != 0:
+            fail(t("steps.site.app_failed", app=app_name))
+            failed.append(app_name)
+            continue
+
+        ok(t("steps.site.app_installed", app=app_name))
+
+    console.print()
+    if failed:
+        fail(t("steps.site.apps_some_failed", failed=len(failed), total=len(cfg.extra_apps)))
+    else:
+        ok(t("steps.site.apps_done", count=len(cfg.extra_apps)))
+
+
 def _update_hosts(cfg: Config):
     """Add site to hosts file if needed."""
     console.print()
@@ -132,8 +172,9 @@ def _show_done(cfg: Config):
 
 
 def run_site(cfg: Config):
-    """Step 5: create site, update hosts, show done."""
+    """Step 5: create site, install extra apps, update hosts, show done."""
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg)
+    _install_extra_apps(cfg)
     _update_hosts(cfg)
     _show_done(cfg)
