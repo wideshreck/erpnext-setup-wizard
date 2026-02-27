@@ -107,6 +107,18 @@ def _install_extra_apps(cfg: Config):
         # Step 5: Build assets (CSS, JS, images)
         run(f"docker compose exec backend bench build --app {app_q}")
 
+        # Step 6: Copy assets to frontend container.
+        # bench build creates a symlink sites/assets/{app} -> apps/{app}/.../public
+        # but the frontend container doesn't have the apps/ volume, so the
+        # symlink is dangling.  Replace it with the actual files.
+        run(
+            f"docker compose exec backend bash -c "
+            f"'if [ -L sites/assets/{app_q} ]; then "
+            f"target=$(readlink sites/assets/{app_q}) && "
+            f"rm sites/assets/{app_q} && "
+            f"cp -r \"$target\" sites/assets/{app_q}; fi'"
+        )
+
         ok(t("steps.site.app_installed", app=app_name))
 
     # Restart frontend (nginx) to serve newly built assets
