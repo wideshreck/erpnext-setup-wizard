@@ -21,26 +21,38 @@ from . import TOTAL_STEPS
 
 
 def _create_site(cfg: Config):
-    """Create the ERPNext site via bench."""
+    """Create the ERPNext site via bench, with retry on failure."""
+    from ..prompts import confirm_action
+
     site_escaped = cfg.site_name.replace("[", "\\[")
     step(t("steps.site.creating", site_name=site_escaped))
     info(t("steps.site.creating_hint"))
 
-    code = run(
-        f"docker compose exec backend bench new-site {shlex.quote(cfg.site_name)} "
-        f"--install-app erpnext "
-        f"--db-root-password {shlex.quote(cfg.db_password)} "
-        f"--admin-password {shlex.quote(cfg.admin_password)}"
-    )
-    if code != 0:
+    while True:
+        code = run(
+            f"docker compose exec backend bench new-site {shlex.quote(cfg.site_name)} "
+            f"--install-app erpnext "
+            f"--db-root-password {shlex.quote(cfg.db_password)} "
+            f"--admin-password {shlex.quote(cfg.admin_password)}"
+        )
+        if code == 0:
+            break
+
         fail(t("steps.site.create_failed"))
-        sys.exit(1)
+        if not confirm_action(t("steps.site.create_retry")):
+            sys.exit(1)
+        console.print()
+        step(t("steps.site.creating", site_name=site_escaped))
+
     ok(t("steps.site.created"))
 
     console.print()
     step(t("steps.site.enabling_scheduler"))
-    run(f"docker compose exec backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
-    ok(t("steps.site.scheduler_enabled"))
+    code = run(f"docker compose exec backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
+    if code != 0:
+        fail(t("steps.site.scheduler_failed"))
+    else:
+        ok(t("steps.site.scheduler_enabled"))
 
 
 def _update_hosts(cfg: Config):
