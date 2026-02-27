@@ -26,4 +26,9 @@ Q_STYLE = QStyle([
     ("selected",    "fg:ansicyan"),
     ("instruction", "fg:ansibrightblack"),
     ("text",        "fg:ansiwhite"),
+    # Autocomplete dropdown
+    ("completion-menu.completion",         "bg:#1a1a2e fg:#e0e0e0"),
+    ("completion-menu.completion.current", "bg:#00b4d8 fg:#000000 bold"),
+    ("scrollbar.background",               "bg:#1a1a2e"),
+    ("scrollbar.button",                   "bg:#00b4d8"),
 ])

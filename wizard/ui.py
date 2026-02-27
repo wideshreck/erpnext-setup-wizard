@@ -24,7 +24,7 @@ from .i18n import t
 
 def banner():
     """Print the startup splash banner."""
-    W = 58  # inner width between ║…║
+    W = 59  # inner width between ║…║
 
     lines = [
         ("", ACCENT),
