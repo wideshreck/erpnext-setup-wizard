@@ -56,7 +56,12 @@ def _create_site(cfg: Config):
 
 
 def _install_extra_apps(cfg: Config):
-    """Download and install selected extra apps. Fail-soft per app."""
+    """Download and install selected extra apps. Fail-soft per app.
+
+    Docker production containers need three explicit steps because
+    ``bench get-app`` only clones the repo without pip-installing or
+    registering the app in ``sites/apps.txt``.
+    """
     if not cfg.extra_apps:
         return
 
@@ -66,20 +71,33 @@ def _install_extra_apps(cfg: Config):
     for i, app_name in enumerate(cfg.extra_apps, 1):
         step(t("steps.site.installing_apps", current=i, total=len(cfg.extra_apps)))
         info(t("steps.site.installing_app", app=app_name))
+        app_q = shlex.quote(app_name)
+        site_q = shlex.quote(cfg.site_name)
 
-        # Step 1: Download app
-        code = run(
-            f"docker compose exec backend bench get-app {shlex.quote(app_name)}"
-        )
+        # Step 1: Clone app repo
+        code = run(f"docker compose exec backend bench get-app {app_q}")
         if code != 0:
             fail(t("steps.site.app_failed", app=app_name))
             failed.append(app_name)
             continue
 
-        # Step 2: Install on site
+        # Step 2: pip install (bench get-app skips this in production containers)
+        code = run(f"docker compose exec backend pip install -e apps/{app_q}")
+        if code != 0:
+            fail(t("steps.site.app_failed", app=app_name))
+            failed.append(app_name)
+            continue
+
+        # Step 3: Register in apps.txt if missing
+        run(
+            f"docker compose exec backend bash -c "
+            f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
+        )
+
+        # Step 4: Install on site
         code = run(
-            f"docker compose exec backend bench --site {shlex.quote(cfg.site_name)} "
-            f"install-app {shlex.quote(app_name)}"
+            f"docker compose exec backend bench --site {site_q} "
+            f"install-app {app_q}"
         )
         if code != 0:
             fail(t("steps.site.app_failed", app=app_name))
