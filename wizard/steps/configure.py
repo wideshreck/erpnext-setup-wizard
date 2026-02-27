@@ -152,6 +152,9 @@ def run_configure() -> Config:
                 icon="🌐",
                 label=t("steps.configure.community_apps"),
                 choices=community_choices,
+                hint_key="steps.configure.community_apps_hint",
+                none_key="steps.configure.community_apps_none",
+                selected_key="steps.configure.community_apps_selected",
             )
 
             # Map selected repo_names back to full CommunityApp objects

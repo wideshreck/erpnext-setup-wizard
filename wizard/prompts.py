@@ -177,16 +177,22 @@ def ask_apps_field(
     icon: str,
     label: str,
     choices: list[tuple[str, str]],
+    hint_key: str = "steps.configure.extra_apps_hint",
+    none_key: str = "steps.configure.extra_apps_none",
+    selected_key: str = "steps.configure.extra_apps_selected",
 ) -> list[str]:
     """Checkbox field for selecting optional apps.
 
     Args:
         choices: list of (value, display_label) tuples
+        hint_key: i18n key for the hint text
+        none_key: i18n key for "none selected" message
+        selected_key: i18n key for "N selected" message
     Returns:
         list of selected values (repo names), may be empty
     """
     _field_header(number, icon, label)
-    console.print(f"      [{MUTED}]{t('steps.configure.extra_apps_hint')}[/]")
+    console.print(f"      [{MUTED}]{t(hint_key)}[/]")
 
     q_choices = [
         questionary.Choice(title=display, value=value)
@@ -205,9 +211,9 @@ def ask_apps_field(
 
     if selected:
         names = ", ".join(selected)
-        console.print(f"      [bold {OK}]✔[/] [green]{t('steps.configure.extra_apps_selected', count=len(selected), apps=names)}[/green]")
+        console.print(f"      [bold {OK}]✔[/] [green]{t(selected_key, count=len(selected), apps=names)}[/green]")
     else:
-        console.print(f"      [{MUTED}]{t('steps.configure.extra_apps_none')}[/]")
+        console.print(f"      [{MUTED}]{t(none_key)}[/]")
 
     console.print()
     return selected
