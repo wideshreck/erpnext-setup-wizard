@@ -149,6 +149,7 @@ def _install_extra_apps(cfg: Config) -> int:
             )
             branch = detected or default_branch
 
+        # source=app_name: bench get-app resolves to github.com/frappe/{name}
         if _install_app(app_name, app_name, app_name, branch,
                         cfg.site_name, "steps.site.app_failed"):
             ok(t("steps.site.app_installed", app=app_name))
