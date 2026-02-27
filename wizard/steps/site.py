@@ -31,7 +31,7 @@ def _create_site(cfg: Config):
 
     while True:
         code = run(
-            f"{COMPOSE_CMD} exec backend bench new-site {shlex.quote(cfg.site_name)} "
+            f"{COMPOSE_CMD} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
             f"--install-app erpnext "
             f"--db-root-password {shlex.quote(cfg.db_password)} "
             f"--admin-password {shlex.quote(cfg.admin_password)}"
@@ -49,7 +49,7 @@ def _create_site(cfg: Config):
 
     console.print()
     step(t("steps.site.enabling_scheduler"))
-    code = run(f"{COMPOSE_CMD} exec backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
+    code = run(f"{COMPOSE_CMD} exec -T backend bench --site {shlex.quote(cfg.site_name)} enable-scheduler")
     if code != 0:
         fail(t("steps.site.scheduler_failed"))
     else:
@@ -79,7 +79,7 @@ def _install_extra_apps(cfg: Config):
 
         # Step 1: Clone app repo (matching ERPNext major version branch)
         code = run(
-            f"{COMPOSE_CMD} exec backend bench get-app "
+            f"{COMPOSE_CMD} exec -T backend bench get-app "
             f"--branch {branch_q} {app_q}"
         )
         if code != 0:
@@ -88,7 +88,7 @@ def _install_extra_apps(cfg: Config):
             continue
 
         # Step 2: pip install (bench get-app skips this in production containers)
-        code = run(f"{COMPOSE_CMD} exec backend pip install -e apps/{app_q}")
+        code = run(f"{COMPOSE_CMD} exec -T backend pip install -e apps/{app_q}")
         if code != 0:
             fail(t("steps.site.app_failed", app=app_name))
             failed.append(app_name)
@@ -96,13 +96,13 @@ def _install_extra_apps(cfg: Config):
 
         # Step 3: Register in apps.txt if missing
         run(
-            f"{COMPOSE_CMD} exec backend bash -c "
+            f"{COMPOSE_CMD} exec -T backend bash -c "
             f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
         )
 
         # Step 4: Install on site
         code = run(
-            f"{COMPOSE_CMD} exec backend bench --site {site_q} "
+            f"{COMPOSE_CMD} exec -T backend bench --site {site_q} "
             f"install-app {app_q}"
         )
         if code != 0:
@@ -111,16 +111,20 @@ def _install_extra_apps(cfg: Config):
             continue
 
         # Step 5: Build assets (CSS, JS, images)
-        run(f"{COMPOSE_CMD} exec backend bench build --app {app_q}")
+        build_code = run(f"{COMPOSE_CMD} exec -T backend bench build --app {app_q}")
+        if build_code != 0:
+            fail(t("steps.site.app_build_failed", app=app_name))
+            failed.append(app_name)
+            continue
 
         # Step 6: Copy assets to frontend container.
         # bench build creates a symlink sites/assets/{app} -> apps/{app}/.../public
         # but the frontend container doesn't have the apps/ volume, so the
         # symlink is dangling.  Replace it with the actual files.
         run(
-            f"{COMPOSE_CMD} exec backend bash -c "
+            f"{COMPOSE_CMD} exec -T backend bash -c "
             f"'if [ -L sites/assets/{app_q} ]; then "
-            f"target=$(readlink sites/assets/{app_q}) && "
+            f"target=$(readlink -f sites/assets/{app_q}) && "
             f"rm sites/assets/{app_q} && "
             f"cp -r \"$target\" sites/assets/{app_q}; fi'"
         )

@@ -109,6 +109,7 @@
       "installing_app": "{app} indiriliyor…",
       "app_installed": "{app} kuruldu.",
       "app_failed": "{app} kurulumu başarısız — atlanıyor.",
+      "app_build_failed": "{app} varlık derleme başarısız — atlanıyor.",
       "apps_done": "Tüm {count} ek uygulama kuruldu.",
       "apps_some_failed": "{total} uygulamadan {failed} tanesi kurulamadı.",
       "hosts_header": " Hosts Dosyası ",

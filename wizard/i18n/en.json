@@ -109,6 +109,7 @@
             "installing_app": "Downloading {app}…",
             "app_installed": "{app} installed.",
             "app_failed": "{app} installation failed — skipping.",
+            "app_build_failed": "{app} asset build failed — skipping.",
             "apps_done": "All {count} extra app(s) installed.",
             "apps_some_failed": "{failed} of {total} app(s) failed to install.",
             "hosts_header": " Hosts File ",

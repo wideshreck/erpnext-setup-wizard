@@ -109,6 +109,7 @@
             "installing_app": "Descargando {app}…",
             "app_installed": "{app} instalada.",
             "app_failed": "Instalación de {app} fallida — omitiendo.",
+            "app_build_failed": "Compilación de assets de {app} fallida — omitiendo.",
             "apps_done": "Las {count} aplicaciones adicionales fueron instaladas.",
             "apps_some_failed": "{failed} de {total} aplicación(es) no pudieron instalarse.",
             "hosts_header": " Archivo Hosts ",

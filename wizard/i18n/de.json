@@ -109,6 +109,7 @@
             "installing_app": "{app} wird heruntergeladen…",
             "app_installed": "{app} installiert.",
             "app_failed": "{app} Installation fehlgeschlagen — wird übersprungen.",
+            "app_build_failed": "Asset-Build für {app} fehlgeschlagen — wird übersprungen.",
             "apps_done": "Alle {count} zusätzlichen App(s) installiert.",
             "apps_some_failed": "{failed} von {total} App(s) konnten nicht installiert werden.",
             "hosts_header": " Hosts-Datei ",
