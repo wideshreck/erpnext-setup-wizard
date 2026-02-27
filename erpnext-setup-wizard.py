@@ -10,15 +10,17 @@ Premium terminal UI powered by Rich + questionary
 Usage:
     uv run erpnext-setup-wizard.py
     uv run erpnext-setup-wizard.py --lang en
-    uv run erpnext-setup-wizard.py --lang tr
+    uv run erpnext-setup-wizard.py --config deploy.yml
+    uv run erpnext-setup-wizard.py --mode production --site-name erp.example.com ...
 """
 
-import argparse
 import sys
 
+from wizard.config_loader import build_parser, load_config
 from wizard.i18n import init as i18n_init, select_language
 from wizard.ui import banner
 from wizard.utils import clear_screen
+from wizard.ssh import create_executor
 from wizard.steps import (
     run_prerequisites,
     run_configure,
@@ -29,33 +31,42 @@ from wizard.steps import (
 
 
 def main():
-    parser = argparse.ArgumentParser(description="ERPNext Setup Wizard")
-    parser.add_argument("--lang", type=str, help="Language code (e.g., tr, en)")
+    parser = build_parser()
     args = parser.parse_args()
 
-    lang = args.lang
-    if not lang:
+    lang = args.lang or "en"
+    unattended_cfg = load_config(args)
+
+    if not unattended_cfg and not args.lang:
         clear_screen()
         lang = select_language()
 
     i18n_init(lang)
-    clear_screen()
-    banner()
+
+    if not unattended_cfg:
+        clear_screen()
+        banner()
+
+    # Step 2 — Configuration (interactive or unattended)
+    if unattended_cfg:
+        cfg = unattended_cfg
+    else:
+        cfg = run_configure()
+
+    # Create executor based on deploy mode
+    executor = create_executor(cfg)
 
     # Step 1 — Prerequisites
-    run_prerequisites()
-
-    # Step 2 — Configuration
-    cfg = run_configure()
+    run_prerequisites(cfg, executor)
 
     # Step 3 — .env File
-    run_env_file(cfg)
+    run_env_file(cfg, executor)
 
     # Step 4 — Docker Compose
-    run_docker()
+    run_docker(cfg, executor)
 
     # Step 5 — Site Creation + Completion
-    run_site(cfg)
+    run_site(cfg, executor)
 
 
 if __name__ == "__main__":
