@@ -128,8 +128,8 @@ def run_configure() -> Config:
     table.add_row(f"🌐  {t('steps.configure.site_name')}", site_name)
     table.add_row(f"📦  {t('steps.configure.erpnext_version')}", erpnext_version)
     table.add_row(f"🔌  {t('steps.configure.http_port')}", http_port)
-    table.add_row(f"🔒  {t('steps.configure.db_password')}", "•" * len(db_password))
-    table.add_row(f"🔑  {t('steps.configure.admin_password')}", "•" * len(admin_password))
+    table.add_row(f"🔒  {t('steps.configure.db_password')}", "••••••••")
+    table.add_row(f"🔑  {t('steps.configure.admin_password')}", "••••••••")
 
     console.print(Align.center(table))
     console.print()

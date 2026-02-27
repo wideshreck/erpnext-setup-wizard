@@ -129,26 +129,45 @@ def ask_password_field(
     label: str,
     min_length: int = 6,
 ) -> str:
-    """Password field with inline validation."""
+    """Password field with confirmation and inline validation."""
     _field_header(number, icon, label)
     console.print(f"      [{MUTED}]{t('prompts.password_min_hint', min_length=min_length)}[/]")
+    console.print(f"      [{MUTED}]{t('steps.configure.password_chars_warning')}[/]")
 
     def _validate(val: str) -> bool | str:
         if len(val) >= min_length:
             return True
         return t("prompts.password_too_short", min_length=min_length)
 
-    password = questionary.password(
-        message="",
-        qmark="      ▸",
-        style=Q_STYLE,
-        validate=_validate,
-    ).ask()
+    while True:
+        password = questionary.password(
+            message="",
+            qmark="      ▸",
+            style=Q_STYLE,
+            validate=_validate,
+        ).ask()
 
-    if password is None:
-        _cancelled()
+        if password is None:
+            _cancelled()
 
-    console.print(f"      [bold {OK}]✔[/] [green]{t('prompts.password_accepted')}[/green]  [{MUTED}]({'•' * len(password)})[/]")
+        # Confirmation
+        console.print(f"      [{MUTED}]{t('prompts.password_confirm')}[/]")
+        confirm = questionary.password(
+            message="",
+            qmark="      ▸",
+            style=Q_STYLE,
+        ).ask()
+
+        if confirm is None:
+            _cancelled()
+
+        if password == confirm:
+            break
+
+        console.print(f"      [bold {ERR}]✘[/] [{ERR}]{t('prompts.password_mismatch')}[/]")
+        console.print()
+
+    console.print(f"      [bold {OK}]✔[/] [green]{t('prompts.password_accepted')}[/green]  [{MUTED}]({'•' * 8})[/]")
     console.print()
     return password
 
