@@ -50,7 +50,10 @@
             "col_setting": "Impostazione",
             "col_value": "Valore",
             "confirm": "Continuare con queste impostazioni?",
-            "cancelled": "Installazione annullata."
+            "cancelled": "Installazione annullata.",
+            "port_invalid": "Inserisci un numero di porta valido (1024–65535)",
+            "version_invalid": "Formato non valido. Esempio: v16.7.3",
+            "site_name_invalid": "Il nome del sito deve contenere almeno un punto e non avere spazi o caratteri non validi"
         },
         "env_file": {
             "title": "Preparazione del file di ambiente",

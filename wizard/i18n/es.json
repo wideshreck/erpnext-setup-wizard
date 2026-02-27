@@ -50,7 +50,10 @@
             "col_setting": "Configuración",
             "col_value": "Valor",
             "confirm": "¿Continuar con esta configuración?",
-            "cancelled": "Instalación cancelada."
+            "cancelled": "Instalación cancelada.",
+            "port_invalid": "Ingrese un número de puerto válido (1024–65535)",
+            "version_invalid": "Formato inválido. Ejemplo: v16.7.3",
+            "site_name_invalid": "El nombre del sitio debe contener al menos un punto y no tener espacios ni caracteres inválidos"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",

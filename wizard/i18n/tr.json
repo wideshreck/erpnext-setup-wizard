@@ -50,7 +50,10 @@
       "col_setting": "Ayar",
       "col_value": "Değer",
       "confirm": "Bu ayarlarla devam edilsin mi?",
-      "cancelled": "Kurulum iptal edildi."
+      "cancelled": "Kurulum iptal edildi.",
+      "port_invalid": "Geçerli bir port numarası girin (1024–65535)",
+      "version_invalid": "Format geçersiz. Örnek: v16.7.3",
+      "site_name_invalid": "Site adı en az bir nokta içermeli ve boşluk/geçersiz karakter içermemeli"
     },
     "env_file": {
       "title": "Ortam Dosyası Hazırlanıyor",
