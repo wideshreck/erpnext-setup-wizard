@@ -12,7 +12,8 @@ from rich import box
 
 from ..theme import console, ACCENT, HEADING, WARN, MUTED
 from ..ui import step_header, step, ok, fail
-from ..prompts import ask_field, ask_password_field, ask_version_field, confirm_action
+from ..prompts import ask_field, ask_password_field, ask_version_field, ask_apps_field, confirm_action
+from ..apps import OPTIONAL_APPS
 from ..i18n import t
 from ..versions import fetch_erpnext_versions
 from . import TOTAL_STEPS
@@ -26,6 +27,7 @@ class Config:
     http_port: str
     db_password: str
     admin_password: str
+    extra_apps: list[str]
 
 
 def _validate_port(val: str) -> bool | str:
@@ -112,6 +114,22 @@ def run_configure() -> Config:
             label=t("steps.configure.admin_password"),
         )
 
+        # ── Optional apps ───────────────────────────────────
+        console.print(Rule(style="dim"))
+        console.print()
+
+        app_choices = [
+            (repo_name, f"{display_name} — {t(i18n_key)}")
+            for repo_name, display_name, i18n_key in OPTIONAL_APPS
+        ]
+
+        extra_apps = ask_apps_field(
+            number=6,
+            icon="📦",
+            label=t("steps.configure.extra_apps"),
+            choices=app_choices,
+        )
+
         # ── Summary table ────────────────────────────────────────
         console.print()
         table = Table(
@@ -131,6 +149,11 @@ def run_configure() -> Config:
         table.add_row(f"🔌  {t('steps.configure.http_port')}", http_port)
         table.add_row(f"🔒  {t('steps.configure.db_password')}", "••••••••")
         table.add_row(f"🔑  {t('steps.configure.admin_password')}", "••••••••")
+        if extra_apps:
+            apps_display = ", ".join(extra_apps)
+        else:
+            apps_display = "—"
+        table.add_row(f"📦  {t('steps.configure.extra_apps')}", apps_display)
 
         console.print(Align.center(table))
         console.print()
@@ -142,6 +165,7 @@ def run_configure() -> Config:
                 http_port=http_port,
                 db_password=db_password,
                 admin_password=admin_password,
+                extra_apps=extra_apps,
             )
 
         # User declined — ask if they want to re-enter
