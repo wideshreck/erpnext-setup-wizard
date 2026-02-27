@@ -66,6 +66,50 @@ def ask_field(
     return value
 
 
+def ask_version_field(
+    number: int,
+    icon: str,
+    label: str,
+    hint: str = "",
+    choices: list[str] | None = None,
+    default: str = "",
+) -> str:
+    """Autocomplete version selector using questionary.autocomplete.
+
+    If choices is empty/None, falls back to ask_field with validation.
+    """
+    if not choices:
+        return ask_field(
+            number=number, icon=icon, label=label, hint=hint,
+            default=default,
+            validate=lambda v: True if __import__("re").fullmatch(r"v\d+\.\d+\.\d+", v) else t("steps.configure.version_invalid"),
+        )
+
+    _field_header(number, icon, label)
+
+    if hint:
+        console.print(f"      [{MUTED}]{hint}[/]")
+    console.print(f"      [{MUTED}]{t('steps.configure.version_search_hint')}[/]")
+
+    value = questionary.autocomplete(
+        message="",
+        choices=choices,
+        default=default,
+        qmark="      ▸",
+        style=Q_STYLE,
+        match_middle=True,
+        ignore_case=True,
+        validate=lambda v: v in choices or t("steps.configure.version_invalid"),
+    ).ask()
+
+    if value is None:
+        _cancelled()
+
+    console.print(f"      [bold {OK}]✔[/] [green]{value}[/green]")
+    console.print()
+    return value
+
+
 def ask_password_field(
     number: int,
     icon: str,
