@@ -78,10 +78,10 @@ def _run_exec(args, lang: str) -> None:
 
 
 def _run_status(args, lang: str) -> None:
-    """Show status of the ERPNext stack (stub)."""
-    from wizard.theme import console
+    """Show status of the ERPNext stack."""
+    from wizard.commands.status import run_status
     i18n_init(lang)
-    console.print("  [yellow]Not implemented yet.[/yellow]")
+    run_status(args)
 
 
 # ── Main dispatch ───────────────────────────────────────────────

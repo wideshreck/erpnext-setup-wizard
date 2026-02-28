@@ -43,6 +43,14 @@
             "image_built": "\u0130maj derlendi: {tag}",
             "build_failed": "Docker imaj derleme ba\u015far\u0131s\u0131z oldu!"
         },
+        "status": {
+            "title": "ERPNext Y\u0131\u011f\u0131n Durumu",
+            "not_running": "\u00c7al\u0131\u015fan ERPNext konteyneri bulunamad\u0131.",
+            "service": "Servis",
+            "state": "Durum",
+            "health": "Sa\u011fl\u0131k",
+            "ports": "Portlar"
+        },
         "upgrade": {
             "reading_env": "Mevcut yap\u0131land\u0131rma okunuyor\u2026",
             "current_version": "Mevcut s\u00fcr\u00fcm: {version}",

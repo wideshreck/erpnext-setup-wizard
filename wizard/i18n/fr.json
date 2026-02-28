@@ -43,6 +43,14 @@
             "image_built": "Image compil\u00e9e : {tag}",
             "build_failed": "\u00c9chec de la compilation de l\u2019image Docker !"
         },
+        "status": {
+            "title": "\u00c9tat du Stack ERPNext",
+            "not_running": "Aucun conteneur ERPNext en cours d\u2019ex\u00e9cution trouv\u00e9.",
+            "service": "Service",
+            "state": "\u00c9tat",
+            "health": "Sant\u00e9",
+            "ports": "Ports"
+        },
         "upgrade": {
             "reading_env": "Lecture de la configuration actuelle\u2026",
             "current_version": "Version actuelle : {version}",
