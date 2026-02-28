@@ -133,7 +133,13 @@
             "smtp_user_hint": "Email account username or address",
             "backup_s3_endpoint_hint": "S3-compatible storage endpoint",
             "backup_s3_bucket_hint": "Name of the storage bucket",
-            "backup_s3_access_key_hint": "Your S3 access key ID"
+            "backup_s3_access_key_hint": "Your S3 access key ID",
+            "custom_apps_prompt": "Add custom private apps?",
+            "custom_apps_label": "Custom Apps",
+            "custom_app_url": "App Git URL",
+            "custom_app_url_hint": "HTTPS or SSH URL to the app repository",
+            "custom_app_branch": "Branch",
+            "custom_app_add_another": "Add another custom app?"
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -197,7 +203,13 @@
             "configuring_backup": "Configuring S3 backup…",
             "backup_configured": "S3 backup configured.",
             "backup_failed": "S3 backup configuration failed.",
-            "frontend_restart_failed": "Frontend container restart failed."
+            "frontend_restart_failed": "Frontend container restart failed.",
+            "installing_custom_apps": "Installing custom apps… ({current}/{total})",
+            "installing_custom_app": "Downloading {app} from {url}…",
+            "custom_app_installed": "{app} installed.",
+            "custom_app_failed": "{app} installation failed — skipping.",
+            "custom_apps_done": "All {count} custom app(s) installed.",
+            "custom_apps_some_failed": "{failed} of {total} custom app(s) failed to install."
         }
     }
 }

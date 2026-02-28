@@ -224,6 +224,17 @@ def _config_from_yaml(path: str) -> Config:
             print(f"Error: '{section_name}' section must be a mapping, got {type(section_val).__name__}.", file=sys.stderr)
             sys.exit(1)
 
+    # Parse custom_apps list from YAML
+    raw_custom_apps = data.get("custom_apps", [])
+    custom_apps = []
+    if isinstance(raw_custom_apps, list):
+        for entry in raw_custom_apps:
+            if isinstance(entry, dict) and "url" in entry:
+                url = entry["url"]
+                branch = entry.get("branch", "main")
+                name = url.rstrip("/").rstrip(".git").split("/")[-1]
+                custom_apps.append({"url": url, "branch": branch, "name": name})
+
     cfg = Config(
         deploy_mode=data.get("mode", "local"),
         site_name=_require(data, "site_name"),
@@ -234,6 +245,7 @@ def _config_from_yaml(path: str) -> Config:
         admin_password=_require(data, "admin_password"),
         extra_apps=data.get("extra_apps", []),
         community_apps=[],
+        custom_apps=custom_apps,
         domain=data.get("domain", ""),
         letsencrypt_email=data.get("letsencrypt_email", ""),
         ssh_host=ssh.get("host", ""),
@@ -267,6 +279,34 @@ def _config_from_args(args) -> Config | None:
     if not all(required):
         return None
 
+    # Parse --custom-apps "url1:branch1,url2:branch2"
+    custom_apps = []
+    raw_custom_apps = getattr(args, "custom_apps", None)
+    if raw_custom_apps:
+        for pair in raw_custom_apps.split(","):
+            pair = pair.strip()
+            if not pair:
+                continue
+            if ":" in pair:
+                # Split on last colon to handle URLs with colons (e.g. https://...)
+                # Format: url:branch — find the branch after the last colon
+                # But URLs contain "://" so we need to be smarter.
+                # Strategy: if it looks like it ends with :branchname (no slashes),
+                # split there; otherwise treat the whole thing as URL with default branch.
+                last_colon = pair.rfind(":")
+                potential_branch = pair[last_colon + 1:]
+                if "/" not in potential_branch and potential_branch:
+                    url = pair[:last_colon]
+                    branch = potential_branch
+                else:
+                    url = pair
+                    branch = "main"
+            else:
+                url = pair
+                branch = "main"
+            name = url.rstrip("/").rstrip(".git").split("/")[-1]
+            custom_apps.append({"url": url, "branch": branch, "name": name})
+
     cfg = Config(
         deploy_mode=args.mode,
         site_name=args.site_name,
@@ -277,6 +317,7 @@ def _config_from_args(args) -> Config | None:
         admin_password=args.admin_password,
         extra_apps=args.apps.split(",") if getattr(args, "apps", None) else [],
         community_apps=[],
+        custom_apps=custom_apps,
         domain=getattr(args, "domain", None) or "",
         letsencrypt_email=getattr(args, "letsencrypt_email", None) or "",
         ssh_host=getattr(args, "ssh_host", None) or "",

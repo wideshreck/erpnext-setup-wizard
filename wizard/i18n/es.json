@@ -133,7 +133,13 @@
             "smtp_user_hint": "Nombre de usuario o dirección de la cuenta de correo",
             "backup_s3_endpoint_hint": "Endpoint de almacenamiento compatible con S3",
             "backup_s3_bucket_hint": "Nombre del bucket de almacenamiento",
-            "backup_s3_access_key_hint": "Su ID de clave de acceso S3"
+            "backup_s3_access_key_hint": "Su ID de clave de acceso S3",
+            "custom_apps_prompt": "Agregar aplicaciones privadas personalizadas?",
+            "custom_apps_label": "Aplicaciones personalizadas",
+            "custom_app_url": "URL Git de la aplicación",
+            "custom_app_url_hint": "URL HTTPS o SSH del repositorio de la aplicación",
+            "custom_app_branch": "Rama (Branch)",
+            "custom_app_add_another": "Agregar otra aplicación personalizada?"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",
@@ -197,7 +203,13 @@
             "configuring_backup": "Configurando respaldo S3…",
             "backup_configured": "Respaldo S3 configurado.",
             "backup_failed": "Error al configurar respaldo S3.",
-            "frontend_restart_failed": "Error al reiniciar el contenedor frontend."
+            "frontend_restart_failed": "Error al reiniciar el contenedor frontend.",
+            "installing_custom_apps": "Instalando aplicaciones personalizadas… ({current}/{total})",
+            "installing_custom_app": "Descargando {app} desde {url}…",
+            "custom_app_installed": "{app} instalada.",
+            "custom_app_failed": "Instalación de {app} fallida — omitiendo.",
+            "custom_apps_done": "Las {count} aplicaciones personalizadas fueron instaladas.",
+            "custom_apps_some_failed": "{failed} de {total} aplicación(es) personalizada(s) no pudieron instalarse."
         }
     }
 }

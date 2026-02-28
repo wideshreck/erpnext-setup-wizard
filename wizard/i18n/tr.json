@@ -133,7 +133,13 @@
             "smtp_user_hint": "E-posta hesabı kullanıcı adı veya adresi",
             "backup_s3_endpoint_hint": "S3 uyumlu depolama uç noktası",
             "backup_s3_bucket_hint": "Depolama kovasının adı",
-            "backup_s3_access_key_hint": "S3 erişim anahtarı kimliğiniz"
+            "backup_s3_access_key_hint": "S3 erişim anahtarı kimliğiniz",
+            "custom_apps_prompt": "Özel uygulama eklemek ister misiniz?",
+            "custom_apps_label": "Özel Uygulamalar",
+            "custom_app_url": "Uygulama Git URL'si",
+            "custom_app_url_hint": "Uygulama deposunun HTTPS veya SSH URL'si",
+            "custom_app_branch": "Dal (Branch)",
+            "custom_app_add_another": "Başka bir özel uygulama eklemek ister misiniz?"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",
@@ -197,7 +203,13 @@
             "configuring_backup": "S3 yedekleme yapılandırılıyor…",
             "backup_configured": "S3 yedekleme yapılandırıldı.",
             "backup_failed": "S3 yedekleme yapılandırması başarısız oldu.",
-            "frontend_restart_failed": "Frontend konteyneri yeniden başlatılamadı."
+            "frontend_restart_failed": "Frontend konteyneri yeniden başlatılamadı.",
+            "installing_custom_apps": "Özel uygulamalar kuruluyor… ({current}/{total})",
+            "installing_custom_app": "{app} indiriliyor: {url}…",
+            "custom_app_installed": "{app} kuruldu.",
+            "custom_app_failed": "{app} kurulumu başarısız — atlanıyor.",
+            "custom_apps_done": "Tüm {count} özel uygulama kuruldu.",
+            "custom_apps_some_failed": "{total} özel uygulamadan {failed} tanesi kurulamadı."
         }
     }
 }

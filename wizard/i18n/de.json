@@ -133,7 +133,13 @@
             "smtp_user_hint": "Benutzername oder Adresse des E-Mail-Kontos",
             "backup_s3_endpoint_hint": "S3-kompatibler Speicher-Endpunkt",
             "backup_s3_bucket_hint": "Name des Speicher-Buckets",
-            "backup_s3_access_key_hint": "Ihre S3-Zugriffsschlüssel-ID"
+            "backup_s3_access_key_hint": "Ihre S3-Zugriffsschlüssel-ID",
+            "custom_apps_prompt": "Eigene private Apps hinzufügen?",
+            "custom_apps_label": "Eigene Apps",
+            "custom_app_url": "App-Git-URL",
+            "custom_app_url_hint": "HTTPS- oder SSH-URL zum App-Repository",
+            "custom_app_branch": "Branch",
+            "custom_app_add_another": "Weitere eigene App hinzufügen?"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -197,7 +203,13 @@
             "configuring_backup": "S3-Backup wird konfiguriert…",
             "backup_configured": "S3-Backup konfiguriert.",
             "backup_failed": "S3-Backup-Konfiguration fehlgeschlagen.",
-            "frontend_restart_failed": "Neustart des Frontend-Containers fehlgeschlagen."
+            "frontend_restart_failed": "Neustart des Frontend-Containers fehlgeschlagen.",
+            "installing_custom_apps": "Eigene Apps werden installiert… ({current}/{total})",
+            "installing_custom_app": "{app} wird heruntergeladen von {url}…",
+            "custom_app_installed": "{app} installiert.",
+            "custom_app_failed": "Installation von {app} fehlgeschlagen — wird übersprungen.",
+            "custom_apps_done": "Alle {count} eigenen App(s) installiert.",
+            "custom_apps_some_failed": "{failed} von {total} eigenen App(s) konnten nicht installiert werden."
         }
     }
 }

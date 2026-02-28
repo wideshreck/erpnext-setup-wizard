@@ -201,6 +201,37 @@ def _install_community_apps(cfg: Config, executor, compose_cmd: str) -> int:
     return len(cfg.community_apps) - len(failed)
 
 
+def _install_custom_apps(cfg: Config, executor, compose_cmd: str) -> int:
+    """Install custom private apps from Git URLs.
+
+    Returns the number of successfully installed apps.
+    """
+    if not cfg.custom_apps:
+        return 0
+
+    console.print()
+    failed = []
+
+    for i, app in enumerate(cfg.custom_apps, 1):
+        step(t("steps.site.installing_custom_apps", current=i, total=len(cfg.custom_apps)))
+        info(t("steps.site.installing_custom_app", app=app["name"], url=app["url"]))
+
+        if _install_app(app["name"], app["name"], app["url"], app["branch"],
+                        cfg.site_name, "steps.site.custom_app_failed",
+                        executor=executor, compose_cmd=compose_cmd):
+            ok(t("steps.site.custom_app_installed", app=app["name"]))
+        else:
+            failed.append(app["name"])
+
+    console.print()
+    if failed:
+        fail(t("steps.site.custom_apps_some_failed", failed=len(failed), total=len(cfg.custom_apps)))
+    else:
+        ok(t("steps.site.custom_apps_done", count=len(cfg.custom_apps)))
+
+    return len(cfg.custom_apps) - len(failed)
+
+
 def _configure_smtp(cfg: Config, executor, compose_cmd: str):
     """Apply SMTP settings via bench set-config."""
     if not cfg.smtp_host:
@@ -341,7 +372,11 @@ def run_site(cfg: Config, executor):
 
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg, executor, compose_cmd)
-    installed = _install_extra_apps(cfg, executor, compose_cmd) + _install_community_apps(cfg, executor, compose_cmd)
+    installed = (
+        _install_extra_apps(cfg, executor, compose_cmd)
+        + _install_community_apps(cfg, executor, compose_cmd)
+        + _install_custom_apps(cfg, executor, compose_cmd)
+    )
     if installed > 0:
         code = executor.run(f"{compose_cmd} restart frontend")
         if code != 0:

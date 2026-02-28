@@ -33,6 +33,7 @@ class Config:
     admin_password: str = ""
     extra_apps: list[str] = field(default_factory=list)
     community_apps: list[CommunityApp] = field(default_factory=list)
+    custom_apps: list[dict] = field(default_factory=list)
 
     # Production + Remote
     domain: str = ""
@@ -322,6 +323,33 @@ def run_configure() -> Config:
         else:
             fail(t("steps.configure.community_apps_failed"))
 
+        # ── Custom private apps ──────────────────────────────
+        console.print(Rule(style="dim"))
+        console.print()
+
+        custom_apps = []
+        if confirm_action(t("steps.configure.custom_apps_prompt")):
+            while True:
+                url = ask_field(
+                    number=n, icon="🔧",
+                    label=t("steps.configure.custom_app_url"),
+                    hint=t("steps.configure.custom_app_url_hint"),
+                    examples="https://github.com/myorg/myapp.git",
+                )
+                if not url:
+                    break
+                branch = ask_field(
+                    number=n, icon="🌿",
+                    label=t("steps.configure.custom_app_branch"),
+                    default="main",
+                )
+                n += 1
+                # Extract repo_name from URL
+                name = url.rstrip("/").rstrip(".git").split("/")[-1]
+                custom_apps.append({"url": url, "branch": branch, "name": name})
+                if not confirm_action(t("steps.configure.custom_app_add_another")):
+                    break
+
         # ── 9. SMTP config (production/remote only) ──────────
         smtp_host = ""
         smtp_port = 587
@@ -456,6 +484,12 @@ def run_configure() -> Config:
             community_display = "—"
         table.add_row(f"🌐  {t('steps.configure.community_apps')}", community_display)
 
+        if custom_apps:
+            custom_display = ", ".join(app["name"] for app in custom_apps)
+        else:
+            custom_display = "—"
+        table.add_row(f"🔧  {t('steps.configure.custom_apps_label')}", custom_display)
+
         if smtp_host:
             table.add_row(f"📧  {t('steps.configure.smtp_host')}", smtp_host)
         if backup_enabled:
@@ -475,6 +509,7 @@ def run_configure() -> Config:
                 admin_password=admin_password,
                 extra_apps=extra_apps,
                 community_apps=community_apps,
+                custom_apps=custom_apps,
                 domain=domain,
                 letsencrypt_email=letsencrypt_email,
                 ssh_host=ssh_host,
