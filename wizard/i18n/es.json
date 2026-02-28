@@ -36,6 +36,13 @@
         "wiki": "Sistema de Base de Conocimiento"
     },
     "commands": {
+        "build": {
+            "generating_apps_json": "Generando apps.json\u2026",
+            "apps_json_ready": "{count} aplicaci\u00f3n(es) configurada(s) para la compilaci\u00f3n.",
+            "building_image": "Compilando imagen Docker personalizada\u2026",
+            "image_built": "Imagen compilada: {tag}",
+            "build_failed": "\u00a1Compilaci\u00f3n de imagen Docker fallida!"
+        },
         "upgrade": {
             "reading_env": "Leyendo configuraci\u00f3n actual\u2026",
             "current_version": "Versi\u00f3n actual: {version}",
@@ -170,7 +177,10 @@
             "extra_site_name": "Nombre del Sitio Adicional",
             "extra_site_name_hint": "Nombre de dominio para el sitio adicional",
             "extra_site_password": "Contraseña de Admin para Sitio Adicional",
-            "multi_site_add_another": "¿Agregar otro sitio?"
+            "multi_site_add_another": "\u00bfAgregar otro sitio?",
+            "build_image_prompt": "\u00bfCompilar una imagen Docker personalizada con aplicaciones integradas?",
+            "image_tag_label": "Etiqueta de Imagen",
+            "image_tag_hint": "Nombre:etiqueta de la imagen Docker para la compilaci\u00f3n personalizada"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",

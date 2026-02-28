@@ -53,6 +53,12 @@ def _build_env_content(cfg: Config) -> str:
     if cfg.backup_cron:
         lines.append(f"BACKUP_CRONSTRING={_env_quote(cfg.backup_cron)}")
 
+    if cfg.build_image:
+        tag_parts = cfg.image_tag.split(":")
+        lines.append(f"CUSTOM_IMAGE={tag_parts[0]}")
+        lines.append(f"CUSTOM_TAG={tag_parts[1] if len(tag_parts) > 1 else 'latest'}")
+        lines.append("PULL_POLICY=never")
+
     return "\n".join(lines) + "\n"
 
 

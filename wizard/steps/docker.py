@@ -71,6 +71,13 @@ def run_docker(cfg: Config, executor):
     """Bring up Docker Compose stack."""
     step_header(4, TOTAL_STEPS, t("steps.docker.title"))
 
+    # Build custom Docker image if requested
+    if cfg.build_image:
+        from ..commands.build import run_build_image
+        console.print()
+        if not run_build_image(cfg, executor):
+            sys.exit(1)
+
     compose_cmd = build_compose_cmd(cfg)
 
     step(t("steps.docker.cleaning"))

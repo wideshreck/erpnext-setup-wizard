@@ -36,6 +36,13 @@
         "wiki": "Wissensdatenbank-System"
     },
     "commands": {
+        "build": {
+            "generating_apps_json": "apps.json wird generiert\u2026",
+            "apps_json_ready": "{count} App(s) f\u00fcr den Build konfiguriert.",
+            "building_image": "Benutzerdefiniertes Docker-Image wird erstellt\u2026",
+            "image_built": "Image erstellt: {tag}",
+            "build_failed": "Docker-Image-Erstellung fehlgeschlagen!"
+        },
         "upgrade": {
             "reading_env": "Aktuelle Konfiguration wird gelesen\u2026",
             "current_version": "Aktuelle Version: {version}",
@@ -170,7 +177,10 @@
             "extra_site_name": "Zusätzlicher Site-Name",
             "extra_site_name_hint": "Domainname für die zusätzliche Site",
             "extra_site_password": "Admin-Passwort für zusätzliche Site",
-            "multi_site_add_another": "Weitere Site hinzufügen?"
+            "multi_site_add_another": "Weitere Site hinzuf\u00fcgen?",
+            "build_image_prompt": "Ein benutzerdefiniertes Docker-Image mit integrierten Apps erstellen?",
+            "image_tag_label": "Image-Tag",
+            "image_tag_hint": "Docker-Image Name:Tag f\u00fcr den benutzerdefinierten Build"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",

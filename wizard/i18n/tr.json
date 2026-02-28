@@ -36,6 +36,13 @@
         "wiki": "Bilgi Tabanı Sistemi"
     },
     "commands": {
+        "build": {
+            "generating_apps_json": "apps.json olu\u015fturuluyor\u2026",
+            "apps_json_ready": "{count} uygulama derleme i\u00e7in yap\u0131land\u0131r\u0131ld\u0131.",
+            "building_image": "\u00d6zel Docker imaj\u0131 derleniyor\u2026",
+            "image_built": "\u0130maj derlendi: {tag}",
+            "build_failed": "Docker imaj derleme ba\u015far\u0131s\u0131z oldu!"
+        },
         "upgrade": {
             "reading_env": "Mevcut yap\u0131land\u0131rma okunuyor\u2026",
             "current_version": "Mevcut s\u00fcr\u00fcm: {version}",
@@ -170,7 +177,10 @@
             "extra_site_name": "Ek Site Adı",
             "extra_site_name_hint": "Ek sitenin alan adı",
             "extra_site_password": "Ek Site Admin Şifresi",
-            "multi_site_add_another": "Başka bir site eklemek ister misiniz?"
+            "multi_site_add_another": "Ba\u015fka bir site eklemek ister misiniz?",
+            "build_image_prompt": "Uygulamalar\u0131 i\u00e7eren \u00f6zel bir Docker imaj\u0131 derlensin mi?",
+            "image_tag_label": "\u0130maj Etiketi",
+            "image_tag_hint": "\u00d6zel derleme i\u00e7in Docker imaj ad\u0131:etiket"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",

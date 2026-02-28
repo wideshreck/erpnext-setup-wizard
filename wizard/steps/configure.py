@@ -63,6 +63,10 @@ class Config:
     # Optional: Backup cron (ofelia)
     backup_cron: str = ""  # e.g., "@every 6h", empty = disabled
 
+    # Optional: Custom Docker image build
+    build_image: bool = False
+    image_tag: str = "custom-erpnext:latest"
+
 
 def _validate_port(val: str) -> bool | str:
     if val.isdigit() and val == str(int(val)) and 1024 <= int(val) <= 65535:
@@ -487,7 +491,21 @@ def run_configure() -> Config:
                 )
                 n += 1
 
-        # ── 12. Summary table ────────────────────────────────
+        # ── 12. Custom Docker image build (production/remote) ─
+        build_image = False
+        image_tag = "custom-erpnext:latest"
+        if deploy_mode != "local":
+            if confirm_action(t("steps.configure.build_image_prompt")):
+                build_image = True
+                image_tag = ask_field(
+                    number=n, icon="\U0001f433",
+                    label=t("steps.configure.image_tag_label"),
+                    default="custom-erpnext:latest",
+                    hint=t("steps.configure.image_tag_hint"),
+                )
+                n += 1
+
+        # ── 13. Summary table ────────────────────────────────
         console.print()
         table = Table(
             title=t("steps.configure.summary_title"),
@@ -546,6 +564,8 @@ def run_configure() -> Config:
             table.add_row(f"☁️  {t('steps.configure.backup_s3_endpoint')}", backup_s3_endpoint)
         if backup_cron:
             table.add_row(f"⏰  {t('steps.configure.backup_cron_label')}", backup_cron)
+        if build_image:
+            table.add_row(f"\U0001f433  {t('steps.configure.image_tag_label')}", image_tag)
 
         console.print(Align.center(table))
         console.print()
@@ -580,6 +600,8 @@ def run_configure() -> Config:
                 backup_s3_access_key=backup_s3_access_key,
                 backup_s3_secret_key=backup_s3_secret_key,
                 backup_cron=backup_cron,
+                build_image=build_image,
+                image_tag=image_tag,
             )
 
         # User declined — ask if they want to re-enter

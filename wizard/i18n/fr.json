@@ -36,6 +36,13 @@
         "wiki": "Système de base de connaissances"
     },
     "commands": {
+        "build": {
+            "generating_apps_json": "G\u00e9n\u00e9ration de apps.json\u2026",
+            "apps_json_ready": "{count} application(s) configur\u00e9e(s) pour la compilation.",
+            "building_image": "Compilation de l\u2019image Docker personnalis\u00e9e\u2026",
+            "image_built": "Image compil\u00e9e : {tag}",
+            "build_failed": "\u00c9chec de la compilation de l\u2019image Docker !"
+        },
         "upgrade": {
             "reading_env": "Lecture de la configuration actuelle\u2026",
             "current_version": "Version actuelle : {version}",
@@ -170,7 +177,10 @@
             "extra_site_name": "Nom du site supplémentaire",
             "extra_site_name_hint": "Nom de domaine pour le site supplémentaire",
             "extra_site_password": "Mot de passe admin pour le site supplémentaire",
-            "multi_site_add_another": "Ajouter un autre site ?"
+            "multi_site_add_another": "Ajouter un autre site ?",
+            "build_image_prompt": "Compiler une image Docker personnalis\u00e9e avec les applications int\u00e9gr\u00e9es ?",
+            "image_tag_label": "Tag de l\u2019image",
+            "image_tag_hint": "Nom:tag de l\u2019image Docker pour la compilation personnalis\u00e9e"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",

@@ -36,6 +36,13 @@
         "wiki": "Knowledge Base System"
     },
     "commands": {
+        "build": {
+            "generating_apps_json": "Generating apps.json\u2026",
+            "apps_json_ready": "{count} app(s) configured for build.",
+            "building_image": "Building custom Docker image\u2026",
+            "image_built": "Image built: {tag}",
+            "build_failed": "Docker image build failed!"
+        },
         "upgrade": {
             "reading_env": "Reading current configuration\u2026",
             "current_version": "Current version: {version}",
@@ -170,7 +177,10 @@
             "extra_site_name": "Additional Site Name",
             "extra_site_name_hint": "Domain name for the additional site",
             "extra_site_password": "Admin Password for Additional Site",
-            "multi_site_add_another": "Add another site?"
+            "multi_site_add_another": "Add another site?",
+            "build_image_prompt": "Build a custom Docker image with apps baked in?",
+            "image_tag_label": "Image Tag",
+            "image_tag_hint": "Docker image name:tag for the custom build"
         },
         "env_file": {
             "title": "Preparing Environment File",
