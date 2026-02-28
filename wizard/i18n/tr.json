@@ -180,7 +180,8 @@
             "multi_site_add_another": "Ba\u015fka bir site eklemek ister misiniz?",
             "build_image_prompt": "Uygulamalar\u0131 i\u00e7eren \u00f6zel bir Docker imaj\u0131 derlensin mi?",
             "image_tag_label": "\u0130maj Etiketi",
-            "image_tag_hint": "\u00d6zel derleme i\u00e7in Docker imaj ad\u0131:etiket"
+            "image_tag_hint": "\u00d6zel derleme i\u00e7in Docker imaj ad\u0131:etiket",
+            "portainer_prompt": "Konteyner y\u00f6netimi i\u00e7in Portainer web aray\u00fcz\u00fc etkinle\u015ftirilsin mi?"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",
@@ -259,7 +260,8 @@
             "extra_site_failed": "{site_name} sitesi oluşturulamadı.",
             "verifying_health": "Site sa\u011fl\u0131\u011f\u0131 do\u011frulan\u0131yor\u2026",
             "health_ok": "Site sa\u011fl\u0131kl\u0131.",
-            "health_warning": "Site sa\u011fl\u0131k kontrol\u00fc uyar\u0131lar d\u00f6nd\u00fcrd\u00fc \u2014 hala ba\u015flat\u0131l\u0131yor olabilir."
+            "health_warning": "Site sa\u011fl\u0131k kontrol\u00fc uyar\u0131lar d\u00f6nd\u00fcrd\u00fc \u2014 hala ba\u015flat\u0131l\u0131yor olabilir.",
+            "done_portainer": "Portainer"
         }
     }
 }

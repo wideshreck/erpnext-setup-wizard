@@ -180,7 +180,8 @@
             "multi_site_add_another": "Add another site?",
             "build_image_prompt": "Build a custom Docker image with apps baked in?",
             "image_tag_label": "Image Tag",
-            "image_tag_hint": "Docker image name:tag for the custom build"
+            "image_tag_hint": "Docker image name:tag for the custom build",
+            "portainer_prompt": "Enable Portainer web UI for container management?"
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -259,7 +260,8 @@
             "extra_site_failed": "Failed to create site {site_name}.",
             "verifying_health": "Verifying site health\u2026",
             "health_ok": "Site is healthy.",
-            "health_warning": "Site health check returned warnings \u2014 it may still be initializing."
+            "health_warning": "Site health check returned warnings \u2014 it may still be initializing.",
+            "done_portainer": "Portainer"
         }
     }
 }

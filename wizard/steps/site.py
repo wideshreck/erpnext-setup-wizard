@@ -376,6 +376,10 @@ def _show_done(cfg: Config):
     if cfg.deploy_mode != "local":
         result_table.add_row(f"🔒  {t('steps.site.done_ssl')}", "Let's Encrypt (auto)")
 
+    if cfg.enable_portainer:
+        portainer_url = f"https://{cfg.domain}:9443" if cfg.deploy_mode != "local" else "https://localhost:9443"
+        result_table.add_row(f"\U0001f5a5\ufe0f  {t('steps.site.done_portainer')}", portainer_url)
+
     done_title = Text.assemble(
         ("\n🎉  ", ""),
         (t("steps.site.done_title"), "bold bright_green"),

@@ -278,6 +278,7 @@ def _config_from_yaml(path: str) -> Config:
         backup_cron=data.get("backup_cron", ""),
         build_image=data.get("build_image", False),
         image_tag=data.get("image_tag", "custom-erpnext:latest"),
+        enable_portainer=data.get("enable_portainer", False),
     )
     _validate_config(cfg)
     return cfg
@@ -366,6 +367,7 @@ def _config_from_args(args) -> Config | None:
         backup_cron=getattr(args, "backup_cron", None) or "",
         build_image=getattr(args, "build_image", False),
         image_tag=getattr(args, "image_tag", None) or "custom-erpnext:latest",
+        enable_portainer=getattr(args, "enable_portainer", False),
     )
     _validate_config(cfg)
     return cfg

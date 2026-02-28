@@ -180,7 +180,8 @@
             "multi_site_add_another": "\u00bfAgregar otro sitio?",
             "build_image_prompt": "\u00bfCompilar una imagen Docker personalizada con aplicaciones integradas?",
             "image_tag_label": "Etiqueta de Imagen",
-            "image_tag_hint": "Nombre:etiqueta de la imagen Docker para la compilaci\u00f3n personalizada"
+            "image_tag_hint": "Nombre:etiqueta de la imagen Docker para la compilaci\u00f3n personalizada",
+            "portainer_prompt": "\u00bfHabilitar la interfaz web Portainer para gesti\u00f3n de contenedores?"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",
@@ -259,7 +260,8 @@
             "extra_site_failed": "Error al crear el sitio {site_name}.",
             "verifying_health": "Verificando el estado del sitio\u2026",
             "health_ok": "El sitio est\u00e1 saludable.",
-            "health_warning": "La verificaci\u00f3n de estado del sitio devolvi\u00f3 advertencias \u2014 puede estar a\u00fan inicializ\u00e1ndose."
+            "health_warning": "La verificaci\u00f3n de estado del sitio devolvi\u00f3 advertencias \u2014 puede estar a\u00fan inicializ\u00e1ndose.",
+            "done_portainer": "Portainer"
         }
     }
 }

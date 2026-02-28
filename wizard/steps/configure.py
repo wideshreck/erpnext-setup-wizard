@@ -67,6 +67,9 @@ class Config:
     build_image: bool = False
     image_tag: str = "custom-erpnext:latest"
 
+    # Optional: Portainer container management UI
+    enable_portainer: bool = False
+
 
 def _validate_port(val: str) -> bool | str:
     if val.isdigit() and val == str(int(val)) and 1024 <= int(val) <= 65535:
@@ -505,7 +508,12 @@ def run_configure() -> Config:
                 )
                 n += 1
 
-        # ── 13. Summary table ────────────────────────────────
+        # ── 13. Portainer (production/remote) ────────────────
+        enable_portainer = False
+        if deploy_mode != "local":
+            enable_portainer = confirm_action(t("steps.configure.portainer_prompt"))
+
+        # ── 14. Summary table ────────────────────────────────
         console.print()
         table = Table(
             title=t("steps.configure.summary_title"),
@@ -566,6 +574,8 @@ def run_configure() -> Config:
             table.add_row(f"⏰  {t('steps.configure.backup_cron_label')}", backup_cron)
         if build_image:
             table.add_row(f"\U0001f433  {t('steps.configure.image_tag_label')}", image_tag)
+        if enable_portainer:
+            table.add_row(f"\U0001f5a5\ufe0f  Portainer", t("steps.configure.portainer_prompt").rstrip("?"))
 
         console.print(Align.center(table))
         console.print()
@@ -602,6 +612,7 @@ def run_configure() -> Config:
                 backup_cron=backup_cron,
                 build_image=build_image,
                 image_tag=image_tag,
+                enable_portainer=enable_portainer,
             )
 
         # User declined — ask if they want to re-enter

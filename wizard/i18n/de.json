@@ -180,7 +180,8 @@
             "multi_site_add_another": "Weitere Site hinzuf\u00fcgen?",
             "build_image_prompt": "Ein benutzerdefiniertes Docker-Image mit integrierten Apps erstellen?",
             "image_tag_label": "Image-Tag",
-            "image_tag_hint": "Docker-Image Name:Tag f\u00fcr den benutzerdefinierten Build"
+            "image_tag_hint": "Docker-Image Name:Tag f\u00fcr den benutzerdefinierten Build",
+            "portainer_prompt": "Portainer-Weboberfl\u00e4che f\u00fcr Container-Verwaltung aktivieren?"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -259,7 +260,8 @@
             "extra_site_failed": "Erstellung der Site {site_name} fehlgeschlagen.",
             "verifying_health": "Site-Zustand wird \u00fcberpr\u00fcft\u2026",
             "health_ok": "Site ist gesund.",
-            "health_warning": "Site-Zustandspr\u00fcfung hat Warnungen zur\u00fcckgegeben \u2014 die Initialisierung l\u00e4uft m\u00f6glicherweise noch."
+            "health_warning": "Site-Zustandspr\u00fcfung hat Warnungen zur\u00fcckgegeben \u2014 die Initialisierung l\u00e4uft m\u00f6glicherweise noch.",
+            "done_portainer": "Portainer"
         }
     }
 }

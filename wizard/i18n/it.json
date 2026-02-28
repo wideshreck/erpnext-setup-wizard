@@ -180,7 +180,8 @@
             "multi_site_add_another": "Aggiungere un altro sito?",
             "build_image_prompt": "Compilare un\u2019immagine Docker personalizzata con le app integrate?",
             "image_tag_label": "Tag Immagine",
-            "image_tag_hint": "Nome:tag dell\u2019immagine Docker per la compilazione personalizzata"
+            "image_tag_hint": "Nome:tag dell\u2019immagine Docker per la compilazione personalizzata",
+            "portainer_prompt": "Abilitare l\u2019interfaccia web Portainer per la gestione dei container?"
         },
         "env_file": {
             "title": "Preparazione del file di ambiente",
@@ -259,7 +260,8 @@
             "extra_site_failed": "Creazione del sito {site_name} fallita.",
             "verifying_health": "Verifica dello stato del sito\u2026",
             "health_ok": "Il sito \u00e8 in buona salute.",
-            "health_warning": "Il controllo dello stato del sito ha restituito avvisi \u2014 potrebbe essere ancora in fase di inizializzazione."
+            "health_warning": "Il controllo dello stato del sito ha restituito avvisi \u2014 potrebbe essere ancora in fase di inizializzazione.",
+            "done_portainer": "Portainer"
         }
     }
 }
