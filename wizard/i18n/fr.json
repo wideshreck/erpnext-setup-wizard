@@ -275,7 +275,12 @@
             "health_ok": "Le site est en bonne santé.",
             "health_warning": "La vérification du site a renvoyé des avertissements — il est peut-être encore en cours d’initialisation.",
             "done_portainer": "Portainer",
-            "create_auto_retry": "Tentative {attempt}/{max} échouée — nouvelle tentative dans {seconds}s (la base de données est peut-être encore en cours de démarrage)…"
+            "create_auto_retry": "Tentative {attempt}/{max} échouée — nouvelle tentative dans {seconds}s (la base de données est peut-être encore en cours de démarrage)…",
+            "building_assets": "Compilation des assets (JS/CSS)…",
+            "assets_built": "Assets compilés avec succès.",
+            "assets_warning": "La compilation des assets a généré des avertissements — le site peut fonctionner malgré tout.",
+            "restarting_frontend": "Redémarrage du frontend pour appliquer les assets…",
+            "frontend_restarted": "Frontend redémarré."
         }
     }
 }

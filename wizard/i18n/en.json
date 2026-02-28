@@ -275,7 +275,12 @@
             "verifying_health": "Verifying site health\u2026",
             "health_ok": "Site is healthy.",
             "health_warning": "Site health check returned warnings \u2014 it may still be initializing.",
-            "done_portainer": "Portainer"
+            "done_portainer": "Portainer",
+            "building_assets": "Building assets (JS/CSS)\u2026",
+            "assets_built": "Assets built successfully.",
+            "assets_warning": "Asset build had warnings \u2014 site may still work.",
+            "restarting_frontend": "Restarting frontend to apply assets\u2026",
+            "frontend_restarted": "Frontend restarted."
         }
     }
 }

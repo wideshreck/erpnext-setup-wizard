@@ -459,10 +459,29 @@ def run_site(cfg: Config, executor):
                 f"install-app {shlex.quote(app['name'])}"
             )
 
-    if installed > 0:
-        code = executor.run(f"{compose_cmd} restart frontend")
-        if code != 0:
-            fail(t("steps.site.frontend_restart_failed"))
+    # Full asset rebuild — ensures JS/CSS are compiled for all installed apps
+    console.print()
+    step(t("steps.site.building_assets"))
+    site_q = shlex.quote(cfg.site_name)
+    build_code = executor.run(f"{compose_cmd} exec -T backend bench build")
+    if build_code == 0:
+        ok(t("steps.site.assets_built"))
+    else:
+        info(t("steps.site.assets_warning"))
+
+    # Clear cache to prevent stale responses (common cause of 500 errors)
+    executor.run(f"{compose_cmd} exec -T backend bench --site {site_q} clear-cache")
+    executor.run(f"{compose_cmd} exec -T backend bench --site {site_q} clear-website-cache")
+
+    # Always restart frontend to pick up new assets — not just when extra apps installed
+    console.print()
+    step(t("steps.site.restarting_frontend"))
+    code = executor.run(f"{compose_cmd} restart frontend")
+    if code != 0:
+        fail(t("steps.site.frontend_restart_failed"))
+    else:
+        ok(t("steps.site.frontend_restarted"))
+
     _configure_smtp(cfg, executor, compose_cmd)
     _configure_backup(cfg, executor, compose_cmd)
     _verify_health(cfg, executor, compose_cmd)

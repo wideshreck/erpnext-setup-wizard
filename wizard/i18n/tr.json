@@ -275,7 +275,12 @@
             "health_ok": "Site sağlıklı.",
             "health_warning": "Site sağlık kontrolü uyarılar döndürdü — hala başlatılıyor olabilir.",
             "done_portainer": "Portainer",
-            "create_auto_retry": "Deneme {attempt}/{max} başarısız — {seconds}s sonra tekrar denenecek (veritabanı hâlâ başlatılıyor olabilir)…"
+            "create_auto_retry": "Deneme {attempt}/{max} başarısız — {seconds}s sonra tekrar denenecek (veritabanı hâlâ başlatılıyor olabilir)…",
+            "building_assets": "Asset'ler (JS/CSS) derleniyor…",
+            "assets_built": "Asset'ler başarıyla derlendi.",
+            "assets_warning": "Asset derleme uyarıları var — site yine de çalışabilir.",
+            "restarting_frontend": "Frontend yeni asset'leri uygulamak için yeniden başlatılıyor…",
+            "frontend_restarted": "Frontend yeniden başlatıldı."
         }
     }
 }

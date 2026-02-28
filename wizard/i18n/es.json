@@ -275,7 +275,12 @@
             "health_ok": "El sitio está saludable.",
             "health_warning": "La verificación de estado del sitio devolvió advertencias — puede estar aún inicializándose.",
             "done_portainer": "Portainer",
-            "create_auto_retry": "Intento {attempt}/{max} fallido — reintentando en {seconds}s (la base de datos puede estar iniciándose)…"
+            "create_auto_retry": "Intento {attempt}/{max} fallido — reintentando en {seconds}s (la base de datos puede estar iniciándose)…",
+            "building_assets": "Compilando assets (JS/CSS)…",
+            "assets_built": "Assets compilados exitosamente.",
+            "assets_warning": "La compilación de assets tuvo advertencias — el sitio puede funcionar de todos modos.",
+            "restarting_frontend": "Reiniciando frontend para aplicar los assets…",
+            "frontend_restarted": "Frontend reiniciado."
         }
     }
 }

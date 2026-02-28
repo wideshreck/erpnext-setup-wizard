@@ -275,7 +275,12 @@
             "health_ok": "Site ist gesund.",
             "health_warning": "Site-Zustandsprüfung hat Warnungen zurückgegeben — die Initialisierung läuft möglicherweise noch.",
             "done_portainer": "Portainer",
-            "create_auto_retry": "Versuch {attempt}/{max} fehlgeschlagen — erneuter Versuch in {seconds}s (Datenbank startet möglicherweise noch)…"
+            "create_auto_retry": "Versuch {attempt}/{max} fehlgeschlagen — erneuter Versuch in {seconds}s (Datenbank startet möglicherweise noch)…",
+            "building_assets": "Assets (JS/CSS) werden erstellt…",
+            "assets_built": "Assets erfolgreich erstellt.",
+            "assets_warning": "Asset-Erstellung mit Warnungen — die Site funktioniert möglicherweise trotzdem.",
+            "restarting_frontend": "Frontend wird neu gestartet, um Assets zu übernehmen…",
+            "frontend_restarted": "Frontend neu gestartet."
         }
     }
 }
