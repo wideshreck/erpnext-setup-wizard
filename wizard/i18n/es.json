@@ -35,6 +35,29 @@
         "print_designer": "Diseñador de Formatos de Impresión",
         "wiki": "Sistema de Base de Conocimiento"
     },
+    "commands": {
+        "upgrade": {
+            "reading_env": "Leyendo configuraci\u00f3n actual\u2026",
+            "current_version": "Versi\u00f3n actual: {version}",
+            "fetching_versions": "Obteniendo versiones disponibles\u2026",
+            "select_version": "Versi\u00f3n objetivo",
+            "already_current": "Ya se est\u00e1 ejecutando la versi\u00f3n m\u00e1s reciente.",
+            "will_upgrade": "Actualizando de {current} a {target}",
+            "confirm": "\u00bfProceder con la actualizaci\u00f3n?",
+            "backing_up": "Creando respaldo antes de la actualizaci\u00f3n\u2026",
+            "backup_done": "Respaldo completado.",
+            "updating_env": "Actualizando archivo .env\u2026",
+            "env_updated": ".env actualizado.",
+            "pulling_images": "Descargando nuevas im\u00e1genes Docker\u2026",
+            "images_pulled": "Im\u00e1genes descargadas.",
+            "restarting": "Reiniciando contenedores\u2026",
+            "restarted": "Contenedores reiniciados.",
+            "migrating": "Ejecutando migraci\u00f3n de base de datos\u2026",
+            "migrate_done": "Migraci\u00f3n completada.",
+            "migrate_failed": "\u00a1Migraci\u00f3n fallida!",
+            "complete": "\u00a1Actualizaci\u00f3n a {version} completada!"
+        }
+    },
     "steps": {
         "prerequisites": {
             "title": "Verificación de requisitos previos",

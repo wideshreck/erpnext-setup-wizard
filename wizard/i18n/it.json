@@ -35,6 +35,29 @@
         "print_designer": "Designer Formati di Stampa",
         "wiki": "Sistema Base di Conoscenza"
     },
+    "commands": {
+        "upgrade": {
+            "reading_env": "Lettura della configurazione attuale\u2026",
+            "current_version": "Versione attuale: {version}",
+            "fetching_versions": "Recupero delle versioni disponibili\u2026",
+            "select_version": "Versione di destinazione",
+            "already_current": "La versione pi\u00f9 recente \u00e8 gi\u00e0 in esecuzione.",
+            "will_upgrade": "Aggiornamento da {current} a {target}",
+            "confirm": "Procedere con l\u2019aggiornamento?",
+            "backing_up": "Creazione del backup prima dell\u2019aggiornamento\u2026",
+            "backup_done": "Backup completato.",
+            "updating_env": "Aggiornamento del file .env\u2026",
+            "env_updated": ".env aggiornato.",
+            "pulling_images": "Download delle nuove immagini Docker\u2026",
+            "images_pulled": "Immagini scaricate.",
+            "restarting": "Riavvio dei container\u2026",
+            "restarted": "Container riavviati.",
+            "migrating": "Esecuzione della migrazione del database\u2026",
+            "migrate_done": "Migrazione completata.",
+            "migrate_failed": "Migrazione fallita!",
+            "complete": "Aggiornamento a {version} completato!"
+        }
+    },
     "steps": {
         "prerequisites": {
             "title": "Verifica dei prerequisiti",

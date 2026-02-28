@@ -35,6 +35,29 @@
         "print_designer": "Print Format Designer",
         "wiki": "Knowledge Base System"
     },
+    "commands": {
+        "upgrade": {
+            "reading_env": "Reading current configuration\u2026",
+            "current_version": "Current version: {version}",
+            "fetching_versions": "Fetching available versions\u2026",
+            "select_version": "Target Version",
+            "already_current": "Already running the latest version.",
+            "will_upgrade": "Upgrading from {current} to {target}",
+            "confirm": "Proceed with upgrade?",
+            "backing_up": "Creating backup before upgrade\u2026",
+            "backup_done": "Backup complete.",
+            "updating_env": "Updating .env file\u2026",
+            "env_updated": ".env updated.",
+            "pulling_images": "Pulling new Docker images\u2026",
+            "images_pulled": "Images pulled.",
+            "restarting": "Restarting containers\u2026",
+            "restarted": "Containers restarted.",
+            "migrating": "Running database migration\u2026",
+            "migrate_done": "Migration complete.",
+            "migrate_failed": "Migration failed!",
+            "complete": "Upgrade to {version} complete!"
+        }
+    },
     "steps": {
         "prerequisites": {
             "title": "Prerequisite Check",

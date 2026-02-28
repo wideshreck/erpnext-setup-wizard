@@ -35,6 +35,29 @@
         "print_designer": "Baskı Format Tasarımcısı",
         "wiki": "Bilgi Tabanı Sistemi"
     },
+    "commands": {
+        "upgrade": {
+            "reading_env": "Mevcut yap\u0131land\u0131rma okunuyor\u2026",
+            "current_version": "Mevcut s\u00fcr\u00fcm: {version}",
+            "fetching_versions": "Mevcut s\u00fcr\u00fcmler getiriliyor\u2026",
+            "select_version": "Hedef S\u00fcr\u00fcm",
+            "already_current": "Zaten en g\u00fcncel s\u00fcr\u00fcm \u00e7al\u0131\u015f\u0131yor.",
+            "will_upgrade": "{current} s\u00fcr\u00fcm\u00fcnden {target} s\u00fcr\u00fcm\u00fcne y\u00fckseltiliyor",
+            "confirm": "Y\u00fckseltmeye devam edilsin mi?",
+            "backing_up": "Y\u00fckseltme \u00f6ncesi yedek olu\u015fturuluyor\u2026",
+            "backup_done": "Yedekleme tamamland\u0131.",
+            "updating_env": ".env dosyas\u0131 g\u00fcncelleniyor\u2026",
+            "env_updated": ".env g\u00fcncellendi.",
+            "pulling_images": "Yeni Docker imajlar\u0131 \u00e7ekiliyor\u2026",
+            "images_pulled": "\u0130majlar \u00e7ekildi.",
+            "restarting": "Konteynerler yeniden ba\u015flat\u0131l\u0131yor\u2026",
+            "restarted": "Konteynerler yeniden ba\u015flat\u0131ld\u0131.",
+            "migrating": "Veritaban\u0131 g\u00f6\u00e7\u00fc \u00e7al\u0131\u015ft\u0131r\u0131l\u0131yor\u2026",
+            "migrate_done": "G\u00f6\u00e7 tamamland\u0131.",
+            "migrate_failed": "G\u00f6\u00e7 ba\u015far\u0131s\u0131z oldu!",
+            "complete": "{version} s\u00fcr\u00fcm\u00fcne y\u00fckseltme tamamland\u0131!"
+        }
+    },
     "steps": {
         "prerequisites": {
             "title": "Ön Koşul Kontrolü",

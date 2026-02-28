@@ -35,6 +35,29 @@
         "print_designer": "Concepteur de formats d'impression",
         "wiki": "Système de base de connaissances"
     },
+    "commands": {
+        "upgrade": {
+            "reading_env": "Lecture de la configuration actuelle\u2026",
+            "current_version": "Version actuelle : {version}",
+            "fetching_versions": "R\u00e9cup\u00e9ration des versions disponibles\u2026",
+            "select_version": "Version cible",
+            "already_current": "La derni\u00e8re version est d\u00e9j\u00e0 en cours d\u2019ex\u00e9cution.",
+            "will_upgrade": "Mise \u00e0 jour de {current} vers {target}",
+            "confirm": "Proc\u00e9der \u00e0 la mise \u00e0 jour ?",
+            "backing_up": "Cr\u00e9ation d\u2019une sauvegarde avant la mise \u00e0 jour\u2026",
+            "backup_done": "Sauvegarde termin\u00e9e.",
+            "updating_env": "Mise \u00e0 jour du fichier .env\u2026",
+            "env_updated": ".env mis \u00e0 jour.",
+            "pulling_images": "T\u00e9l\u00e9chargement des nouvelles images Docker\u2026",
+            "images_pulled": "Images t\u00e9l\u00e9charg\u00e9es.",
+            "restarting": "Red\u00e9marrage des conteneurs\u2026",
+            "restarted": "Conteneurs red\u00e9marr\u00e9s.",
+            "migrating": "Ex\u00e9cution de la migration de la base de donn\u00e9es\u2026",
+            "migrate_done": "Migration termin\u00e9e.",
+            "migrate_failed": "\u00c9chec de la migration !",
+            "complete": "Mise \u00e0 jour vers {version} termin\u00e9e !"
+        }
+    },
     "steps": {
         "prerequisites": {
             "title": "Vérification des prérequis",

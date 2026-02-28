@@ -65,10 +65,10 @@ def _run_setup(args, lang: str) -> None:
 
 
 def _run_upgrade(args, lang: str) -> None:
-    """Upgrade an existing ERPNext installation (stub)."""
-    from wizard.theme import console
+    """Upgrade an existing ERPNext installation."""
+    from wizard.commands.upgrade import run_upgrade
     i18n_init(lang)
-    console.print("  [yellow]Not implemented yet.[/yellow]")
+    run_upgrade(args)
 
 
 def _run_exec(args, lang: str) -> None:
