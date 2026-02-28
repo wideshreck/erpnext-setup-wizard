@@ -30,7 +30,7 @@ An interactive terminal wizard that sets up a production-ready [ERPNext](https:/
 - **S3 backup** — optional S3-compatible backup configuration
 - **Unattended mode** — deploy from CLI flags or a YAML config file (CI/CD ready)
 - **CLI subcommands** — `setup`, `upgrade`, `exec`, `status`
-- **Multi-language** — English, Turkish, German, Spanish, French, Italian (244 i18n keys)
+- **Multi-language** — English, Turkish, German, Spanish, French, Italian (245 i18n keys)
 - **Input validation** — site name format, port range, password confirmation, email format
 
 ## Prerequisites
@@ -394,7 +394,7 @@ wizard/
 ├── apps.py                  Optional Frappe apps registry + branch detection
 ├── community_apps.py        Community app discovery from awesome-frappe
 ├── i18n/
-│   ├── __init__.py          Translation engine (dot-notation keys, 244 keys)
+│   ├── __init__.py          Translation engine (dot-notation keys, 245 keys)
 │   ├── en.json              English
 │   ├── tr.json              Turkish
 │   ├── de.json              German
@@ -419,7 +419,7 @@ wizard/
 ## Adding a Language
 
 1. Copy `wizard/i18n/en.json` to `wizard/i18n/{code}.json`
-2. Translate all 244 values (keep keys and `{placeholder}` variables unchanged)
+2. Translate all 245 values (keep keys and `{placeholder}` variables unchanged)
 3. Set `"lang_name"` to the language's native name (e.g., `"Deutsch"`)
 4. The wizard picks it up automatically — no code changes needed
 
