@@ -61,6 +61,7 @@
             "confirm": "\u00bfProceder con la actualizaci\u00f3n?",
             "backing_up": "Creando respaldo antes de la actualizaci\u00f3n\u2026",
             "backup_done": "Respaldo completado.",
+            "backup_failed": "Respaldo fallido! \u00bfContinuar de todos modos?",
             "updating_env": "Actualizando archivo .env\u2026",
             "env_updated": ".env actualizado.",
             "pulling_images": "Descargando nuevas im\u00e1genes Docker\u2026",

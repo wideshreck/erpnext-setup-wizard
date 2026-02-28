@@ -59,16 +59,13 @@ volumes:
 '''
     if cfg.deploy_mode == "remote":
         import tempfile, os
-        tmp = tempfile.mktemp(suffix=".yaml")
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write(content)
+            tmp = f.name
         try:
-            with open(tmp, "w") as f:
-                f.write(content)
             executor.upload(tmp, "~/frappe_docker/compose.portainer.yaml")
         finally:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
+            os.unlink(tmp)
     else:
         with open("compose.portainer.yaml", "w") as f:
             f.write(content)
@@ -88,16 +85,13 @@ def _write_autoheal_overlay(executor, cfg):
 '''
     if cfg.deploy_mode == "remote":
         import tempfile, os
-        tmp = tempfile.mktemp(suffix=".yaml")
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write(content)
+            tmp = f.name
         try:
-            with open(tmp, "w") as f:
-                f.write(content)
             executor.upload(tmp, "~/frappe_docker/compose.autoheal.yaml")
         finally:
-            try:
-                os.unlink(tmp)
-            except OSError:
-                pass
+            os.unlink(tmp)
     else:
         with open("compose.autoheal.yaml", "w") as f:
             f.write(content)
@@ -141,8 +135,9 @@ def run_docker(cfg: Config, executor):
     # Build custom Docker image if requested
     if cfg.build_image:
         from ..commands.build import run_build_image
+        cd_prefix = "cd ~/frappe_docker && " if cfg.deploy_mode == "remote" else ""
         console.print()
-        if not run_build_image(cfg, executor):
+        if not run_build_image(cfg, executor, cd_prefix=cd_prefix):
             sys.exit(1)
 
     # Write overlay files for optional services

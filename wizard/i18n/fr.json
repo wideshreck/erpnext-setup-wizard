@@ -37,40 +37,41 @@
     },
     "commands": {
         "build": {
-            "generating_apps_json": "G\u00e9n\u00e9ration de apps.json\u2026",
-            "apps_json_ready": "{count} application(s) configur\u00e9e(s) pour la compilation.",
-            "building_image": "Compilation de l\u2019image Docker personnalis\u00e9e\u2026",
-            "image_built": "Image compil\u00e9e : {tag}",
-            "build_failed": "\u00c9chec de la compilation de l\u2019image Docker !"
+            "generating_apps_json": "Génération de apps.json…",
+            "apps_json_ready": "{count} application(s) configurée(s) pour la compilation.",
+            "building_image": "Compilation de l’image Docker personnalisée…",
+            "image_built": "Image compilée : {tag}",
+            "build_failed": "Échec de la compilation de l’image Docker !"
         },
         "status": {
-            "title": "\u00c9tat du Stack ERPNext",
-            "not_running": "Aucun conteneur ERPNext en cours d\u2019ex\u00e9cution trouv\u00e9.",
+            "title": "État du Stack ERPNext",
+            "not_running": "Aucun conteneur ERPNext en cours d’exécution trouvé.",
             "service": "Service",
-            "state": "\u00c9tat",
-            "health": "Sant\u00e9",
+            "state": "État",
+            "health": "Santé",
             "ports": "Ports"
         },
         "upgrade": {
-            "reading_env": "Lecture de la configuration actuelle\u2026",
+            "reading_env": "Lecture de la configuration actuelle…",
             "current_version": "Version actuelle : {version}",
-            "fetching_versions": "R\u00e9cup\u00e9ration des versions disponibles\u2026",
+            "fetching_versions": "Récupération des versions disponibles…",
             "select_version": "Version cible",
-            "already_current": "La derni\u00e8re version est d\u00e9j\u00e0 en cours d\u2019ex\u00e9cution.",
-            "will_upgrade": "Mise \u00e0 jour de {current} vers {target}",
-            "confirm": "Proc\u00e9der \u00e0 la mise \u00e0 jour ?",
-            "backing_up": "Cr\u00e9ation d\u2019une sauvegarde avant la mise \u00e0 jour\u2026",
-            "backup_done": "Sauvegarde termin\u00e9e.",
-            "updating_env": "Mise \u00e0 jour du fichier .env\u2026",
-            "env_updated": ".env mis \u00e0 jour.",
-            "pulling_images": "T\u00e9l\u00e9chargement des nouvelles images Docker\u2026",
-            "images_pulled": "Images t\u00e9l\u00e9charg\u00e9es.",
-            "restarting": "Red\u00e9marrage des conteneurs\u2026",
-            "restarted": "Conteneurs red\u00e9marr\u00e9s.",
-            "migrating": "Ex\u00e9cution de la migration de la base de donn\u00e9es\u2026",
-            "migrate_done": "Migration termin\u00e9e.",
-            "migrate_failed": "\u00c9chec de la migration !",
-            "complete": "Mise \u00e0 jour vers {version} termin\u00e9e !"
+            "already_current": "La dernière version est déjà en cours d’exécution.",
+            "will_upgrade": "Mise à jour de {current} vers {target}",
+            "confirm": "Procéder à la mise à jour ?",
+            "backing_up": "Création d’une sauvegarde avant la mise à jour…",
+            "backup_done": "Sauvegarde terminée.",
+            "updating_env": "Mise à jour du fichier .env…",
+            "env_updated": ".env mis à jour.",
+            "pulling_images": "Téléchargement des nouvelles images Docker…",
+            "images_pulled": "Images téléchargées.",
+            "restarting": "Redémarrage des conteneurs…",
+            "restarted": "Conteneurs redémarrés.",
+            "migrating": "Exécution de la migration de la base de données…",
+            "migrate_done": "Migration terminée.",
+            "migrate_failed": "Échec de la migration !",
+            "complete": "Mise à jour vers {version} terminée !",
+            "backup_failed": "Échec de la sauvegarde ! Continuer quand même ?"
         }
     },
     "steps": {
@@ -186,11 +187,11 @@
             "extra_site_name_hint": "Nom de domaine pour le site supplémentaire",
             "extra_site_password": "Mot de passe admin pour le site supplémentaire",
             "multi_site_add_another": "Ajouter un autre site ?",
-            "build_image_prompt": "Compiler une image Docker personnalis\u00e9e avec les applications int\u00e9gr\u00e9es ?",
-            "image_tag_label": "Tag de l\u2019image",
-            "image_tag_hint": "Nom:tag de l\u2019image Docker pour la compilation personnalis\u00e9e",
-            "portainer_prompt": "Activer l\u2019interface web Portainer pour la gestion des conteneurs ?",
-            "autoheal_prompt": "Activer autoheal pour la r\u00e9cup\u00e9ration automatique des conteneurs ?"
+            "build_image_prompt": "Compiler une image Docker personnalisée avec les applications intégrées ?",
+            "image_tag_label": "Tag de l’image",
+            "image_tag_hint": "Nom:tag de l’image Docker pour la compilation personnalisée",
+            "portainer_prompt": "Activer l’interface web Portainer pour la gestion des conteneurs ?",
+            "autoheal_prompt": "Activer autoheal pour la récupération automatique des conteneurs ?"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",
@@ -206,11 +207,11 @@
             "first_time_hint": "Cela peut prendre 5 à 10 minutes la première fois.",
             "start_failed": "Échec du démarrage de Docker Compose !",
             "running": "Les conteneurs fonctionnent.",
-            "waiting_db": "En attente de la disponibilit\u00e9 de la base de donn\u00e9es",
-            "down_failed": "Impossible d\u2019arr\u00eater les conteneurs pr\u00e9c\u00e9dents. Docker est-il en cours d\u2019ex\u00e9cution ?",
-            "health_checking": "V\u00e9rification de l\u2019\u00e9tat des conteneurs\u2026",
-            "all_healthy": "Tous les conteneurs sont en bonne sant\u00e9.",
-            "health_timeout": "La v\u00e9rification d\u2019\u00e9tat a expir\u00e9 \u2014 passage \u00e0 l\u2019attente temporis\u00e9e."
+            "waiting_db": "En attente de la disponibilité de la base de données",
+            "down_failed": "Impossible d’arrêter les conteneurs précédents. Docker est-il en cours d’exécution ?",
+            "health_checking": "Vérification de l’état des conteneurs…",
+            "all_healthy": "Tous les conteneurs sont en bonne santé.",
+            "health_timeout": "La vérification d’état a expiré — passage à l’attente temporisée."
         },
         "site": {
             "title": "Création du site ERPNext",
@@ -262,14 +263,14 @@
             "installing_custom_app": "Téléchargement de {app} depuis {url}…",
             "custom_app_installed": "{app} installée.",
             "custom_app_failed": "Installation de {app} échouée — ignorée.",
-            "custom_apps_done": "Les {count} applications personnalis\u00e9es ont \u00e9t\u00e9 install\u00e9es.",
-            "custom_apps_some_failed": "{failed} sur {total} application(s) personnalis\u00e9e(s) n\u2019ont pas pu \u00eatre install\u00e9es.",
+            "custom_apps_done": "Les {count} applications personnalisées ont été installées.",
+            "custom_apps_some_failed": "{failed} sur {total} application(s) personnalisée(s) n’ont pas pu être installées.",
             "creating_extra_site": "Création du site supplémentaire : [bold]{site_name}[/bold]",
             "extra_site_created": "Site {site_name} créé.",
             "extra_site_failed": "Échec de la création du site {site_name}.",
-            "verifying_health": "V\u00e9rification de l\u2019\u00e9tat du site\u2026",
-            "health_ok": "Le site est en bonne sant\u00e9.",
-            "health_warning": "La v\u00e9rification du site a renvoy\u00e9 des avertissements \u2014 il est peut-\u00eatre encore en cours d\u2019initialisation.",
+            "verifying_health": "Vérification de l’état du site…",
+            "health_ok": "Le site est en bonne santé.",
+            "health_warning": "La vérification du site a renvoyé des avertissements — il est peut-être encore en cours d’initialisation.",
             "done_portainer": "Portainer"
         }
     }

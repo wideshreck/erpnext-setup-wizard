@@ -24,7 +24,8 @@ def run_status(args):
         cd_prefix = f"cd {project_dir} && "
     else:
         executor = LocalExecutor()
-        cd_prefix = ""
+        project_dir = getattr(args, "project", "frappe_docker")
+        cd_prefix = f"cd {project_dir} && "
 
     # Get container status
     result = executor.run(f"{cd_prefix}docker compose ps --format json", capture=True)

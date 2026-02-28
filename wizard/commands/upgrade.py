@@ -1,5 +1,6 @@
 """Upgrade an existing ERPNext installation to a new version."""
 
+import re
 import shlex
 
 from ..theme import console
@@ -44,7 +45,7 @@ def run_upgrade(args):
 
     project = getattr(args, "project", "frappe_docker")
     project_dir = f"~/{project}" if is_remote else project
-    cd_prefix = f"cd {project_dir} && " if is_remote else ""
+    cd_prefix = f"cd {project_dir} && "
 
     # Step 1: Read current version
     step(t("commands.upgrade.reading_env"))
@@ -64,6 +65,11 @@ def run_upgrade(args):
             choices=versions, default=current_version,
         )
 
+    # Validate version format to prevent shell injection via sed
+    if not re.fullmatch(r"v\d+\.\d+\.\d+", target_version):
+        fail(t("steps.configure.version_invalid"))
+        return
+
     if target_version == current_version:
         info(t("commands.upgrade.already_current"))
         return
@@ -78,32 +84,49 @@ def run_upgrade(args):
     # Step 3: Backup before upgrade
     console.print()
     step(t("commands.upgrade.backing_up"))
-    executor.run(f"{cd_prefix}docker compose exec -T backend bench --site all backup")
-    ok(t("commands.upgrade.backup_done"))
+    code = executor.run(f"{cd_prefix}docker compose exec -T backend bench --site all backup")
+    if code != 0:
+        fail(t("commands.upgrade.backup_failed"))
+        if not confirm_action(t("commands.upgrade.confirm")):
+            return
+    else:
+        ok(t("commands.upgrade.backup_done"))
 
     # Step 4: Update .env
     console.print()
     step(t("commands.upgrade.updating_env"))
     new_frappe = version_branch(target_version)
-    executor.run(
+    code = executor.run(
         f"{cd_prefix}sed -i "
-        f"'s/ERPNEXT_VERSION=.*/ERPNEXT_VERSION={shlex.quote(target_version)}/' .env"
+        f"'s/ERPNEXT_VERSION=.*/ERPNEXT_VERSION={target_version}/' .env"
     )
-    executor.run(
+    if code != 0:
+        fail(t("commands.upgrade.env_updated"))
+        return
+    code = executor.run(
         f"{cd_prefix}sed -i "
-        f"'s/FRAPPE_VERSION=.*/FRAPPE_VERSION={shlex.quote(new_frappe)}/' .env"
+        f"'s/FRAPPE_VERSION=.*/FRAPPE_VERSION={new_frappe}/' .env"
     )
+    if code != 0:
+        fail(t("commands.upgrade.env_updated"))
+        return
     ok(t("commands.upgrade.env_updated"))
 
     # Step 5: Pull new images and restart
     console.print()
     step(t("commands.upgrade.pulling_images"))
-    executor.run(f"{cd_prefix}docker compose pull")
+    code = executor.run(f"{cd_prefix}docker compose pull")
+    if code != 0:
+        fail(t("commands.upgrade.pulling_images"))
+        return
     ok(t("commands.upgrade.images_pulled"))
 
     console.print()
     step(t("commands.upgrade.restarting"))
-    executor.run(f"{cd_prefix}docker compose up -d")
+    code = executor.run(f"{cd_prefix}docker compose up -d")
+    if code != 0:
+        fail(t("commands.upgrade.restarting"))
+        return
     ok(t("commands.upgrade.restarted"))
 
     # Step 6: Run migrate

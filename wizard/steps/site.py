@@ -422,6 +422,27 @@ def run_site(cfg: Config, executor):
         + _install_community_apps(cfg, executor, compose_cmd)
         + _install_custom_apps(cfg, executor, compose_cmd)
     )
+
+    # Install the same apps on extra sites (apps are already fetched,
+    # just need install-app per site)
+    for extra in cfg.extra_sites:
+        site_q = shlex.quote(extra["name"])
+        for app_name in cfg.extra_apps:
+            executor.run(
+                f"{compose_cmd} exec -T backend bench --site {site_q} "
+                f"install-app {shlex.quote(app_name)}"
+            )
+        for app in cfg.community_apps:
+            executor.run(
+                f"{compose_cmd} exec -T backend bench --site {site_q} "
+                f"install-app {shlex.quote(app.repo_name)}"
+            )
+        for app in cfg.custom_apps:
+            executor.run(
+                f"{compose_cmd} exec -T backend bench --site {site_q} "
+                f"install-app {shlex.quote(app['name'])}"
+            )
+
     if installed > 0:
         code = executor.run(f"{compose_cmd} restart frontend")
         if code != 0:

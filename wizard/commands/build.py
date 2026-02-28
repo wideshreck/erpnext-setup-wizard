@@ -20,12 +20,12 @@ def generate_apps_json(cfg) -> str:
             "url": f"https://github.com/frappe/{app_name}",
             "branch": f"version-{major}",
         })
-    for app in getattr(cfg, "custom_apps", []):
+    for app in cfg.custom_apps:
         apps.append({"url": app["url"], "branch": app["branch"]})
     return json.dumps(apps)
 
 
-def run_build_image(cfg, executor):
+def run_build_image(cfg, executor, cd_prefix: str = ""):
     """Build custom Docker image with apps baked in."""
     step(t("commands.build.generating_apps_json"))
     apps_json = generate_apps_json(cfg)
@@ -35,11 +35,11 @@ def run_build_image(cfg, executor):
 
     console.print()
     step(t("commands.build.building_image"))
-    tag = getattr(cfg, "image_tag", "custom-erpnext:latest")
+    tag = cfg.image_tag
     frappe_branch = "version-" + cfg.erpnext_version.split(".")[0].lstrip("v")
 
     build_cmd = (
-        f"docker build "
+        f"{cd_prefix}docker build "
         f"--build-arg=APPS_JSON_BASE64={shlex.quote(apps_b64)} "
         f"--build-arg=FRAPPE_BRANCH={shlex.quote(frappe_branch)} "
         f"-t {shlex.quote(tag)} "

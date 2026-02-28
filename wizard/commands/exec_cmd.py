@@ -1,6 +1,7 @@
 """Open an interactive shell in a running ERPNext container."""
 
 import os
+import shlex
 import sys
 
 
@@ -27,8 +28,11 @@ def run_exec(args):
             ssh_parts.extend(["-p", str(args.ssh_port)])
         user = getattr(args, "ssh_user", None) or "root"
         ssh_parts.append(f"{user}@{args.ssh_host}")
+        safe_project = shlex.quote(project)
+        safe_service = shlex.quote(service)
+        safe_cmd = " ".join(shlex.quote(c) for c in container_cmd)
         ssh_parts.append(
-            f"cd ~/{project} && docker compose exec {service} {' '.join(container_cmd)}"
+            f"cd ~/{safe_project} && docker compose exec {safe_service} {safe_cmd}"
         )
         os.execvp("ssh", ssh_parts)
     else:

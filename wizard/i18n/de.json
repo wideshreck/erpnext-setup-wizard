@@ -61,6 +61,7 @@
             "confirm": "Mit dem Upgrade fortfahren?",
             "backing_up": "Backup vor dem Upgrade wird erstellt\u2026",
             "backup_done": "Backup abgeschlossen.",
+            "backup_failed": "Backup fehlgeschlagen! Trotzdem fortfahren?",
             "updating_env": ".env-Datei wird aktualisiert\u2026",
             "env_updated": ".env aktualisiert.",
             "pulling_images": "Neue Docker-Images werden heruntergeladen\u2026",

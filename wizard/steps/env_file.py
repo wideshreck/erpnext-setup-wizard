@@ -45,10 +45,13 @@ def _build_env_content(cfg: Config) -> str:
         lines.append(f"LETSENCRYPT_EMAIL={_env_quote(cfg.letsencrypt_email)}")
         if cfg.extra_sites:
             all_domains = [cfg.domain] + [s["name"] for s in cfg.extra_sites]
+            # Strip backticks to prevent Traefik rule injection
+            all_domains = [d.replace("`", "") for d in all_domains]
             sites_rule = " || ".join(f"Host(`{d}`)" for d in all_domains)
             lines.append(f"SITES_RULE={sites_rule}")
         else:
-            lines.append(f"SITES_RULE=Host(`{cfg.domain}`)")
+            safe_domain = cfg.domain.replace("`", "")
+            lines.append(f"SITES_RULE=Host(`{safe_domain}`)")
 
     if cfg.backup_cron:
         lines.append(f"BACKUP_CRONSTRING={_env_quote(cfg.backup_cron)}")

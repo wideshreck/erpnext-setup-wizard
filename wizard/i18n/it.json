@@ -61,6 +61,7 @@
             "confirm": "Procedere con l\u2019aggiornamento?",
             "backing_up": "Creazione del backup prima dell\u2019aggiornamento\u2026",
             "backup_done": "Backup completato.",
+            "backup_failed": "Backup fallito! Continuare comunque?",
             "updating_env": "Aggiornamento del file .env\u2026",
             "env_updated": ".env aggiornato.",
             "pulling_images": "Download delle nuove immagini Docker\u2026",
