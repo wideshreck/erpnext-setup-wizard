@@ -1,6 +1,8 @@
 """Step 4: Start Docker Compose containers."""
 
+import json
 import sys
+import time
 
 from ..theme import console
 from ..ui import step_header, step, ok, fail, info, animated_wait
@@ -31,6 +33,37 @@ def build_compose_cmd(cfg: Config) -> str:
     return cmd
 
 
+def _wait_for_healthy(executor, compose_cmd: str, timeout: int = 120) -> bool:
+    """Poll container health until all services are running or timeout."""
+    step(t("steps.docker.health_checking"))
+    start = time.time()
+    while time.time() - start < timeout:
+        result = executor.run(f"{compose_cmd} ps --format json", capture=True)
+        if isinstance(result, tuple):
+            code, stdout, _ = result
+        else:
+            break  # fallback
+        if code == 0 and stdout.strip():
+            lines = stdout.strip().split("\n")
+            all_up = True
+            for line in lines:
+                try:
+                    svc = json.loads(line)
+                    state = svc.get("State", "")
+                    if state != "running":
+                        all_up = False
+                        break
+                except (json.JSONDecodeError, KeyError):
+                    all_up = False
+                    break
+            if all_up and len(lines) > 0:
+                ok(t("steps.docker.all_healthy"))
+                return True
+        time.sleep(5)
+    fail(t("steps.docker.health_timeout"))
+    return False
+
+
 def run_docker(cfg: Config, executor):
     """Bring up Docker Compose stack."""
     step_header(4, TOTAL_STEPS, t("steps.docker.title"))
@@ -54,5 +87,7 @@ def run_docker(cfg: Config, executor):
     ok(t("steps.docker.running"))
 
     console.print()
-    wait_time = 35 if cfg.deploy_mode == "remote" else 25
-    animated_wait(wait_time, t("steps.docker.waiting_db"))
+    # Try health polling first, fall back to timed wait
+    if not _wait_for_healthy(executor, compose_cmd):
+        wait_time = 35 if cfg.deploy_mode == "remote" else 25
+        animated_wait(wait_time, t("steps.docker.waiting_db"))

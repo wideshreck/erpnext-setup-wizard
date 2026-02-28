@@ -155,8 +155,11 @@
             "first_time_hint": "İlk seferde 5-10 dakika sürebilir.",
             "start_failed": "Docker Compose başlatma başarısız!",
             "running": "Konteynerler çalışıyor.",
-            "waiting_db": "Veritabanı hazır olana kadar bekleniyor",
-            "down_failed": "Önceki konteynerler durdurulamadı. Docker çalışıyor mu?"
+            "waiting_db": "Veritaban\u0131 haz\u0131r olana kadar bekleniyor",
+            "down_failed": "\u00d6nceki konteynerler durdurulamad\u0131. Docker \u00e7al\u0131\u015f\u0131yor mu?",
+            "health_checking": "Konteyner sa\u011fl\u0131\u011f\u0131 kontrol ediliyor\u2026",
+            "all_healthy": "T\u00fcm konteynerler sa\u011fl\u0131kl\u0131.",
+            "health_timeout": "Sa\u011fl\u0131k kontrol\u00fc zaman a\u015f\u0131m\u0131na u\u011frad\u0131 \u2014 zamanl\u0131 beklemeye ge\u00e7iliyor."
         },
         "site": {
             "title": "ERPNext Sitesi Oluşturuluyor",
@@ -208,8 +211,11 @@
             "installing_custom_app": "{app} indiriliyor: {url}…",
             "custom_app_installed": "{app} kuruldu.",
             "custom_app_failed": "{app} kurulumu başarısız — atlanıyor.",
-            "custom_apps_done": "Tüm {count} özel uygulama kuruldu.",
-            "custom_apps_some_failed": "{total} özel uygulamadan {failed} tanesi kurulamadı."
+            "custom_apps_done": "T\u00fcm {count} \u00f6zel uygulama kuruldu.",
+            "custom_apps_some_failed": "{total} \u00f6zel uygulamadan {failed} tanesi kurulamad\u0131.",
+            "verifying_health": "Site sa\u011fl\u0131\u011f\u0131 do\u011frulan\u0131yor\u2026",
+            "health_ok": "Site sa\u011fl\u0131kl\u0131.",
+            "health_warning": "Site sa\u011fl\u0131k kontrol\u00fc uyar\u0131lar d\u00f6nd\u00fcrd\u00fc \u2014 hala ba\u015flat\u0131l\u0131yor olabilir."
         }
     }
 }

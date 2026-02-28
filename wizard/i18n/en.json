@@ -156,7 +156,10 @@
             "start_failed": "Docker Compose startup failed!",
             "running": "Containers are running.",
             "waiting_db": "Waiting for database to be ready",
-            "down_failed": "Could not stop previous containers. Is Docker running?"
+            "down_failed": "Could not stop previous containers. Is Docker running?",
+            "health_checking": "Checking container health\u2026",
+            "all_healthy": "All containers are healthy.",
+            "health_timeout": "Health check timed out \u2014 falling back to timed wait."
         },
         "site": {
             "title": "Creating ERPNext Site",
@@ -209,7 +212,10 @@
             "custom_app_installed": "{app} installed.",
             "custom_app_failed": "{app} installation failed — skipping.",
             "custom_apps_done": "All {count} custom app(s) installed.",
-            "custom_apps_some_failed": "{failed} of {total} custom app(s) failed to install."
+            "custom_apps_some_failed": "{failed} of {total} custom app(s) failed to install.",
+            "verifying_health": "Verifying site health\u2026",
+            "health_ok": "Site is healthy.",
+            "health_warning": "Site health check returned warnings \u2014 it may still be initializing."
         }
     }
 }

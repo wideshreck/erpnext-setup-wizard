@@ -156,7 +156,10 @@
             "start_failed": "Docker Compose Start fehlgeschlagen!",
             "running": "Container laufen.",
             "waiting_db": "Warten, bis die Datenbank bereit ist",
-            "down_failed": "Vorherige Container konnten nicht gestoppt werden. Läuft Docker?"
+            "down_failed": "Vorherige Container konnten nicht gestoppt werden. L\u00e4uft Docker?",
+            "health_checking": "Container-Zustand wird \u00fcberpr\u00fcft\u2026",
+            "all_healthy": "Alle Container sind gesund.",
+            "health_timeout": "Zustandspr\u00fcfung hat das Zeitlimit \u00fcberschritten \u2014 Wechsel zur zeitgesteuerten Wartezeit."
         },
         "site": {
             "title": "ERPNext-Site wird erstellt",
@@ -209,7 +212,10 @@
             "custom_app_installed": "{app} installiert.",
             "custom_app_failed": "Installation von {app} fehlgeschlagen — wird übersprungen.",
             "custom_apps_done": "Alle {count} eigenen App(s) installiert.",
-            "custom_apps_some_failed": "{failed} von {total} eigenen App(s) konnten nicht installiert werden."
+            "custom_apps_some_failed": "{failed} von {total} eigenen App(s) konnten nicht installiert werden.",
+            "verifying_health": "Site-Zustand wird \u00fcberpr\u00fcft\u2026",
+            "health_ok": "Site ist gesund.",
+            "health_warning": "Site-Zustandspr\u00fcfung hat Warnungen zur\u00fcckgegeben \u2014 die Initialisierung l\u00e4uft m\u00f6glicherweise noch."
         }
     }
 }

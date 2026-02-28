@@ -156,7 +156,10 @@
             "start_failed": "Avvio di Docker Compose fallito!",
             "running": "I container sono in esecuzione.",
             "waiting_db": "In attesa che il database sia pronto",
-            "down_failed": "Impossibile fermare i container precedenti. Docker è in esecuzione?"
+            "down_failed": "Impossibile fermare i container precedenti. Docker \u00e8 in esecuzione?",
+            "health_checking": "Controllo dello stato dei container\u2026",
+            "all_healthy": "Tutti i container sono in buona salute.",
+            "health_timeout": "Il controllo dello stato ha superato il tempo limite \u2014 passaggio all\u2019attesa temporizzata."
         },
         "site": {
             "title": "Creazione del sito ERPNext",
@@ -209,7 +212,10 @@
             "custom_app_installed": "{app} installata.",
             "custom_app_failed": "Installazione di {app} fallita — saltata.",
             "custom_apps_done": "Tutte le {count} app personalizzate sono state installate.",
-            "custom_apps_some_failed": "{failed} di {total} app personalizzate non sono state installate."
+            "custom_apps_some_failed": "{failed} di {total} app personalizzate non sono state installate.",
+            "verifying_health": "Verifica dello stato del sito\u2026",
+            "health_ok": "Il sito \u00e8 in buona salute.",
+            "health_warning": "Il controllo dello stato del sito ha restituito avvisi \u2014 potrebbe essere ancora in fase di inizializzazione."
         }
     }
 }

@@ -280,6 +280,20 @@ def _configure_backup(cfg: Config, executor, compose_cmd: str):
         ok(t("steps.site.backup_configured"))
 
 
+def _verify_health(cfg: Config, executor, compose_cmd: str):
+    """Final health verification -- check site is accessible."""
+    console.print()
+    step(t("steps.site.verifying_health"))
+    site_q = shlex.quote(cfg.site_name)
+    code = executor.run(
+        f"{compose_cmd} exec -T backend bench --site {site_q} doctor"
+    )
+    if code == 0:
+        ok(t("steps.site.health_ok"))
+    else:
+        info(t("steps.site.health_warning"))
+
+
 def _update_hosts(cfg: Config):
     """Add site to hosts file if needed (local mode only)."""
     if cfg.deploy_mode != "local":
@@ -383,5 +397,6 @@ def run_site(cfg: Config, executor):
             fail(t("steps.site.frontend_restart_failed"))
     _configure_smtp(cfg, executor, compose_cmd)
     _configure_backup(cfg, executor, compose_cmd)
+    _verify_health(cfg, executor, compose_cmd)
     _update_hosts(cfg)
     _show_done(cfg)
