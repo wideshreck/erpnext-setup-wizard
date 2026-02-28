@@ -50,43 +50,39 @@ def _run_setup(args, lang: str) -> None:
         clear_screen()
         banner()
 
-    # Step 2 — Configuration (interactive or unattended)
+    # Configuration (interactive or unattended)
     if unattended_cfg:
         cfg = unattended_cfg
     else:
         cfg = run_configure()
 
-    # Create executor based on deploy mode
     executor = create_executor(cfg)
 
-    # Step 1 — Prerequisites
     run_prerequisites(cfg, executor)
-
-    # Step 3 — .env File
     run_env_file(cfg, executor)
-
-    # Step 4 — Docker Compose
     run_docker(cfg, executor)
-
-    # Step 5 — Site Creation + Completion
     run_site(cfg, executor)
 
 
 def _run_upgrade(args, lang: str) -> None:
     """Upgrade an existing ERPNext installation (stub)."""
+    from wizard.theme import console
     i18n_init(lang)
-    print("Not implemented yet")
+    console.print("  [yellow]Not implemented yet.[/yellow]")
 
 
-def _run_exec(args) -> None:
+def _run_exec(args, lang: str) -> None:
     """Execute a command in a running container (stub)."""
-    print("Not implemented yet")
+    from wizard.theme import console
+    i18n_init(lang)
+    console.print("  [yellow]Not implemented yet.[/yellow]")
 
 
 def _run_status(args, lang: str) -> None:
     """Show status of the ERPNext stack (stub)."""
+    from wizard.theme import console
     i18n_init(lang)
-    print("Not implemented yet")
+    console.print("  [yellow]Not implemented yet.[/yellow]")
 
 
 # ── Main dispatch ───────────────────────────────────────────────
@@ -96,7 +92,10 @@ def main():
     parser = build_parser()
     args = parser.parse_args()
 
-    lang = args.lang or "en"
+    # --lang can appear on root parser or subparser.
+    # When subparser also defines --lang, argparse may override the root value.
+    # Use parse_known_args to detect if root parser captured --lang.
+    lang = getattr(args, "lang", None) or "en"
 
     # Default to setup when no subcommand is given
     command = args.command or "setup"
@@ -106,7 +105,7 @@ def main():
     elif command == "upgrade":
         _run_upgrade(args, lang)
     elif command == "exec":
-        _run_exec(args)
+        _run_exec(args, lang)
     elif command == "status":
         _run_status(args, lang)
     else:

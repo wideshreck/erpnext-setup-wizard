@@ -11,6 +11,16 @@ from .steps.configure import Config
 
 # ── Shared argument helpers ─────────────────────────────────────
 
+def _add_lang_arg(parser: argparse.ArgumentParser) -> None:
+    """Add --lang to a subparser so it works in any position.
+
+    Uses SUPPRESS default so the subparser does not override a value
+    already set by the root parser when --lang appears before the subcommand.
+    """
+    parser.add_argument("--lang", type=str, default=argparse.SUPPRESS,
+                        help="Language code (e.g., tr, en)")
+
+
 def _add_ssh_args(parser: argparse.ArgumentParser) -> None:
     """Add SSH-related arguments to *parser*."""
     ssh = parser.add_argument_group("SSH options")
@@ -50,6 +60,7 @@ def build_parser() -> argparse.ArgumentParser:
         "setup", help="Run the interactive setup wizard (default)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    _add_lang_arg(setup_p)
     setup_p.add_argument("--config", type=str,
                          help="Path to YAML config file for unattended mode")
 
@@ -107,6 +118,7 @@ def build_parser() -> argparse.ArgumentParser:
     upgrade_p = subparsers.add_parser(
         "upgrade", help="Upgrade an existing ERPNext installation",
     )
+    _add_lang_arg(upgrade_p)
     upgrade_p.add_argument("--version", type=str,
                            help="Target ERPNext version (e.g., v16.8.0)")
     _add_project_arg(upgrade_p)
@@ -116,15 +128,19 @@ def build_parser() -> argparse.ArgumentParser:
     exec_p = subparsers.add_parser(
         "exec", help="Execute a command in a running container",
     )
+    _add_lang_arg(exec_p)
     _add_project_arg(exec_p)
     exec_p.add_argument("--service", type=str, default="backend",
                         help="Service name (default: %(default)s)")
     _add_ssh_args(exec_p)
+    exec_p.add_argument("cmd", nargs=argparse.REMAINDER,
+                        help="Command to run in the container")
 
     # ── status ───────────────────────────────────────────────
     status_p = subparsers.add_parser(
         "status", help="Show status of the ERPNext stack",
     )
+    _add_lang_arg(status_p)
     _add_project_arg(status_p)
     _add_ssh_args(status_p)
 
