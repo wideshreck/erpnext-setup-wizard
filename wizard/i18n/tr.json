@@ -181,7 +181,8 @@
             "build_image_prompt": "Uygulamalar\u0131 i\u00e7eren \u00f6zel bir Docker imaj\u0131 derlensin mi?",
             "image_tag_label": "\u0130maj Etiketi",
             "image_tag_hint": "\u00d6zel derleme i\u00e7in Docker imaj ad\u0131:etiket",
-            "portainer_prompt": "Konteyner y\u00f6netimi i\u00e7in Portainer web aray\u00fcz\u00fc etkinle\u015ftirilsin mi?"
+            "portainer_prompt": "Konteyner y\u00f6netimi i\u00e7in Portainer web aray\u00fcz\u00fc etkinle\u015ftirilsin mi?",
+            "autoheal_prompt": "Otomatik konteyner kurtarma i\u00e7in autoheal etkinle\u015ftirilsin mi?"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",

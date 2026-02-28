@@ -181,7 +181,8 @@
             "build_image_prompt": "Compiler une image Docker personnalis\u00e9e avec les applications int\u00e9gr\u00e9es ?",
             "image_tag_label": "Tag de l\u2019image",
             "image_tag_hint": "Nom:tag de l\u2019image Docker pour la compilation personnalis\u00e9e",
-            "portainer_prompt": "Activer l\u2019interface web Portainer pour la gestion des conteneurs ?"
+            "portainer_prompt": "Activer l\u2019interface web Portainer pour la gestion des conteneurs ?",
+            "autoheal_prompt": "Activer autoheal pour la r\u00e9cup\u00e9ration automatique des conteneurs ?"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",

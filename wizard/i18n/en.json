@@ -181,7 +181,8 @@
             "build_image_prompt": "Build a custom Docker image with apps baked in?",
             "image_tag_label": "Image Tag",
             "image_tag_hint": "Docker image name:tag for the custom build",
-            "portainer_prompt": "Enable Portainer web UI for container management?"
+            "portainer_prompt": "Enable Portainer web UI for container management?",
+            "autoheal_prompt": "Enable autoheal for automatic container recovery?"
         },
         "env_file": {
             "title": "Preparing Environment File",

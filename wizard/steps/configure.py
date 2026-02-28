@@ -70,6 +70,9 @@ class Config:
     # Optional: Portainer container management UI
     enable_portainer: bool = False
 
+    # Optional: Autoheal container recovery
+    enable_autoheal: bool = False
+
 
 def _validate_port(val: str) -> bool | str:
     if val.isdigit() and val == str(int(val)) and 1024 <= int(val) <= 65535:
@@ -513,7 +516,12 @@ def run_configure() -> Config:
         if deploy_mode != "local":
             enable_portainer = confirm_action(t("steps.configure.portainer_prompt"))
 
-        # ── 14. Summary table ────────────────────────────────
+        # ── 14. Autoheal (production/remote) ─────────────────
+        enable_autoheal = False
+        if deploy_mode != "local":
+            enable_autoheal = confirm_action(t("steps.configure.autoheal_prompt"))
+
+        # ── 15. Summary table ────────────────────────────────
         console.print()
         table = Table(
             title=t("steps.configure.summary_title"),
@@ -576,6 +584,8 @@ def run_configure() -> Config:
             table.add_row(f"\U0001f433  {t('steps.configure.image_tag_label')}", image_tag)
         if enable_portainer:
             table.add_row(f"\U0001f5a5\ufe0f  Portainer", t("steps.configure.portainer_prompt").rstrip("?"))
+        if enable_autoheal:
+            table.add_row(f"\U0001fa7a  Autoheal", t("steps.configure.autoheal_prompt").rstrip("?"))
 
         console.print(Align.center(table))
         console.print()
@@ -613,6 +623,7 @@ def run_configure() -> Config:
                 build_image=build_image,
                 image_tag=image_tag,
                 enable_portainer=enable_portainer,
+                enable_autoheal=enable_autoheal,
             )
 
         # User declined — ask if they want to re-enter

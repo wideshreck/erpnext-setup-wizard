@@ -181,7 +181,8 @@
             "build_image_prompt": "Ein benutzerdefiniertes Docker-Image mit integrierten Apps erstellen?",
             "image_tag_label": "Image-Tag",
             "image_tag_hint": "Docker-Image Name:Tag f\u00fcr den benutzerdefinierten Build",
-            "portainer_prompt": "Portainer-Weboberfl\u00e4che f\u00fcr Container-Verwaltung aktivieren?"
+            "portainer_prompt": "Portainer-Weboberfl\u00e4che f\u00fcr Container-Verwaltung aktivieren?",
+            "autoheal_prompt": "Autoheal f\u00fcr automatische Container-Wiederherstellung aktivieren?"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",

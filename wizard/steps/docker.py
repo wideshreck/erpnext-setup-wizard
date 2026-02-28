@@ -33,6 +33,9 @@ def build_compose_cmd(cfg: Config) -> str:
     if cfg.enable_portainer:
         files.append("compose.portainer.yaml")
 
+    if cfg.enable_autoheal:
+        files.append("compose.autoheal.yaml")
+
     cmd = "docker compose " + " ".join(f"-f {f}" for f in files)
     if cfg.deploy_mode == "remote":
         cmd = f"cd ~/frappe_docker && {cmd}"
@@ -68,6 +71,35 @@ volumes:
                 pass
     else:
         with open("compose.portainer.yaml", "w") as f:
+            f.write(content)
+
+
+def _write_autoheal_overlay(executor, cfg):
+    """Write compose.autoheal.yaml overlay file."""
+    content = '''services:
+  autoheal:
+    image: willfarrell/autoheal:latest
+    restart: always
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: all
+      AUTOHEAL_INTERVAL: 60
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+'''
+    if cfg.deploy_mode == "remote":
+        import tempfile, os
+        tmp = tempfile.mktemp(suffix=".yaml")
+        try:
+            with open(tmp, "w") as f:
+                f.write(content)
+            executor.upload(tmp, "~/frappe_docker/compose.autoheal.yaml")
+        finally:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+    else:
+        with open("compose.autoheal.yaml", "w") as f:
             f.write(content)
 
 
@@ -116,6 +148,9 @@ def run_docker(cfg: Config, executor):
     # Write overlay files for optional services
     if cfg.enable_portainer:
         _write_portainer_overlay(executor, cfg)
+
+    if cfg.enable_autoheal:
+        _write_autoheal_overlay(executor, cfg)
 
     compose_cmd = build_compose_cmd(cfg)
 

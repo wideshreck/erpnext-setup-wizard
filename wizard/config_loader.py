@@ -279,6 +279,7 @@ def _config_from_yaml(path: str) -> Config:
         build_image=data.get("build_image", False),
         image_tag=data.get("image_tag", "custom-erpnext:latest"),
         enable_portainer=data.get("enable_portainer", False),
+        enable_autoheal=data.get("enable_autoheal", False),
     )
     _validate_config(cfg)
     return cfg
@@ -368,6 +369,7 @@ def _config_from_args(args) -> Config | None:
         build_image=getattr(args, "build_image", False),
         image_tag=getattr(args, "image_tag", None) or "custom-erpnext:latest",
         enable_portainer=getattr(args, "enable_portainer", False),
+        enable_autoheal=getattr(args, "enable_autoheal", False),
     )
     _validate_config(cfg)
     return cfg
