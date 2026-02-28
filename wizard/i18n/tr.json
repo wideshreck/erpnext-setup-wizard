@@ -139,7 +139,10 @@
             "custom_app_url": "Uygulama Git URL'si",
             "custom_app_url_hint": "Uygulama deposunun HTTPS veya SSH URL'si",
             "custom_app_branch": "Dal (Branch)",
-            "custom_app_add_another": "Başka bir özel uygulama eklemek ister misiniz?"
+            "custom_app_add_another": "Başka bir özel uygulama eklemek ister misiniz?",
+            "backup_cron_prompt": "Otomatik yedekleme zamanlaması etkinleştirilsin mi?",
+            "backup_cron_label": "Yedekleme Zamanlaması",
+            "backup_cron_hint": "Otomatik yedeklemeler için ofelia cron ifadesi"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",

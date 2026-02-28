@@ -59,6 +59,9 @@ class Config:
     backup_s3_access_key: str = ""
     backup_s3_secret_key: str = ""
 
+    # Optional: Backup cron (ofelia)
+    backup_cron: str = ""  # e.g., "@every 6h", empty = disabled
+
 
 def _validate_port(val: str) -> bool | str:
     if val.isdigit() and val == str(int(val)) and 1024 <= int(val) <= 65535:
@@ -441,7 +444,23 @@ def run_configure() -> Config:
                 )
                 n += 1
 
-        # ── 11. Summary table ────────────────────────────────
+        # ── 11. Backup cron (production/remote only) ─────────
+        backup_cron = ""
+        if deploy_mode != "local":
+            console.print(Rule(style="dim"))
+            console.print()
+
+            if confirm_action(t("steps.configure.backup_cron_prompt")):
+                backup_cron = ask_field(
+                    number=n, icon="⏰",
+                    label=t("steps.configure.backup_cron_label"),
+                    default="@every 6h",
+                    hint=t("steps.configure.backup_cron_hint"),
+                    examples="@every 6h · @every 12h · @daily",
+                )
+                n += 1
+
+        # ── 12. Summary table ────────────────────────────────
         console.print()
         table = Table(
             title=t("steps.configure.summary_title"),
@@ -494,6 +513,8 @@ def run_configure() -> Config:
             table.add_row(f"📧  {t('steps.configure.smtp_host')}", smtp_host)
         if backup_enabled:
             table.add_row(f"☁️  {t('steps.configure.backup_s3_endpoint')}", backup_s3_endpoint)
+        if backup_cron:
+            table.add_row(f"⏰  {t('steps.configure.backup_cron_label')}", backup_cron)
 
         console.print(Align.center(table))
         console.print()
@@ -526,6 +547,7 @@ def run_configure() -> Config:
                 backup_s3_bucket=backup_s3_bucket,
                 backup_s3_access_key=backup_s3_access_key,
                 backup_s3_secret_key=backup_s3_secret_key,
+                backup_cron=backup_cron,
             )
 
         # User declined — ask if they want to re-enter

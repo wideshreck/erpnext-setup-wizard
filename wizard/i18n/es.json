@@ -139,7 +139,10 @@
             "custom_app_url": "URL Git de la aplicación",
             "custom_app_url_hint": "URL HTTPS o SSH del repositorio de la aplicación",
             "custom_app_branch": "Rama (Branch)",
-            "custom_app_add_another": "Agregar otra aplicación personalizada?"
+            "custom_app_add_another": "Agregar otra aplicación personalizada?",
+            "backup_cron_prompt": "¿Habilitar programación automática de respaldos?",
+            "backup_cron_label": "Programación de Respaldos",
+            "backup_cron_hint": "Expresión cron de ofelia para respaldos automáticos"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",

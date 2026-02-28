@@ -139,7 +139,10 @@
             "custom_app_url": "URL Git de l'application",
             "custom_app_url_hint": "URL HTTPS ou SSH du dépôt de l'application",
             "custom_app_branch": "Branche",
-            "custom_app_add_another": "Ajouter une autre application personnalisée ?"
+            "custom_app_add_another": "Ajouter une autre application personnalisée ?",
+            "backup_cron_prompt": "Activer la planification automatique des sauvegardes ?",
+            "backup_cron_label": "Planification des sauvegardes",
+            "backup_cron_hint": "Expression cron ofelia pour les sauvegardes automatiques"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",

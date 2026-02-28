@@ -27,6 +27,9 @@ def build_compose_cmd(cfg: Config) -> str:
     else:
         files.append("overrides/compose.https.yaml")
 
+    if cfg.backup_cron:
+        files.append("overrides/compose.backup-cron.yaml")
+
     cmd = "docker compose " + " ".join(f"-f {f}" for f in files)
     if cfg.deploy_mode == "remote":
         cmd = f"cd ~/frappe_docker && {cmd}"

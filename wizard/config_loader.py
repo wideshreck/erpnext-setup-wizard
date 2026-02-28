@@ -262,6 +262,7 @@ def _config_from_yaml(path: str) -> Config:
         backup_s3_bucket=backup.get("s3_bucket", ""),
         backup_s3_access_key=backup.get("s3_access_key", ""),
         backup_s3_secret_key=backup.get("s3_secret_key", ""),
+        backup_cron=data.get("backup_cron", ""),
     )
     _validate_config(cfg)
     return cfg
@@ -334,6 +335,7 @@ def _config_from_args(args) -> Config | None:
         backup_s3_bucket=getattr(args, "backup_s3_bucket", None) or "",
         backup_s3_access_key=getattr(args, "backup_s3_access_key", None) or "",
         backup_s3_secret_key=getattr(args, "backup_s3_secret_key", None) or "",
+        backup_cron=getattr(args, "backup_cron", None) or "",
     )
     _validate_config(cfg)
     return cfg

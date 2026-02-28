@@ -139,7 +139,10 @@
             "custom_app_url": "App-Git-URL",
             "custom_app_url_hint": "HTTPS- oder SSH-URL zum App-Repository",
             "custom_app_branch": "Branch",
-            "custom_app_add_another": "Weitere eigene App hinzufügen?"
+            "custom_app_add_another": "Weitere eigene App hinzufügen?",
+            "backup_cron_prompt": "Automatischen Backup-Zeitplan aktivieren?",
+            "backup_cron_label": "Backup-Zeitplan",
+            "backup_cron_hint": "Ofelia-Cron-Ausdruck für automatische Backups"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
