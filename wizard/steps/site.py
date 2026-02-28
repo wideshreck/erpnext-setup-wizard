@@ -60,6 +60,29 @@ def _create_site(cfg: Config, executor, compose_cmd: str):
         ok(t("steps.site.scheduler_enabled"))
 
 
+def _create_extra_site(extra: dict, cfg: Config, executor, compose_cmd: str):
+    """Create an additional site with the same apps."""
+    site_escaped = extra["name"].replace("[", "\\[")
+    step(t("steps.site.creating_extra_site", site_name=site_escaped))
+
+    db_type_flag = " --db-type postgres" if cfg.db_type == "postgres" else ""
+    site_q = shlex.quote(extra["name"])
+
+    code = executor.run(
+        f"{compose_cmd} exec -T backend bench new-site {site_q} "
+        f"--install-app erpnext "
+        f"--db-root-password {shlex.quote(cfg.db_password)} "
+        f"--admin-password {shlex.quote(extra['admin_password'])}"
+        f"{db_type_flag}"
+    )
+    if code == 0:
+        ok(t("steps.site.extra_site_created", site_name=extra["name"]))
+        # Enable scheduler
+        executor.run(f"{compose_cmd} exec -T backend bench --site {site_q} enable-scheduler")
+    else:
+        fail(t("steps.site.extra_site_failed", site_name=extra["name"]))
+
+
 def _install_app(repo_name: str, display_name: str, source: str,
                   branch: str, site_name: str, fail_key: str,
                   executor=None, compose_cmd: str = "") -> bool:
@@ -386,6 +409,10 @@ def run_site(cfg: Config, executor):
 
     step_header(5, TOTAL_STEPS, t("steps.site.title"))
     _create_site(cfg, executor, compose_cmd)
+
+    for extra in cfg.extra_sites:
+        _create_extra_site(extra, cfg, executor, compose_cmd)
+
     installed = (
         _install_extra_apps(cfg, executor, compose_cmd)
         + _install_community_apps(cfg, executor, compose_cmd)

@@ -235,6 +235,18 @@ def _config_from_yaml(path: str) -> Config:
                 name = url.rstrip("/").rstrip(".git").split("/")[-1]
                 custom_apps.append({"url": url, "branch": branch, "name": name})
 
+    # Parse extra_sites list from YAML
+    raw_extra_sites = data.get("extra_sites", [])
+    extra_sites = []
+    admin_password = _require(data, "admin_password")
+    if isinstance(raw_extra_sites, list):
+        for entry in raw_extra_sites:
+            if isinstance(entry, dict) and "name" in entry:
+                extra_sites.append({
+                    "name": entry["name"],
+                    "admin_password": entry.get("admin_password", admin_password),
+                })
+
     cfg = Config(
         deploy_mode=data.get("mode", "local"),
         site_name=_require(data, "site_name"),
@@ -242,10 +254,11 @@ def _config_from_yaml(path: str) -> Config:
         db_type=data.get("db_type", "mariadb"),
         http_port=str(data.get("http_port", "8080")),
         db_password=_require(data, "db_password"),
-        admin_password=_require(data, "admin_password"),
+        admin_password=admin_password,
         extra_apps=data.get("extra_apps", []),
         community_apps=[],
         custom_apps=custom_apps,
+        extra_sites=extra_sites,
         domain=data.get("domain", ""),
         letsencrypt_email=data.get("letsencrypt_email", ""),
         ssh_host=ssh.get("host", ""),
@@ -308,6 +321,18 @@ def _config_from_args(args) -> Config | None:
             name = url.rstrip("/").rstrip(".git").split("/")[-1]
             custom_apps.append({"url": url, "branch": branch, "name": name})
 
+    # Parse --sites "site2.example.com,site3.example.com"
+    extra_sites = []
+    raw_sites = getattr(args, "sites", None)
+    if raw_sites:
+        for site_name in raw_sites.split(","):
+            site_name = site_name.strip()
+            if site_name:
+                extra_sites.append({
+                    "name": site_name,
+                    "admin_password": args.admin_password,
+                })
+
     cfg = Config(
         deploy_mode=args.mode,
         site_name=args.site_name,
@@ -319,6 +344,7 @@ def _config_from_args(args) -> Config | None:
         extra_apps=args.apps.split(",") if getattr(args, "apps", None) else [],
         community_apps=[],
         custom_apps=custom_apps,
+        extra_sites=extra_sites,
         domain=getattr(args, "domain", None) or "",
         letsencrypt_email=getattr(args, "letsencrypt_email", None) or "",
         ssh_host=getattr(args, "ssh_host", None) or "",

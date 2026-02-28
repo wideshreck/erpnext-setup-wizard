@@ -165,7 +165,12 @@
             "custom_app_add_another": "Weitere eigene App hinzufügen?",
             "backup_cron_prompt": "Automatischen Backup-Zeitplan aktivieren?",
             "backup_cron_label": "Backup-Zeitplan",
-            "backup_cron_hint": "Ofelia-Cron-Ausdruck für automatische Backups"
+            "backup_cron_hint": "Ofelia-Cron-Ausdruck für automatische Backups",
+            "multi_site_prompt": "Zusätzliche Sites hinzufügen?",
+            "extra_site_name": "Zusätzlicher Site-Name",
+            "extra_site_name_hint": "Domainname für die zusätzliche Site",
+            "extra_site_password": "Admin-Passwort für zusätzliche Site",
+            "multi_site_add_another": "Weitere Site hinzufügen?"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -239,6 +244,9 @@
             "custom_app_failed": "Installation von {app} fehlgeschlagen — wird übersprungen.",
             "custom_apps_done": "Alle {count} eigenen App(s) installiert.",
             "custom_apps_some_failed": "{failed} von {total} eigenen App(s) konnten nicht installiert werden.",
+            "creating_extra_site": "Zusätzliche Site wird erstellt: [bold]{site_name}[/bold]",
+            "extra_site_created": "Site {site_name} erstellt.",
+            "extra_site_failed": "Erstellung der Site {site_name} fehlgeschlagen.",
             "verifying_health": "Site-Zustand wird \u00fcberpr\u00fcft\u2026",
             "health_ok": "Site ist gesund.",
             "health_warning": "Site-Zustandspr\u00fcfung hat Warnungen zur\u00fcckgegeben \u2014 die Initialisierung l\u00e4uft m\u00f6glicherweise noch."

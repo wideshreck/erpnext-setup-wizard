@@ -165,7 +165,12 @@
             "custom_app_add_another": "Ajouter une autre application personnalisée ?",
             "backup_cron_prompt": "Activer la planification automatique des sauvegardes ?",
             "backup_cron_label": "Planification des sauvegardes",
-            "backup_cron_hint": "Expression cron ofelia pour les sauvegardes automatiques"
+            "backup_cron_hint": "Expression cron ofelia pour les sauvegardes automatiques",
+            "multi_site_prompt": "Ajouter des sites supplémentaires ?",
+            "extra_site_name": "Nom du site supplémentaire",
+            "extra_site_name_hint": "Nom de domaine pour le site supplémentaire",
+            "extra_site_password": "Mot de passe admin pour le site supplémentaire",
+            "multi_site_add_another": "Ajouter un autre site ?"
         },
         "env_file": {
             "title": "Préparation du fichier d'environnement",
@@ -239,6 +244,9 @@
             "custom_app_failed": "Installation de {app} échouée — ignorée.",
             "custom_apps_done": "Les {count} applications personnalis\u00e9es ont \u00e9t\u00e9 install\u00e9es.",
             "custom_apps_some_failed": "{failed} sur {total} application(s) personnalis\u00e9e(s) n\u2019ont pas pu \u00eatre install\u00e9es.",
+            "creating_extra_site": "Création du site supplémentaire : [bold]{site_name}[/bold]",
+            "extra_site_created": "Site {site_name} créé.",
+            "extra_site_failed": "Échec de la création du site {site_name}.",
             "verifying_health": "V\u00e9rification de l\u2019\u00e9tat du site\u2026",
             "health_ok": "Le site est en bonne sant\u00e9.",
             "health_warning": "La v\u00e9rification du site a renvoy\u00e9 des avertissements \u2014 il est peut-\u00eatre encore en cours d\u2019initialisation."

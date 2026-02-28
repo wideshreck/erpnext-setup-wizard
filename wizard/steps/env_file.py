@@ -43,7 +43,12 @@ def _build_env_content(cfg: Config) -> str:
         lines.append("LETSENCRYPT_EMAIL=mail@example.com")
     else:
         lines.append(f"LETSENCRYPT_EMAIL={_env_quote(cfg.letsencrypt_email)}")
-        lines.append(f"SITES_RULE=Host(`{cfg.domain}`)")
+        if cfg.extra_sites:
+            all_domains = [cfg.domain] + [s["name"] for s in cfg.extra_sites]
+            sites_rule = " || ".join(f"Host(`{d}`)" for d in all_domains)
+            lines.append(f"SITES_RULE={sites_rule}")
+        else:
+            lines.append(f"SITES_RULE=Host(`{cfg.domain}`)")
 
     if cfg.backup_cron:
         lines.append(f"BACKUP_CRONSTRING={_env_quote(cfg.backup_cron)}")

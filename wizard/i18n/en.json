@@ -165,7 +165,12 @@
             "custom_app_add_another": "Add another custom app?",
             "backup_cron_prompt": "Enable automatic backup schedule?",
             "backup_cron_label": "Backup Schedule",
-            "backup_cron_hint": "ofelia cron expression for automatic backups"
+            "backup_cron_hint": "ofelia cron expression for automatic backups",
+            "multi_site_prompt": "Add additional sites?",
+            "extra_site_name": "Additional Site Name",
+            "extra_site_name_hint": "Domain name for the additional site",
+            "extra_site_password": "Admin Password for Additional Site",
+            "multi_site_add_another": "Add another site?"
         },
         "env_file": {
             "title": "Preparing Environment File",
@@ -239,6 +244,9 @@
             "custom_app_failed": "{app} installation failed — skipping.",
             "custom_apps_done": "All {count} custom app(s) installed.",
             "custom_apps_some_failed": "{failed} of {total} custom app(s) failed to install.",
+            "creating_extra_site": "Creating additional site: [bold]{site_name}[/bold]",
+            "extra_site_created": "Site {site_name} created.",
+            "extra_site_failed": "Failed to create site {site_name}.",
             "verifying_health": "Verifying site health\u2026",
             "health_ok": "Site is healthy.",
             "health_warning": "Site health check returned warnings \u2014 it may still be initializing."

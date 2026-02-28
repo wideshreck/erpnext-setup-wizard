@@ -165,7 +165,12 @@
             "custom_app_add_another": "Başka bir özel uygulama eklemek ister misiniz?",
             "backup_cron_prompt": "Otomatik yedekleme zamanlaması etkinleştirilsin mi?",
             "backup_cron_label": "Yedekleme Zamanlaması",
-            "backup_cron_hint": "Otomatik yedeklemeler için ofelia cron ifadesi"
+            "backup_cron_hint": "Otomatik yedeklemeler için ofelia cron ifadesi",
+            "multi_site_prompt": "Ek siteler eklemek ister misiniz?",
+            "extra_site_name": "Ek Site Adı",
+            "extra_site_name_hint": "Ek sitenin alan adı",
+            "extra_site_password": "Ek Site Admin Şifresi",
+            "multi_site_add_another": "Başka bir site eklemek ister misiniz?"
         },
         "env_file": {
             "title": "Ortam Dosyası Hazırlanıyor",
@@ -239,6 +244,9 @@
             "custom_app_failed": "{app} kurulumu başarısız — atlanıyor.",
             "custom_apps_done": "T\u00fcm {count} \u00f6zel uygulama kuruldu.",
             "custom_apps_some_failed": "{total} \u00f6zel uygulamadan {failed} tanesi kurulamad\u0131.",
+            "creating_extra_site": "Ek site oluşturuluyor: [bold]{site_name}[/bold]",
+            "extra_site_created": "{site_name} sitesi oluşturuldu.",
+            "extra_site_failed": "{site_name} sitesi oluşturulamadı.",
             "verifying_health": "Site sa\u011fl\u0131\u011f\u0131 do\u011frulan\u0131yor\u2026",
             "health_ok": "Site sa\u011fl\u0131kl\u0131.",
             "health_warning": "Site sa\u011fl\u0131k kontrol\u00fc uyar\u0131lar d\u00f6nd\u00fcrd\u00fc \u2014 hala ba\u015flat\u0131l\u0131yor olabilir."

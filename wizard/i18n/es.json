@@ -165,7 +165,12 @@
             "custom_app_add_another": "Agregar otra aplicación personalizada?",
             "backup_cron_prompt": "¿Habilitar programación automática de respaldos?",
             "backup_cron_label": "Programación de Respaldos",
-            "backup_cron_hint": "Expresión cron de ofelia para respaldos automáticos"
+            "backup_cron_hint": "Expresión cron de ofelia para respaldos automáticos",
+            "multi_site_prompt": "¿Agregar sitios adicionales?",
+            "extra_site_name": "Nombre del Sitio Adicional",
+            "extra_site_name_hint": "Nombre de dominio para el sitio adicional",
+            "extra_site_password": "Contraseña de Admin para Sitio Adicional",
+            "multi_site_add_another": "¿Agregar otro sitio?"
         },
         "env_file": {
             "title": "Preparando archivo de entorno",
@@ -239,6 +244,9 @@
             "custom_app_failed": "Instalación de {app} fallida — omitiendo.",
             "custom_apps_done": "Las {count} aplicaciones personalizadas fueron instaladas.",
             "custom_apps_some_failed": "{failed} de {total} aplicaci\u00f3n(es) personalizada(s) no pudieron instalarse.",
+            "creating_extra_site": "Creando sitio adicional: [bold]{site_name}[/bold]",
+            "extra_site_created": "Sitio {site_name} creado.",
+            "extra_site_failed": "Error al crear el sitio {site_name}.",
             "verifying_health": "Verificando el estado del sitio\u2026",
             "health_ok": "El sitio est\u00e1 saludable.",
             "health_warning": "La verificaci\u00f3n de estado del sitio devolvi\u00f3 advertencias \u2014 puede estar a\u00fan inicializ\u00e1ndose."
