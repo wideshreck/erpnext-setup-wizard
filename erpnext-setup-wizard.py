@@ -72,10 +72,9 @@ def _run_upgrade(args, lang: str) -> None:
 
 
 def _run_exec(args, lang: str) -> None:
-    """Execute a command in a running container (stub)."""
-    from wizard.theme import console
-    i18n_init(lang)
-    console.print("  [yellow]Not implemented yet.[/yellow]")
+    """Execute a command in a running container."""
+    from wizard.commands.exec_cmd import run_exec
+    run_exec(args)
 
 
 def _run_status(args, lang: str) -> None:
