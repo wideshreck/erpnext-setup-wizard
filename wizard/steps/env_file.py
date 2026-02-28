@@ -14,9 +14,15 @@ def _env_quote(value: str) -> str:
 
     Docker Compose only supports double-quoted values in .env files.
     """
-    needs_quoting = set("#$\"'`\\!&|;() \t\n")
+    needs_quoting = set("#$\"'`\\!&|;() \t\n\r")
     if any(c in needs_quoting for c in value):
-        escaped = value.replace("\\", "\\\\").replace('"', '\\"').replace("$", "\\$").replace("`", "\\`")
+        escaped = (value
+                   .replace("\\", "\\\\")
+                   .replace('"', '\\"')
+                   .replace("$", "\\$")
+                   .replace("`", "\\`")
+                   .replace("\n", "\\n")
+                   .replace("\r", "\\r"))
         return f'"{escaped}"'
     return value
 
@@ -36,7 +42,7 @@ def _build_env_content(cfg: Config) -> str:
         lines.append(f"HTTP_PUBLISH_PORT={cfg.http_port}")
         lines.append("LETSENCRYPT_EMAIL=mail@example.com")
     else:
-        lines.append(f"LETSENCRYPT_EMAIL={cfg.letsencrypt_email}")
+        lines.append(f"LETSENCRYPT_EMAIL={_env_quote(cfg.letsencrypt_email)}")
         lines.append(f"SITES_RULE=Host(`{cfg.domain}`)")
 
     return "\n".join(lines) + "\n"
@@ -51,11 +57,16 @@ def run_env_file(cfg: Config, executor):
 
     if cfg.deploy_mode == "remote":
         tmp_path = ".env.remote.tmp"
-        with open(tmp_path, "w") as f:
-            f.write(env_content)
-        executor.upload(tmp_path, "~/frappe_docker/.env")
-        os.unlink(tmp_path)
-        info(t("steps.env_file.uploaded"))
+        try:
+            with open(tmp_path, "w") as f:
+                f.write(env_content)
+            executor.upload(tmp_path, "~/frappe_docker/.env")
+            info(t("steps.env_file.uploaded"))
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except OSError:
+                pass
     else:
         tmp_path = ".env.tmp"
         try:

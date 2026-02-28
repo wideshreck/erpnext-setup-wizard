@@ -193,8 +193,11 @@
             "dns_reminder": "Erişmeden önce {domain} için DNS kaydının sunucunuza yönlendiğinden emin olun.",
             "configuring_smtp": "SMTP yapılandırılıyor…",
             "smtp_configured": "SMTP yapılandırıldı.",
+            "smtp_failed": "SMTP yapılandırması başarısız oldu.",
             "configuring_backup": "S3 yedekleme yapılandırılıyor…",
-            "backup_configured": "S3 yedekleme yapılandırıldı."
+            "backup_configured": "S3 yedekleme yapılandırıldı.",
+            "backup_failed": "S3 yedekleme yapılandırması başarısız oldu.",
+            "frontend_restart_failed": "Frontend konteyneri yeniden başlatılamadı."
         }
     }
 }

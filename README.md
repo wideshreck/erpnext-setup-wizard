@@ -108,6 +108,7 @@ Example `deploy.yml`:
 ```yaml
 mode: production
 site_name: erp.example.com
+http_port: 8080                   # only for local mode
 erpnext_version: v16.7.3
 db_type: mariadb
 db_password: secure_password
@@ -183,8 +184,9 @@ Generates the `.env` file with your configuration. Production/remote modes inclu
 ### Step 4 — Docker Compose
 
 Starts the container stack with the correct overlay files:
-- **Database:** `compose.mariadb.yaml` or `compose.postgres.yaml`
-- **Proxy:** `compose.noproxy.yaml` (local) or `compose.https.yaml` (production/remote)
+- **Database:** `overrides/compose.mariadb.yaml` or `overrides/compose.postgres.yaml`
+- **Cache:** `overrides/compose.redis.yaml`
+- **Proxy:** `overrides/compose.noproxy.yaml` (local) or `overrides/compose.https.yaml` (production/remote)
 
 ### Step 5 — Site Creation
 

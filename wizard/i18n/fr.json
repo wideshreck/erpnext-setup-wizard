@@ -193,8 +193,11 @@
             "dns_reminder": "Assurez-vous que le DNS de {domain} pointe vers votre serveur avant d'y accéder.",
             "configuring_smtp": "Configuration du SMTP…",
             "smtp_configured": "SMTP configuré.",
+            "smtp_failed": "Échec de la configuration SMTP.",
             "configuring_backup": "Configuration de la sauvegarde S3…",
-            "backup_configured": "Sauvegarde S3 configurée."
+            "backup_configured": "Sauvegarde S3 configurée.",
+            "backup_failed": "Échec de la configuration de la sauvegarde S3.",
+            "frontend_restart_failed": "Échec du redémarrage du conteneur frontend."
         }
     }
 }

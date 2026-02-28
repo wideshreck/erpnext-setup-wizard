@@ -94,7 +94,7 @@ def _install_app(repo_name: str, display_name: str, source: str,
     # Step 3: Register in apps.txt if missing
     executor.run(
         f"{compose_cmd} exec -T backend bash -c "
-        f"'grep -qxF {app_q} sites/apps.txt || echo {app_q} >> sites/apps.txt'"
+        f"'grep -qxF \"$1\" sites/apps.txt || echo \"$1\" >> sites/apps.txt' _ {app_q}"
     )
 
     # Step 4: Install on site
@@ -118,10 +118,10 @@ def _install_app(repo_name: str, display_name: str, source: str,
     # symlink is dangling.  Replace it with the actual files.
     executor.run(
         f"{compose_cmd} exec -T backend bash -c "
-        f"'if [ -L sites/assets/{app_q} ]; then "
-        f"target=$(readlink -f sites/assets/{app_q}) && "
-        f"rm sites/assets/{app_q} && "
-        f"cp -r \"$target\" sites/assets/{app_q}; fi'"
+        f"'if [ -L \"sites/assets/$1\" ]; then "
+        f"target=$(readlink -f \"sites/assets/$1\") && "
+        f"rm \"sites/assets/$1\" && "
+        f"cp -r \"$target\" \"sites/assets/$1\"; fi' _ {app_q}"
     )
 
     return True
@@ -209,12 +209,20 @@ def _configure_smtp(cfg: Config, executor, compose_cmd: str):
     step(t("steps.site.configuring_smtp"))
     site_q = shlex.quote(cfg.site_name)
     bench_cfg = f"{compose_cmd} exec -T backend bench --site {site_q} set-config"
-    executor.run(f"{bench_cfg} mail_server {shlex.quote(cfg.smtp_host)}")
-    executor.run(f"{bench_cfg} mail_port {cfg.smtp_port}")
-    executor.run(f"{bench_cfg} mail_login {shlex.quote(cfg.smtp_user)}")
-    executor.run(f"{bench_cfg} mail_password {shlex.quote(cfg.smtp_password)}")
-    executor.run(f"{bench_cfg} use_tls {1 if cfg.smtp_use_tls else 0}")
-    ok(t("steps.site.smtp_configured"))
+    failed = False
+    for code in [
+        executor.run(f"{bench_cfg} mail_server {shlex.quote(cfg.smtp_host)}"),
+        executor.run(f"{bench_cfg} mail_port {cfg.smtp_port}"),
+        executor.run(f"{bench_cfg} mail_login {shlex.quote(cfg.smtp_user)}"),
+        executor.run(f"{bench_cfg} mail_password {shlex.quote(cfg.smtp_password)}"),
+        executor.run(f"{bench_cfg} use_tls {1 if cfg.smtp_use_tls else 0}"),
+    ]:
+        if code != 0:
+            failed = True
+    if failed:
+        fail(t("steps.site.smtp_failed"))
+    else:
+        ok(t("steps.site.smtp_configured"))
 
 
 def _configure_backup(cfg: Config, executor, compose_cmd: str):
@@ -225,12 +233,20 @@ def _configure_backup(cfg: Config, executor, compose_cmd: str):
     step(t("steps.site.configuring_backup"))
     site_q = shlex.quote(cfg.site_name)
     bench_cfg = f"{compose_cmd} exec -T backend bench --site {site_q} set-config"
-    executor.run(f"{bench_cfg} backup_bucket {shlex.quote(cfg.backup_s3_bucket)}")
-    executor.run(f'{bench_cfg} backup_region ""')
-    executor.run(f"{bench_cfg} backup_endpoint {shlex.quote(cfg.backup_s3_endpoint)}")
-    executor.run(f"{bench_cfg} backup_access_key {shlex.quote(cfg.backup_s3_access_key)}")
-    executor.run(f"{bench_cfg} backup_secret_key {shlex.quote(cfg.backup_s3_secret_key)}")
-    ok(t("steps.site.backup_configured"))
+    failed = False
+    for code in [
+        executor.run(f"{bench_cfg} backup_bucket {shlex.quote(cfg.backup_s3_bucket)}"),
+        executor.run(f'{bench_cfg} backup_region ""'),
+        executor.run(f"{bench_cfg} backup_endpoint {shlex.quote(cfg.backup_s3_endpoint)}"),
+        executor.run(f"{bench_cfg} backup_access_key {shlex.quote(cfg.backup_s3_access_key)}"),
+        executor.run(f"{bench_cfg} backup_secret_key {shlex.quote(cfg.backup_s3_secret_key)}"),
+    ]:
+        if code != 0:
+            failed = True
+    if failed:
+        fail(t("steps.site.backup_failed"))
+    else:
+        ok(t("steps.site.backup_configured"))
 
 
 def _update_hosts(cfg: Config):
@@ -327,7 +343,9 @@ def run_site(cfg: Config, executor):
     _create_site(cfg, executor, compose_cmd)
     installed = _install_extra_apps(cfg, executor, compose_cmd) + _install_community_apps(cfg, executor, compose_cmd)
     if installed > 0:
-        executor.run(f"{compose_cmd} restart frontend")
+        code = executor.run(f"{compose_cmd} restart frontend")
+        if code != 0:
+            fail(t("steps.site.frontend_restart_failed"))
     _configure_smtp(cfg, executor, compose_cmd)
     _configure_backup(cfg, executor, compose_cmd)
     _update_hosts(cfg)

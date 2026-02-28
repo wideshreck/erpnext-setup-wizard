@@ -193,8 +193,11 @@
             "dns_reminder": "Stellen Sie sicher, dass der DNS-Eintrag für {domain} auf Ihren Server zeigt.",
             "configuring_smtp": "SMTP wird konfiguriert…",
             "smtp_configured": "SMTP konfiguriert.",
+            "smtp_failed": "SMTP-Konfiguration fehlgeschlagen.",
             "configuring_backup": "S3-Backup wird konfiguriert…",
-            "backup_configured": "S3-Backup konfiguriert."
+            "backup_configured": "S3-Backup konfiguriert.",
+            "backup_failed": "S3-Backup-Konfiguration fehlgeschlagen.",
+            "frontend_restart_failed": "Neustart des Frontend-Containers fehlgeschlagen."
         }
     }
 }

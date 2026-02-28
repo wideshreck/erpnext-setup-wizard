@@ -90,6 +90,8 @@ def _validate_config(cfg: Config) -> None:
             errors.append("domain is required for production/remote mode")
         if not cfg.letsencrypt_email:
             errors.append("letsencrypt_email is required for production/remote mode")
+        elif not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", cfg.letsencrypt_email):
+            errors.append(f"Invalid letsencrypt_email format: {cfg.letsencrypt_email}")
     if cfg.deploy_mode == "remote":
         if not cfg.ssh_host:
             errors.append("ssh_host is required for remote mode")
@@ -103,12 +105,28 @@ def _validate_config(cfg: Config) -> None:
 
 def _config_from_yaml(path: str) -> Config:
     """Parse a YAML config file into a Config object."""
-    with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except FileNotFoundError:
+        print(f"Error: Config file not found: {path}", file=sys.stderr)
+        sys.exit(1)
+    except yaml.YAMLError as e:
+        print(f"Error: Invalid YAML in {path}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    if not isinstance(data, dict):
+        print(f"Error: Config file must contain a YAML mapping, got {type(data).__name__}.", file=sys.stderr)
+        sys.exit(1)
 
     smtp = data.get("smtp", {})
     backup = data.get("backup", {})
     ssh = data.get("ssh", {})
+
+    for section_name, section_val in [("smtp", smtp), ("backup", backup), ("ssh", ssh)]:
+        if section_val and not isinstance(section_val, dict):
+            print(f"Error: '{section_name}' section must be a mapping, got {type(section_val).__name__}.", file=sys.stderr)
+            sys.exit(1)
 
     cfg = Config(
         deploy_mode=data.get("mode", "local"),
