@@ -37,9 +37,9 @@
     },
     "commands": {
         "build": {
-            "generating_apps_json": "apps.json wird generiert\u2026",
-            "apps_json_ready": "{count} App(s) f\u00fcr den Build konfiguriert.",
-            "building_image": "Benutzerdefiniertes Docker-Image wird erstellt\u2026",
+            "generating_apps_json": "apps.json wird generiert…",
+            "apps_json_ready": "{count} App(s) für den Build konfiguriert.",
+            "building_image": "Benutzerdefiniertes Docker-Image wird erstellt…",
             "image_built": "Image erstellt: {tag}",
             "build_failed": "Docker-Image-Erstellung fehlgeschlagen!"
         },
@@ -52,23 +52,23 @@
             "ports": "Ports"
         },
         "upgrade": {
-            "reading_env": "Aktuelle Konfiguration wird gelesen\u2026",
+            "reading_env": "Aktuelle Konfiguration wird gelesen…",
             "current_version": "Aktuelle Version: {version}",
-            "fetching_versions": "Verf\u00fcgbare Versionen werden abgerufen\u2026",
+            "fetching_versions": "Verfügbare Versionen werden abgerufen…",
             "select_version": "Zielversion",
-            "already_current": "Die neueste Version wird bereits ausgef\u00fchrt.",
+            "already_current": "Die neueste Version wird bereits ausgeführt.",
             "will_upgrade": "Upgrade von {current} auf {target}",
             "confirm": "Mit dem Upgrade fortfahren?",
-            "backing_up": "Backup vor dem Upgrade wird erstellt\u2026",
+            "backing_up": "Backup vor dem Upgrade wird erstellt…",
             "backup_done": "Backup abgeschlossen.",
             "backup_failed": "Backup fehlgeschlagen! Trotzdem fortfahren?",
-            "updating_env": ".env-Datei wird aktualisiert\u2026",
+            "updating_env": ".env-Datei wird aktualisiert…",
             "env_updated": ".env aktualisiert.",
-            "pulling_images": "Neue Docker-Images werden heruntergeladen\u2026",
+            "pulling_images": "Neue Docker-Images werden heruntergeladen…",
             "images_pulled": "Images heruntergeladen.",
-            "restarting": "Container werden neu gestartet\u2026",
+            "restarting": "Container werden neu gestartet…",
             "restarted": "Container neu gestartet.",
-            "migrating": "Datenbankmigration wird ausgef\u00fchrt\u2026",
+            "migrating": "Datenbankmigration wird ausgeführt…",
             "migrate_done": "Migration abgeschlossen.",
             "migrate_failed": "Migration fehlgeschlagen!",
             "complete": "Upgrade auf {version} abgeschlossen!"
@@ -186,12 +186,12 @@
             "extra_site_name": "Zusätzlicher Site-Name",
             "extra_site_name_hint": "Domainname für die zusätzliche Site",
             "extra_site_password": "Admin-Passwort für zusätzliche Site",
-            "multi_site_add_another": "Weitere Site hinzuf\u00fcgen?",
+            "multi_site_add_another": "Weitere Site hinzufügen?",
             "build_image_prompt": "Ein benutzerdefiniertes Docker-Image mit integrierten Apps erstellen?",
             "image_tag_label": "Image-Tag",
-            "image_tag_hint": "Docker-Image Name:Tag f\u00fcr den benutzerdefinierten Build",
-            "portainer_prompt": "Portainer-Weboberfl\u00e4che f\u00fcr Container-Verwaltung aktivieren?",
-            "autoheal_prompt": "Autoheal f\u00fcr automatische Container-Wiederherstellung aktivieren?"
+            "image_tag_hint": "Docker-Image Name:Tag für den benutzerdefinierten Build",
+            "portainer_prompt": "Portainer-Weboberfläche für Container-Verwaltung aktivieren?",
+            "autoheal_prompt": "Autoheal für automatische Container-Wiederherstellung aktivieren?"
         },
         "env_file": {
             "title": "Umgebungsdatei wird vorbereitet",
@@ -208,10 +208,13 @@
             "start_failed": "Docker Compose Start fehlgeschlagen!",
             "running": "Container laufen.",
             "waiting_db": "Warten, bis die Datenbank bereit ist",
-            "down_failed": "Vorherige Container konnten nicht gestoppt werden. L\u00e4uft Docker?",
-            "health_checking": "Container-Zustand wird \u00fcberpr\u00fcft\u2026",
+            "down_failed": "Vorherige Container konnten nicht gestoppt werden. Läuft Docker?",
+            "health_checking": "Container-Zustand wird überprüft…",
             "all_healthy": "Alle Container sind gesund.",
-            "health_timeout": "Zustandspr\u00fcfung hat das Zeitlimit \u00fcberschritten \u2014 Wechsel zur zeitgesteuerten Wartezeit."
+            "health_timeout": "Zustandsprüfung hat das Zeitlimit überschritten — Wechsel zur zeitgesteuerten Wartezeit.",
+            "waiting_db_ready": "Warten auf Datenbankverbindung…",
+            "db_ready": "Datenbank akzeptiert Verbindungen.",
+            "db_timeout": "Datenbank-Bereitschaftsprüfung abgelaufen — es wird trotzdem fortgefahren."
         },
         "site": {
             "title": "ERPNext-Site wird erstellt",
@@ -268,10 +271,11 @@
             "creating_extra_site": "Zusätzliche Site wird erstellt: [bold]{site_name}[/bold]",
             "extra_site_created": "Site {site_name} erstellt.",
             "extra_site_failed": "Erstellung der Site {site_name} fehlgeschlagen.",
-            "verifying_health": "Site-Zustand wird \u00fcberpr\u00fcft\u2026",
+            "verifying_health": "Site-Zustand wird überprüft…",
             "health_ok": "Site ist gesund.",
-            "health_warning": "Site-Zustandspr\u00fcfung hat Warnungen zur\u00fcckgegeben \u2014 die Initialisierung l\u00e4uft m\u00f6glicherweise noch.",
-            "done_portainer": "Portainer"
+            "health_warning": "Site-Zustandsprüfung hat Warnungen zurückgegeben — die Initialisierung läuft möglicherweise noch.",
+            "done_portainer": "Portainer",
+            "create_auto_retry": "Versuch {attempt}/{max} fehlgeschlagen — erneuter Versuch in {seconds}s (Datenbank startet möglicherweise noch)…"
         }
     }
 }

@@ -128,6 +128,25 @@ def _wait_for_healthy(executor, compose_cmd: str, timeout: int = 120) -> bool:
     return False
 
 
+def _wait_for_db(executor, compose_cmd: str, cfg, timeout: int = 60) -> bool:
+    """Poll until the database service accepts connections."""
+    step(t("steps.docker.waiting_db_ready"))
+    if cfg.db_type == "postgres":
+        probe = f"{compose_cmd} exec -T db pg_isready -U postgres"
+    else:
+        probe = f"{compose_cmd} exec -T db mariadb-admin ping -h localhost"
+
+    start = time.time()
+    while time.time() - start < timeout:
+        code = executor.run(probe)
+        if code == 0:
+            ok(t("steps.docker.db_ready"))
+            return True
+        time.sleep(3)
+    fail(t("steps.docker.db_timeout"))
+    return False
+
+
 def run_docker(cfg: Config, executor):
     """Bring up Docker Compose stack."""
     step_header(4, TOTAL_STEPS, t("steps.docker.title"))
@@ -170,3 +189,9 @@ def run_docker(cfg: Config, executor):
     if not _wait_for_healthy(executor, compose_cmd):
         wait_time = 35 if cfg.deploy_mode == "remote" else 25
         animated_wait(wait_time, t("steps.docker.waiting_db"))
+
+    # Verify database is actually accepting connections
+    console.print()
+    if not _wait_for_db(executor, compose_cmd, cfg):
+        # Even if probe fails, give some extra time and proceed
+        animated_wait(15, t("steps.docker.waiting_db"))

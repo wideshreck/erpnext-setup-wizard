@@ -37,11 +37,11 @@
     },
     "commands": {
         "build": {
-            "generating_apps_json": "Generazione di apps.json\u2026",
+            "generating_apps_json": "Generazione di apps.json…",
             "apps_json_ready": "{count} app configurata/e per la compilazione.",
-            "building_image": "Compilazione dell\u2019immagine Docker personalizzata\u2026",
+            "building_image": "Compilazione dell’immagine Docker personalizzata…",
             "image_built": "Immagine compilata: {tag}",
-            "build_failed": "Compilazione dell\u2019immagine Docker fallita!"
+            "build_failed": "Compilazione dell’immagine Docker fallita!"
         },
         "status": {
             "title": "Stato dello Stack ERPNext",
@@ -52,23 +52,23 @@
             "ports": "Porte"
         },
         "upgrade": {
-            "reading_env": "Lettura della configurazione attuale\u2026",
+            "reading_env": "Lettura della configurazione attuale…",
             "current_version": "Versione attuale: {version}",
-            "fetching_versions": "Recupero delle versioni disponibili\u2026",
+            "fetching_versions": "Recupero delle versioni disponibili…",
             "select_version": "Versione di destinazione",
-            "already_current": "La versione pi\u00f9 recente \u00e8 gi\u00e0 in esecuzione.",
+            "already_current": "La versione più recente è già in esecuzione.",
             "will_upgrade": "Aggiornamento da {current} a {target}",
-            "confirm": "Procedere con l\u2019aggiornamento?",
-            "backing_up": "Creazione del backup prima dell\u2019aggiornamento\u2026",
+            "confirm": "Procedere con l’aggiornamento?",
+            "backing_up": "Creazione del backup prima dell’aggiornamento…",
             "backup_done": "Backup completato.",
             "backup_failed": "Backup fallito! Continuare comunque?",
-            "updating_env": "Aggiornamento del file .env\u2026",
+            "updating_env": "Aggiornamento del file .env…",
             "env_updated": ".env aggiornato.",
-            "pulling_images": "Download delle nuove immagini Docker\u2026",
+            "pulling_images": "Download delle nuove immagini Docker…",
             "images_pulled": "Immagini scaricate.",
-            "restarting": "Riavvio dei container\u2026",
+            "restarting": "Riavvio dei container…",
             "restarted": "Container riavviati.",
-            "migrating": "Esecuzione della migrazione del database\u2026",
+            "migrating": "Esecuzione della migrazione del database…",
             "migrate_done": "Migrazione completata.",
             "migrate_failed": "Migrazione fallita!",
             "complete": "Aggiornamento a {version} completato!"
@@ -187,10 +187,10 @@
             "extra_site_name_hint": "Nome di dominio per il sito aggiuntivo",
             "extra_site_password": "Password Admin per il Sito Aggiuntivo",
             "multi_site_add_another": "Aggiungere un altro sito?",
-            "build_image_prompt": "Compilare un\u2019immagine Docker personalizzata con le app integrate?",
+            "build_image_prompt": "Compilare un’immagine Docker personalizzata con le app integrate?",
             "image_tag_label": "Tag Immagine",
-            "image_tag_hint": "Nome:tag dell\u2019immagine Docker per la compilazione personalizzata",
-            "portainer_prompt": "Abilitare l\u2019interfaccia web Portainer per la gestione dei container?",
+            "image_tag_hint": "Nome:tag dell’immagine Docker per la compilazione personalizzata",
+            "portainer_prompt": "Abilitare l’interfaccia web Portainer per la gestione dei container?",
             "autoheal_prompt": "Abilitare autoheal per il ripristino automatico dei container?"
         },
         "env_file": {
@@ -208,10 +208,13 @@
             "start_failed": "Avvio di Docker Compose fallito!",
             "running": "I container sono in esecuzione.",
             "waiting_db": "In attesa che il database sia pronto",
-            "down_failed": "Impossibile fermare i container precedenti. Docker \u00e8 in esecuzione?",
-            "health_checking": "Controllo dello stato dei container\u2026",
+            "down_failed": "Impossibile fermare i container precedenti. Docker è in esecuzione?",
+            "health_checking": "Controllo dello stato dei container…",
             "all_healthy": "Tutti i container sono in buona salute.",
-            "health_timeout": "Il controllo dello stato ha superato il tempo limite \u2014 passaggio all\u2019attesa temporizzata."
+            "health_timeout": "Il controllo dello stato ha superato il tempo limite — passaggio all’attesa temporizzata.",
+            "waiting_db_ready": "In attesa che il database accetti connessioni…",
+            "db_ready": "Il database accetta connessioni.",
+            "db_timeout": "Controllo di disponibilità del database scaduto — si procede comunque."
         },
         "site": {
             "title": "Creazione del sito ERPNext",
@@ -268,10 +271,11 @@
             "creating_extra_site": "Creazione del sito aggiuntivo: [bold]{site_name}[/bold]",
             "extra_site_created": "Sito {site_name} creato.",
             "extra_site_failed": "Creazione del sito {site_name} fallita.",
-            "verifying_health": "Verifica dello stato del sito\u2026",
-            "health_ok": "Il sito \u00e8 in buona salute.",
-            "health_warning": "Il controllo dello stato del sito ha restituito avvisi \u2014 potrebbe essere ancora in fase di inizializzazione.",
-            "done_portainer": "Portainer"
+            "verifying_health": "Verifica dello stato del sito…",
+            "health_ok": "Il sito è in buona salute.",
+            "health_warning": "Il controllo dello stato del sito ha restituito avvisi — potrebbe essere ancora in fase di inizializzazione.",
+            "done_portainer": "Portainer",
+            "create_auto_retry": "Tentativo {attempt}/{max} fallito — nuovo tentativo tra {seconds}s (il database potrebbe essere ancora in avvio)…"
         }
     }
 }

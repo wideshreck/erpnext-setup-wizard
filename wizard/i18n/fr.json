@@ -211,7 +211,10 @@
             "down_failed": "Impossible d’arrêter les conteneurs précédents. Docker est-il en cours d’exécution ?",
             "health_checking": "Vérification de l’état des conteneurs…",
             "all_healthy": "Tous les conteneurs sont en bonne santé.",
-            "health_timeout": "La vérification d’état a expiré — passage à l’attente temporisée."
+            "health_timeout": "La vérification d’état a expiré — passage à l’attente temporisée.",
+            "waiting_db_ready": "Attente de la connexion à la base de données…",
+            "db_ready": "La base de données accepte les connexions.",
+            "db_timeout": "Vérification de la base de données expirée — poursuite malgré tout."
         },
         "site": {
             "title": "Création du site ERPNext",
@@ -271,7 +274,8 @@
             "verifying_health": "Vérification de l’état du site…",
             "health_ok": "Le site est en bonne santé.",
             "health_warning": "La vérification du site a renvoyé des avertissements — il est peut-être encore en cours d’initialisation.",
-            "done_portainer": "Portainer"
+            "done_portainer": "Portainer",
+            "create_auto_retry": "Tentative {attempt}/{max} échouée — nouvelle tentative dans {seconds}s (la base de données est peut-être encore en cours de démarrage)…"
         }
     }
 }

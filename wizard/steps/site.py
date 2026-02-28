@@ -3,6 +3,7 @@
 import platform
 import shlex
 import sys
+import time
 
 from rich.align import Align
 from rich.panel import Panel
@@ -23,7 +24,7 @@ from .docker import build_compose_cmd
 
 
 def _create_site(cfg: Config, executor, compose_cmd: str):
-    """Create the ERPNext site via bench, with retry on failure."""
+    """Create the ERPNext site via bench, with automatic retry on failure."""
     from ..prompts import confirm_action
 
     site_escaped = cfg.site_name.replace("[", "\\[")
@@ -31,23 +32,38 @@ def _create_site(cfg: Config, executor, compose_cmd: str):
     info(t("steps.site.creating_hint"))
 
     db_type_flag = " --db-type postgres" if cfg.db_type == "postgres" else ""
+    max_auto_retries = 3
+    retry_delay = 10
 
-    while True:
-        code = executor.run(
-            f"{compose_cmd} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
-            f"--install-app erpnext "
-            f"--db-root-password {shlex.quote(cfg.db_password)} "
-            f"--admin-password {shlex.quote(cfg.admin_password)}"
-            f"{db_type_flag}"
-        )
+    new_site_cmd = (
+        f"{compose_cmd} exec -T backend bench new-site {shlex.quote(cfg.site_name)} "
+        f"--install-app erpnext "
+        f"--db-root-password {shlex.quote(cfg.db_password)} "
+        f"--admin-password {shlex.quote(cfg.admin_password)}"
+        f"{db_type_flag}"
+    )
+
+    # Automatic retries for transient DB connection errors
+    for attempt in range(1, max_auto_retries + 1):
+        code = executor.run(new_site_cmd)
         if code == 0:
             break
-
-        fail(t("steps.site.create_failed"))
-        if not confirm_action(t("steps.site.create_retry")):
-            sys.exit(1)
-        console.print()
-        step(t("steps.site.creating", site_name=site_escaped))
+        if attempt < max_auto_retries:
+            info(t("steps.site.create_auto_retry",
+                    attempt=attempt, max=max_auto_retries, seconds=retry_delay))
+            time.sleep(retry_delay)
+            step(t("steps.site.creating", site_name=site_escaped))
+    else:
+        # All auto retries exhausted — ask user
+        while True:
+            fail(t("steps.site.create_failed"))
+            if not confirm_action(t("steps.site.create_retry")):
+                sys.exit(1)
+            console.print()
+            step(t("steps.site.creating", site_name=site_escaped))
+            code = executor.run(new_site_cmd)
+            if code == 0:
+                break
 
     ok(t("steps.site.created"))
 

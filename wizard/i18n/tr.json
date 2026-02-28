@@ -211,7 +211,10 @@
             "down_failed": "Önceki konteynerler durdurulamadı. Docker çalışıyor mu?",
             "health_checking": "Konteyner sağlığı kontrol ediliyor…",
             "all_healthy": "Tüm konteynerler sağlıklı.",
-            "health_timeout": "Sağlık kontrolü zaman aşımına uğradı — zamanlı beklemeye geçiliyor."
+            "health_timeout": "Sağlık kontrolü zaman aşımına uğradı — zamanlı beklemeye geçiliyor.",
+            "waiting_db_ready": "Veritabanının bağlantı kabul etmesi bekleniyor…",
+            "db_ready": "Veritabanı bağlantı kabul ediyor.",
+            "db_timeout": "Veritabanı hazırlık kontrolü zaman aşımına uğradı — yine de devam ediliyor."
         },
         "site": {
             "title": "ERPNext Sitesi Oluşturuluyor",
@@ -271,7 +274,8 @@
             "verifying_health": "Site sağlığı doğrulanıyor…",
             "health_ok": "Site sağlıklı.",
             "health_warning": "Site sağlık kontrolü uyarılar döndürdü — hala başlatılıyor olabilir.",
-            "done_portainer": "Portainer"
+            "done_portainer": "Portainer",
+            "create_auto_retry": "Deneme {attempt}/{max} başarısız — {seconds}s sonra tekrar denenecek (veritabanı hâlâ başlatılıyor olabilir)…"
         }
     }
 }

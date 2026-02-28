@@ -211,13 +211,17 @@
             "down_failed": "Could not stop previous containers. Is Docker running?",
             "health_checking": "Checking container health\u2026",
             "all_healthy": "All containers are healthy.",
-            "health_timeout": "Health check timed out \u2014 falling back to timed wait."
+            "health_timeout": "Health check timed out \u2014 falling back to timed wait.",
+            "waiting_db_ready": "Waiting for database to accept connections\u2026",
+            "db_ready": "Database is accepting connections.",
+            "db_timeout": "Database readiness check timed out \u2014 proceeding anyway."
         },
         "site": {
             "title": "Creating ERPNext Site",
             "creating": "Creating site: [bold]{site_name}[/bold]",
             "creating_hint": "This may take 3-5 minutes…",
             "create_failed": "Site creation failed!",
+            "create_auto_retry": "Attempt {attempt}/{max} failed \u2014 retrying in {seconds}s (database may still be starting)\u2026",
             "create_retry": "Would you like to retry site creation?",
             "created": "Site created successfully.",
             "enabling_scheduler": "Enabling scheduler…",
