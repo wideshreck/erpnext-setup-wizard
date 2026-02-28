@@ -9,49 +9,129 @@ import yaml
 from .steps.configure import Config
 
 
+# ── Shared argument helpers ─────────────────────────────────────
+
+def _add_ssh_args(parser: argparse.ArgumentParser) -> None:
+    """Add SSH-related arguments to *parser*."""
+    ssh = parser.add_argument_group("SSH options")
+    ssh.add_argument("--ssh-host", type=str)
+    ssh.add_argument("--ssh-user", type=str)
+    ssh.add_argument("--ssh-port", type=int)
+    ssh.add_argument("--ssh-key", type=str)
+
+
+def _add_project_arg(parser: argparse.ArgumentParser, default: str = "frappe_docker") -> None:
+    """Add --project flag to *parser*."""
+    parser.add_argument(
+        "--project", type=str, default=default,
+        help="Docker Compose project directory (default: %(default)s)",
+    )
+
+
+# ── Parser builder ──────────────────────────────────────────────
+
 def build_parser() -> argparse.ArgumentParser:
-    """Build the full argument parser."""
+    """Build the argument parser with subcommands.
+
+    Global flag:  --lang
+    Subcommands:  setup (default), upgrade, exec, status
+    """
     parser = argparse.ArgumentParser(
         description="ERPNext Setup Wizard",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--lang", type=str, help="Language code (e.g., tr, en)")
-    parser.add_argument("--config", type=str, help="Path to YAML config file for unattended mode")
+
+    # ── Subcommands ─────────────────────────────────────────
+    subparsers = parser.add_subparsers(dest="command")
+
+    # ── setup ────────────────────────────────────────────────
+    setup_p = subparsers.add_parser(
+        "setup", help="Run the interactive setup wizard (default)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    setup_p.add_argument("--config", type=str,
+                         help="Path to YAML config file for unattended mode")
 
     # Deploy mode
-    parser.add_argument("--mode", choices=["local", "production", "remote"],
-                        help="Deployment mode")
-    parser.add_argument("--site-name", type=str)
-    parser.add_argument("--version", type=str, help="ERPNext version (e.g., v16.7.3)")
-    parser.add_argument("--db-type", choices=["mariadb", "postgres"], default=None)
-    parser.add_argument("--http-port", type=str)
-    parser.add_argument("--db-password", type=str)
-    parser.add_argument("--admin-password", type=str)
-    parser.add_argument("--domain", type=str)
-    parser.add_argument("--letsencrypt-email", type=str)
-    parser.add_argument("--apps", type=str, help="Comma-separated app names")
+    setup_p.add_argument("--mode", choices=["local", "production", "remote"],
+                         help="Deployment mode")
+    setup_p.add_argument("--site-name", type=str)
+    setup_p.add_argument("--version", type=str,
+                         help="ERPNext version (e.g., v16.7.3)")
+    setup_p.add_argument("--db-type", choices=["mariadb", "postgres"],
+                         default=None)
+    setup_p.add_argument("--http-port", type=str)
+    setup_p.add_argument("--db-password", type=str)
+    setup_p.add_argument("--admin-password", type=str)
+    setup_p.add_argument("--domain", type=str)
+    setup_p.add_argument("--letsencrypt-email", type=str)
+    setup_p.add_argument("--apps", type=str,
+                         help="Comma-separated app names")
 
-    # SSH
-    parser.add_argument("--ssh-host", type=str)
-    parser.add_argument("--ssh-user", type=str)
-    parser.add_argument("--ssh-port", type=int)
-    parser.add_argument("--ssh-key", type=str)
+    # New setup flags (future features)
+    setup_p.add_argument("--custom-apps", type=str,
+                         help="Comma-separated url:branch pairs for private apps")
+    setup_p.add_argument("--backup-cron", type=str,
+                         help='Backup schedule (e.g. "@every 6h")')
+    setup_p.add_argument("--sites", type=str,
+                         help="Comma-separated extra site names")
+    setup_p.add_argument("--enable-portainer", action="store_true",
+                         help="Enable Portainer container management UI")
+    setup_p.add_argument("--build-image", action="store_true",
+                         help="Build a custom Docker image")
+    setup_p.add_argument("--image-tag", type=str,
+                         default="custom-erpnext:latest",
+                         help="Tag for the custom image (default: %(default)s)")
+    setup_p.add_argument("--enable-autoheal", action="store_true",
+                         help="Enable Docker autoheal for container restarts")
+
+    _add_ssh_args(setup_p)
 
     # SMTP
-    parser.add_argument("--smtp-host", type=str)
-    parser.add_argument("--smtp-port", type=int)
-    parser.add_argument("--smtp-user", type=str)
-    parser.add_argument("--smtp-password", type=str)
-    parser.add_argument("--smtp-no-tls", action="store_true")
+    smtp = setup_p.add_argument_group("SMTP options")
+    smtp.add_argument("--smtp-host", type=str)
+    smtp.add_argument("--smtp-port", type=int)
+    smtp.add_argument("--smtp-user", type=str)
+    smtp.add_argument("--smtp-password", type=str)
+    smtp.add_argument("--smtp-no-tls", action="store_true")
 
     # Backup
-    parser.add_argument("--backup-s3-endpoint", type=str)
-    parser.add_argument("--backup-s3-bucket", type=str)
-    parser.add_argument("--backup-s3-access-key", type=str)
-    parser.add_argument("--backup-s3-secret-key", type=str)
+    backup = setup_p.add_argument_group("Backup options")
+    backup.add_argument("--backup-s3-endpoint", type=str)
+    backup.add_argument("--backup-s3-bucket", type=str)
+    backup.add_argument("--backup-s3-access-key", type=str)
+    backup.add_argument("--backup-s3-secret-key", type=str)
+
+    # ── upgrade ──────────────────────────────────────────────
+    upgrade_p = subparsers.add_parser(
+        "upgrade", help="Upgrade an existing ERPNext installation",
+    )
+    upgrade_p.add_argument("--version", type=str,
+                           help="Target ERPNext version (e.g., v16.8.0)")
+    _add_project_arg(upgrade_p)
+    _add_ssh_args(upgrade_p)
+
+    # ── exec ─────────────────────────────────────────────────
+    exec_p = subparsers.add_parser(
+        "exec", help="Execute a command in a running container",
+    )
+    _add_project_arg(exec_p)
+    exec_p.add_argument("--service", type=str, default="backend",
+                        help="Service name (default: %(default)s)")
+    _add_ssh_args(exec_p)
+
+    # ── status ───────────────────────────────────────────────
+    status_p = subparsers.add_parser(
+        "status", help="Show status of the ERPNext stack",
+    )
+    _add_project_arg(status_p)
+    _add_ssh_args(status_p)
 
     return parser
 
+
+# ── Config loading helpers ──────────────────────────────────────
 
 def _require(data: dict, key: str, context: str = "config file") -> str:
     """Return data[key] or exit with a clear error if missing."""
@@ -161,8 +241,13 @@ def _config_from_yaml(path: str) -> Config:
 
 def _config_from_args(args) -> Config | None:
     """Try to build Config from CLI args. Returns None if not enough args for unattended."""
-    required = [args.mode, args.site_name, args.version,
-                args.db_password, args.admin_password]
+    required = [
+        getattr(args, "mode", None),
+        getattr(args, "site_name", None),
+        getattr(args, "version", None),
+        getattr(args, "db_password", None),
+        getattr(args, "admin_password", None),
+    ]
     if not all(required):
         return None
 
@@ -170,28 +255,28 @@ def _config_from_args(args) -> Config | None:
         deploy_mode=args.mode,
         site_name=args.site_name,
         erpnext_version=args.version,
-        db_type=args.db_type or "mariadb",
-        http_port=args.http_port or "8080",
+        db_type=getattr(args, "db_type", None) or "mariadb",
+        http_port=getattr(args, "http_port", None) or "8080",
         db_password=args.db_password,
         admin_password=args.admin_password,
-        extra_apps=args.apps.split(",") if args.apps else [],
+        extra_apps=args.apps.split(",") if getattr(args, "apps", None) else [],
         community_apps=[],
-        domain=args.domain or "",
-        letsencrypt_email=args.letsencrypt_email or "",
-        ssh_host=args.ssh_host or "",
-        ssh_user=args.ssh_user or "root",
-        ssh_port=args.ssh_port or 22,
-        ssh_key_path=args.ssh_key or "",
-        smtp_host=args.smtp_host or "",
-        smtp_port=args.smtp_port or 587,
-        smtp_user=args.smtp_user or "",
-        smtp_password=args.smtp_password or "",
-        smtp_use_tls=not args.smtp_no_tls,
-        backup_enabled=bool(args.backup_s3_bucket),
-        backup_s3_endpoint=args.backup_s3_endpoint or "",
-        backup_s3_bucket=args.backup_s3_bucket or "",
-        backup_s3_access_key=args.backup_s3_access_key or "",
-        backup_s3_secret_key=args.backup_s3_secret_key or "",
+        domain=getattr(args, "domain", None) or "",
+        letsencrypt_email=getattr(args, "letsencrypt_email", None) or "",
+        ssh_host=getattr(args, "ssh_host", None) or "",
+        ssh_user=getattr(args, "ssh_user", None) or "root",
+        ssh_port=getattr(args, "ssh_port", None) or 22,
+        ssh_key_path=getattr(args, "ssh_key", None) or "",
+        smtp_host=getattr(args, "smtp_host", None) or "",
+        smtp_port=getattr(args, "smtp_port", None) or 587,
+        smtp_user=getattr(args, "smtp_user", None) or "",
+        smtp_password=getattr(args, "smtp_password", None) or "",
+        smtp_use_tls=not getattr(args, "smtp_no_tls", False),
+        backup_enabled=bool(getattr(args, "backup_s3_bucket", None)),
+        backup_s3_endpoint=getattr(args, "backup_s3_endpoint", None) or "",
+        backup_s3_bucket=getattr(args, "backup_s3_bucket", None) or "",
+        backup_s3_access_key=getattr(args, "backup_s3_access_key", None) or "",
+        backup_s3_secret_key=getattr(args, "backup_s3_secret_key", None) or "",
     )
     _validate_config(cfg)
     return cfg
@@ -202,6 +287,7 @@ def load_config(args) -> Config | None:
 
     Returns Config for unattended mode, or None to fall through to interactive.
     """
-    if args.config:
-        return _config_from_yaml(args.config)
+    config_path = getattr(args, "config", None)
+    if config_path:
+        return _config_from_yaml(config_path)
     return _config_from_args(args)
